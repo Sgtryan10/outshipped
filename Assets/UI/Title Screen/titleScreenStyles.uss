@@ -1,0 +1,349 @@
+:root {
+}
+
+.root {
+    justify-content: center;
+    align-content: center;
+    align-items: center;
+    align-self: center;
+}
+
+.background-image {
+}
+
+.title-screen {
+    align-self: center;
+    align-items: center;
+    justify-content: center;
+    align-content: center;
+}
+
+.outline {
+    width: 1745.072px;
+    height: 896.727px;
+}
+
+.courier-container {
+    width: 477.203px;
+    height: 41.472px;
+    max-height: none;
+    max-width: none;
+    margin-bottom: 23px;
+    flex-direction: row;
+    margin-right: 961.73px;
+    margin-top: 0;
+}
+
+.courier {
+    width: 477.203px;
+    height: 41.472px;
+    max-height: 41.472px;
+    max-width: 477.203px;
+    margin-bottom: 23px;
+    flex-direction: row;
+    margin-right: 961.73px;
+    margin-top: 0;
+}
+
+.os-container {
+    height: 19.493px;
+    width: 306.134px;
+    max-height: none;
+    max-width: none;
+    flex-direction: row;
+    align-items: center;
+    align-self: center;
+    margin-bottom: 32.13px;
+}
+
+.os {
+    height: 19.493px;
+    width: 306.134px;
+    max-height: 19.493px;
+    max-width: 306.134px;
+    flex-direction: row;
+    align-items: center;
+    align-self: center;
+    margin-bottom: 32.13px;
+}
+
+.top-detail {
+    width: 1745.072px;
+    height: 41.472px;
+    max-height: 41.472px;
+    max-width: 1745.072px;
+    margin-bottom: 0;
+    flex-direction: row;
+    margin-top: 59.4px;
+}
+
+.bottom-detail {
+    width: 1746.112px;
+    height: 22.8px;
+    max-width: 1746.112px;
+    max-height: 22.8px;
+    margin-top: 19.59px;
+    margin-bottom: 19.59px;
+    align-self: center;
+    align-content: flex-start;
+    align-items: center;
+    justify-content: flex-start;
+    flex-direction: row;
+}
+
+.nominal-container {
+    height: 19.493px;
+    width: 240.07px;
+    margin-right: 1309.75px;
+}
+
+.nominal {
+    width: 240.07px;
+    height: 19.493px;
+    margin-right: 1309.75px;
+    -unity-background-scale-mode: scale-to-fit;
+    max-width: 240.07px;
+    max-height: 19.493px;
+}
+
+.date-container {
+    width: 196.976px;
+    height: 22.8px;
+    max-width: 196.976px;
+    max-height: 22.8px;
+}
+
+.date {
+    width: 196.976px;
+    height: 22.8px;
+    max-width: 196.976px;
+    background-image: url("project://database/Assets/UI/Title%20Screen/Textures/titleScreenDate.svg?fileID=7388822144124034973&guid=40fd752368a135f90a6343b40f684882&type=3#titleScreenDate");
+    max-height: 22.8px;
+}
+
+.main-title {
+    width: 1647.87px;
+    height: 127.781px;
+    max-width: 1647.87px;
+    max-height: 127.781px;
+    align-self: center;
+    justify-content: center;
+    align-content: center;
+    align-items: center;
+}
+
+.start-elements {
+    width: 636px;
+    max-width: 636px;
+    height: 104.039px;
+    max-height: 104.039px;
+    margin-top: 74.86px;
+    align-content: center;
+    justify-content: center;
+    align-self: center;
+    align-items: center;
+}
+
+.start-box {
+    width: 636px;
+    height: 104.039px;
+    position: relative;
+    align-content: center;
+    max-width: 636px;
+    max-height: 104.039px;
+    justify-content: center;
+}
+
+.start {
+    width: 598.898px;
+    height: 46.784px;
+    align-items: center;
+    align-self: center;
+    position: relative;
+    -unity-background-scale-mode: stretch-to-fill;
+    max-width: 598.898px;
+    max-height: 46.784px;
+    justify-content: center;
+    align-content: center;
+    flex-direction: column;
+}
+
+.outline-start {
+    scale: 1 0;
+    transform-origin: center;
+    transition-property: scale;
+    transition-duration: 0.75s;
+    flex-grow: 1;
+    align-items: center;
+    align-content: center;
+    align-self: center;
+    -unity-background-scale-mode: scale-to-fit;
+    max-height: none;
+    -unity-slice-type: sliced;
+    width: 1745.072px;
+    height: 896.7279px;
+}
+
+.outline-end {
+    scale: 1 1;
+}
+
+.curtain-parent-courier {
+    overflow: hidden;
+    height: 41.472px;
+    transition-property: width;
+    transition-duration: 0.25s;
+    transition-timing-function: ease-out-sine;
+    width: 0;
+    display: flex;
+    visibility: visible;
+}
+
+.curtain-parent-courier-open {
+    width: 477.203px;
+}
+
+.courier-anim {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 477.203px;
+    height: 41.472px;
+}
+
+.curtain-parent-os {
+    overflow: hidden;
+    height: 19.493px;
+    transition-property: width;
+    transition-duration: 0.25s;
+    transition-timing-function: ease-out-sine;
+    width: 0;
+    display: flex;
+    visibility: visible;
+}
+
+.curtain-parent-os-open {
+    width: 306.134px;
+}
+
+.os-anim {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 306.134px;
+    height: 19.493px;
+}
+
+.curtain-parent-nominal {
+    overflow: hidden;
+    height: 19.493px;
+    transition-property: width;
+    transition-duration: 0.25s;
+    transition-timing-function: ease-out-sine;
+    width: 0;
+    display: flex;
+    visibility: visible;
+}
+
+.curtain-parent-nominal-open {
+    width: 240.07px;
+}
+
+.nominal-anim {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 240.07px;
+    height: 19.493px;
+}
+
+.curtain-parent-date {
+    overflow: hidden;
+    height: 22.8px;
+    transition-property: width;
+    transition-duration: 0.25s;
+    transition-timing-function: ease-out-sine;
+    width: 0;
+    display: flex;
+    visibility: visible;
+}
+
+.curtain-parent-date-open {
+    width: 196.976px;
+}
+
+.date-anim {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 196.976px;
+    height: 22.8px;
+}
+
+.main-title-start {
+    scale: 0 0;
+    transform-origin: center;
+    transition-property: scale;
+    transition-duration: 0.5s;
+    transition-timing-function: ease-out-cubic;
+}
+
+.main-title-end {
+    scale: 1 1;
+}
+
+.curtain-parent-start {
+    overflow: hidden;
+    height: 0px;
+    transition-property: height;
+    transition-duration: 0.25s;
+    transition-timing-function: ease-out-sine;
+    width: 636px;
+    display: flex;
+    visibility: visible;
+    flex-shrink: 0;
+    flex-grow: 0;
+}
+
+.curtain-parent-start-open {
+    height: 104.039px;
+}
+
+.start-anim {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 636px;
+    height: 104.039px;
+}
+
+.start {
+    width: 598.898px;
+    height: 46.784px;
+    align-items: center;
+    align-self: center;
+    position: relative;
+    -unity-background-scale-mode: stretch-to-fill;
+    opacity: 0;
+    transition-property: opacity;
+    transition-duration: 0.5s;
+    transition-timing-function: ease-in-out;
+}
+
+.start-visible {
+    opacity: 1;
+}
+
+.start-dimmed {
+    opacity: 0;
+}
+
+.fade-out {
+    opacity: 0;
+    transition-duration: 0.75s;
+}
+
+.fade-in {
+    opacity: 1;
+    transition-duration: 0.75s;
+}

@@ -149,3 +149,13 @@
     width: 524.088px;
     height: 309.54px;
 }
+
+.fade-out {
+    opacity: 0;
+    transition-duration: 0.75s;
+}
+
+.fade-in {
+    opacity: 1;
+    transition-duration: 0.75s;
+}

@@ -1,0 +1,33 @@
+<ui:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="project://database/Assets/UI/Title%20Screen/titleScreenStyles.uss?fileID=7433441132597879392&amp;guid=54d1b0f95f65360d79fcbea6e59ba01e&amp;type=3#titleScreenStyles"/>
+    <ui:VisualElement name="Root" class="root" style="flex-grow: 1; background-image: url(&quot;project://database/Assets/UI/Title%20Screen/Textures/titleScreenBackground.svg?fileID=7388822144124034973&amp;guid=98a2803982f66223198e4fa2e36e2f2e&amp;type=3#titleScreenBackground&quot;);">
+        <ui:VisualElement name="BackgroundImage" class="background-image" style="flex-grow: 1; width: 1920px; height: 1080px; background-image: url(&quot;project://database/Assets/UI/Title%20Screen/Textures/titleScreenBackground.svg?fileID=7388822144124034973&amp;guid=98a2803982f66223198e4fa2e36e2f2e&amp;type=3#titleScreenBackground&quot;); position: absolute;"/>
+        <ui:VisualElement name="TitleScreen" class="title-screen" style="flex-grow: 1; width: 1745.072px; height: 1080px; align-self: auto; justify-content: flex-end;">
+            <ui:VisualElement name="TopDetail" class="top-detail" style="flex-grow: 1; flex-direction: row;">
+                <ui:VisualElement name="CourierContainer" class="courier-container curtain-parent-courier" style="align-self: flex-end; background-image: none; -unity-background-scale-mode: scale-to-fit; align-items: stretch;">
+                    <ui:VisualElement name="Courier" class="courier courier-anim" style="flex-grow: 0; align-self: center; background-image: url(&quot;project://database/Assets/UI/Title%20Screen/Textures/titleScreenCourier.svg?fileID=7388822144124034973&amp;guid=d33b4b4436e6db7e79023ac310573305&amp;type=3#titleScreenCourier&quot;); -unity-background-scale-mode: scale-to-fit; align-items: stretch; overflow: visible;"/>
+                </ui:VisualElement>
+                <ui:VisualElement name="OSContainer" class="os-container curtain-parent-os" style="align-self: flex-end; justify-content: flex-end; background-image: none; align-content: flex-end; -unity-background-scale-mode: scale-to-fit;">
+                    <ui:VisualElement name="OS" class="os os-anim" style="flex-grow: 0; align-self: flex-end; justify-content: flex-end; background-image: url(&quot;project://database/Assets/UI/Title%20Screen/Textures/titleScreenOS.svg?fileID=7388822144124034973&amp;guid=8cf6dfcf6c1af92dd85b353f187aea62&amp;type=3#titleScreenOS&quot;); align-content: flex-end; -unity-background-scale-mode: scale-to-fit;"/>
+                </ui:VisualElement>
+            </ui:VisualElement>
+            <ui:VisualElement name="Outline" class="outline outline-start" style="width: 1745.072px; background-image: url(&quot;project://database/Assets/UI/Title%20Screen/Textures/titleScreenOutline.svg?fileID=7388822144124034973&amp;guid=b84cc703382b2213692691cbd30afa9c&amp;type=3#titleScreenOutline&quot;); -unity-background-scale-mode: stretch-to-fill; justify-content: center;"/>
+            <ui:VisualElement name="OutlineAlignment" class="outline" style="flex-grow: 1; width: 1745.072px; height: 896.727px; background-image: none; max-height: 896.727px; -unity-background-scale-mode: stretch-to-fill; max-width: 1745.072px; justify-content: center; position: absolute; bottom: 61.98px;">
+                <ui:VisualElement name="MainTitle" class="main-title main-title-start" style="flex-grow: 1; background-image: url(&quot;project://database/Assets/UI/Title%20Screen/Textures/titleScreenMainTitle.svg?fileID=7388822144124034973&amp;guid=688e46de7280141bfb4b5b9e14b156c5&amp;type=3#titleScreenMainTitle&quot;);"/>
+                <ui:VisualElement name="StartElements" class="start-elements curtain-parent-start" style="align-self: center;">
+                    <ui:VisualElement name="StartBox" class="start-box start-anim" style="flex-grow: 1; background-image: url(&quot;project://database/Assets/UI/Title%20Screen/Textures/titleScreenStartBox.svg?fileID=7388822144124034973&amp;guid=30d438f8598eec772ba416acfa8662f3&amp;type=3#titleScreenStartBox&quot;); position: absolute; align-self: center; justify-content: center;">
+                        <ui:VisualElement name="Start" class="start" style="flex-grow: 1; background-image: url(&quot;project://database/Assets/UI/Title%20Screen/Textures/titleScreenStart.svg?fileID=7388822144124034973&amp;guid=cc97bc80e3f7b3be98bb3d51574ab5bd&amp;type=3#titleScreenStart&quot;); -unity-background-scale-mode: scale-to-fit; position: relative; align-content: center; justify-content: center; align-items: center; align-self: center; top: auto; left: auto;"/>
+                    </ui:VisualElement>
+                </ui:VisualElement>
+            </ui:VisualElement>
+            <ui:VisualElement name="BottomDetail" class="bottom-detail" style="flex-grow: 1; max-height: 22.8px; max-width: 1746.112px; margin-top: 19.59px; flex-direction: row;">
+                <ui:VisualElement name="NominalContainer" class="nominal-container curtain-parent-nominal" style="max-height: 19.493px; max-width: 240.07px;">
+                    <ui:VisualElement name="Nominal" class="nominal nominal-anim" style="background-image: url(&quot;project://database/Assets/UI/Title%20Screen/Textures/titleScreenNominal.svg?fileID=7388822144124034973&amp;guid=9fe2004670f3c9e6ab09365b575a9be5&amp;type=3#titleScreenNominal&quot;); max-height: 19.493px; max-width: 240.07px;"/>
+                </ui:VisualElement>
+                <ui:VisualElement name="DateContainer" class="date-container curtain-parent-date">
+                    <ui:VisualElement name="Date" class="date date-anim"/>
+                </ui:VisualElement>
+            </ui:VisualElement>
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>

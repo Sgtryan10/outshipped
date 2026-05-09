@@ -15,7 +15,7 @@ public class mainMenuAnimations : MonoBehaviour
         var container = root.Q<VisualElement>("ButtonContainer");
 
         // Initial Delay
-        await Task.Delay(2000);
+        await Task.Delay(100);
 
         // Title Image
         var logoCurtain = root.Q<VisualElement>("TitleImageContainer");

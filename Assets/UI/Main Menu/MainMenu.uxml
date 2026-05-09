@@ -1,6 +1,6 @@
 <ui:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
     <Style src="project://database/Assets/UI/Main%20Menu/mainMenuStyles.uss?fileID=7433441132597879392&amp;guid=002366802bf9eda78a3cf5053c6260ca&amp;type=3#mainMenuStyles"/>
-    <ui:VisualElement name="Root" class="root" style="flex-grow: 1;">
+    <ui:VisualElement name="Root" class="root" style="flex-grow: 1; background-image: url(&quot;project://database/Assets/UI/Main%20Menu/Textures/mainMenuBackground.svg?fileID=7388822144124034973&amp;guid=9f8eb6b81a791fd379304e3b3364046f&amp;type=3#mainMenuBackground&quot;);">
         <ui:VisualElement name="BackgroundImage" class="background-image" style="flex-grow: 1; -unity-background-scale-mode: scale-to-fit; width: 1920px; height: 1080px; top: 0; left: 0;"/>
         <ui:VisualElement name="MainMenu" class="main-menu" style="flex-grow: 1; flex-direction: row;">
             <ui:VisualElement name="TitleImageContainer" class="title-image-container curtain-parent" style="flex-grow: 0; height: 309.54px; align-items: center; align-content: center; justify-content: center; align-self: center; flex-shrink: 0; overflow: hidden;">
