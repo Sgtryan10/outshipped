@@ -15,7 +15,7 @@ public class mainMenuAnimations : MonoBehaviour
         var container = root.Q<VisualElement>("ButtonContainer");
 
         // Initial Delay
-        await Task.Delay(100);
+        await Task.Delay(1250);
 
         // Title Image
         var logoCurtain = root.Q<VisualElement>("TitleImageContainer");
@@ -41,7 +41,9 @@ public class mainMenuAnimations : MonoBehaviour
         // Buttons
         foreach (var button in container.Children())
         {
+            button.RemoveFromClassList("fade-start");
             button.AddToClassList("fade-end");
+
             await Task.Delay(staggerDelayMs);
         }
     }

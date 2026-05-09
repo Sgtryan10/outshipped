@@ -338,6 +338,12 @@
     opacity: 0;
 }
 
+.root {
+    opacity: 1;
+    transition-property: opacity;
+    transition-duration: 0.75s;
+}
+
 .fade-out {
     opacity: 0;
     transition-duration: 0.75s;

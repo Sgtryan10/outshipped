@@ -1,6 +1,6 @@
 <ui:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
     <Style src="project://database/Assets/UI/Title%20Screen/titleScreenStyles.uss?fileID=7433441132597879392&amp;guid=54d1b0f95f65360d79fcbea6e59ba01e&amp;type=3#titleScreenStyles"/>
-    <ui:VisualElement name="Root" class="root" style="flex-grow: 1; background-image: url(&quot;project://database/Assets/UI/Title%20Screen/Textures/titleScreenBackground.svg?fileID=7388822144124034973&amp;guid=98a2803982f66223198e4fa2e36e2f2e&amp;type=3#titleScreenBackground&quot;);">
+    <ui:VisualElement name="Root" class="root" style="flex-grow: 1; background-image: none;">
         <ui:VisualElement name="BackgroundImage" class="background-image" style="flex-grow: 1; width: 1920px; height: 1080px; background-image: url(&quot;project://database/Assets/UI/Title%20Screen/Textures/titleScreenBackground.svg?fileID=7388822144124034973&amp;guid=98a2803982f66223198e4fa2e36e2f2e&amp;type=3#titleScreenBackground&quot;); position: absolute;"/>
         <ui:VisualElement name="TitleScreen" class="title-screen" style="flex-grow: 1; width: 1745.072px; height: 1080px; align-self: auto; justify-content: flex-end;">
             <ui:VisualElement name="TopDetail" class="top-detail" style="flex-grow: 1; flex-direction: row;">
