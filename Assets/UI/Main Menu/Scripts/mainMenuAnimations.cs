@@ -41,8 +41,8 @@ public class mainMenuAnimations : MonoBehaviour
         // Buttons
         foreach (var button in container.Children())
         {
-            button.RemoveFromClassList("fade-start");
-            button.AddToClassList("fade-end");
+            button.RemoveFromClassList("fade-start-button");
+            button.AddToClassList("fade-end-button");
 
             await Task.Delay(staggerDelayMs);
         }

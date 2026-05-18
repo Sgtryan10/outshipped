@@ -12,6 +12,10 @@
 .root {
     align-items: center;
     justify-content: center;
+
+    transition-property: opacity;
+    transition-duration: 0.75s;
+    transition-timing-function: ease-in-out;
 }
 
 .main-menu {
@@ -86,14 +90,14 @@
     transition-timing-function: ease-in-out, ease-out, ease-out;
 }
 
-.fade-start {
+.fade-start-button {
     opacity: 0;
     transition-property: opacity;
     transition-duration: 0.6s;
     transition-timing-function: ease-in-out;
 }
 
-.fade-end {
+.fade-end-button {
     opacity: 1;
 }
 
@@ -176,4 +180,8 @@
     scale: 1.1;
     border-color: rgba(255, 255, 255, 0);
     opacity: 0.8;
+}
+
+.root.fade-out {
+    opacity: 0;
 }
