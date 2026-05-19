@@ -7,7 +7,7 @@
                 <ui:VisualElement name="Courier" class="courier courier-hidden" style="flex-grow: 1;"/>
                 <ui:VisualElement name="CourierBox" class="courier-box courier-box-reveal" style="flex-grow: 1; background-image: url(&quot;project://database/Assets/UI/Selection%20Screen/Textures/selectionScreenCourierBox.svg?fileID=7388822144124034973&amp;guid=92ff47a13c7d03451b0150c0b416d418&amp;type=3#selectionScreenCourierBox&quot;);"/>
             </ui:VisualElement>
-            <ui:VisualElement name="SelectionContainer" class="selection-container" style="justify-content: flex-start; align-content: flex-start; background-image: none;">
+            <ui:VisualElement name="SelectionContainer" class="selection-container allow-hover" style="justify-content: flex-start; align-content: flex-start; background-image: none;">
                 <ui:VisualElement name="WorkhorseContainer" class="workhorse-container selection-column column-hidden" style="background-image: url(&quot;project://database/Assets/UI/Selection%20Screen/Textures/selectionScreenWorkhorseBox.svg?fileID=7388822144124034973&amp;guid=bae6e0c261063d02c9fb591c957f6751&amp;type=3#selectionScreenWorkhorseBox&quot;);">
                     <ui:VisualElement name="Workhorse" class="workhorse" style="background-image: url(&quot;project://database/Assets/UI/Selection%20Screen/Textures/selectionScreenWorkhorse.svg?fileID=7388822144124034973&amp;guid=5f6402e6ddaaf9429a890a9410b4743c&amp;type=3#selectionScreenWorkhorse&quot;);"/>
                     <ui:VisualElement name="WorkhorseLogo" class="workhorse-logo" style="background-image: url(&quot;project://database/Assets/UI/Selection%20Screen/Textures/selectionScreenWorkhorseLogo.svg?fileID=7388822144124034973&amp;guid=27aac3faa043c2676b9820b3452d4e2c&amp;type=3#selectionScreenWorkhorseLogo&quot;);"/>
@@ -31,5 +31,6 @@
             </ui:VisualElement>
             <ui:VisualElement name="BottomBar" class="bottom-bar bottom-bar-reveal" style="background-image: url(&quot;project://database/Assets/UI/Selection%20Screen/Textures/selectionScreenBottomBar.svg?fileID=7388822144124034973&amp;guid=55208653e051550748707f4550f8ea25&amp;type=3#selectionScreenBottomBar&quot;);"/>
         </ui:VisualElement>
+        <ui:VisualElement name="FadeOverlay" class="fade-overlay" style="flex-grow: 1;"/>
     </ui:VisualElement>
 </ui:UXML>

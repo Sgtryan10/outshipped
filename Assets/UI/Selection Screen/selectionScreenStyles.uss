@@ -50,7 +50,7 @@
 }
 
 .selection-container {
-    height: 864px;
+    flex-grow: 1;
     width: 1920px;
     max-width: 1920px;
     justify-content: center;
@@ -225,21 +225,22 @@
     align-items: center;
     justify-content: flex-start;
     padding-top: 224px;
-    transition-property: flex-grow, background-color, padding-top, opacity;
-    transition-duration: 0.35s, 0.35s, 0.35s, 0.5s;
-    transition-timing-function: ease-in-out, ease-in-out, ease-in-out, ease-out-sine;
+    transition-property: flex-grow, background-color, padding-top, opacity, width, height;
+    transition-duration: 0.35s, 0.35s, 0.35s, 0.5s, 0.5s, 0.5s;
+    transition-timing-function: ease-in-out, ease-in-out, ease-in-out, ease-out-sine, ease-in-out, ease-in-out;
+    overflow: hidden;
 }
 
-.selection-column:hover {
+.allow-hover .selection-column:hover {
     flex-grow: 1.8;
     background-color: rgba(255, 255, 255, 0.05);
     padding-top: 160px;
 }
 
-.selection-column:hover .workhorse-logo,
-.selection-column:hover .cruiser-logo,
-.selection-column:hover .freighter-logo,
-.selection-column:hover .monarch-logo {
+.allow-hover .selection-column:hover .workhorse-logo,
+.allow-hover .selection-column:hover .cruiser-logo,
+.allow-hover .selection-column:hover .freighter-logo,
+.allow-hover .selection-column:hover .monarch-logo {
     scale: 0.75 0.75;
     translate: 0 -50px;
 }
@@ -260,7 +261,7 @@
     transition-timing-function: ease-in-out;
 }
 
-.selection-column:hover .hover-workhorse-description {
+.allow-hover .selection-column:hover .hover-workhorse-description {
     opacity: 1;
     translate: 0 -50px;
 }
@@ -281,7 +282,7 @@
     transition-timing-function: ease-in-out;
 }
 
-.selection-column:hover .hover-cruiser-description {
+.allow-hover .selection-column:hover .hover-cruiser-description {
     opacity: 1;
     translate: 0 -50px;
 }
@@ -302,7 +303,7 @@
     transition-timing-function: ease-in-out;
 }
 
-.selection-column:hover .hover-freighter-description {
+.allow-hover .selection-column:hover .hover-freighter-description {
     opacity: 1;
     translate: 0 -50px;
 }
@@ -323,7 +324,7 @@
     transition-timing-function: ease-in-out;
 }
 
-.selection-column:hover .hover-monarch-description {
+.allow-hover .selection-column:hover .hover-monarch-description {
     opacity: 1;
     translate: 0 -50px;
 }
@@ -348,3 +349,35 @@
     opacity: 0;
 }
 
+.column-expanded {
+    width: 1920px;
+    height: 1080px;
+    max-height: none;
+    flex-grow: 0;
+    justify-content: center;
+    padding-top: 0;
+}
+
+.column-collapsed {
+    width: 0;
+    flex-grow: 0;
+    opacity: 0;
+    padding-left: 0;
+    padding-right: 0;
+}
+
+/* Base state: Transparent */
+.fade-overlay {
+    position: absolute;
+    width: 1920px;
+    height: 1080px;
+    background-color: rgb(0, 0, 0);
+    opacity: 0;
+    transition-property: opacity;
+    transition-duration: 0.75s;
+    transition-timing-function: ease-in-out;
+}
+
+.fade-overlay-active {
+    opacity: 1;
+}
