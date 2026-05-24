@@ -7,6 +7,13 @@
                 <ui:VisualElement name="TopPackagesText" class="top-packages-text" style="background-image: url(&quot;project://database/Assets/UI/HUD/Textures/HUDTopPackagesText.svg?fileID=7388822144124034973&amp;guid=072b3720b897712f8ac50b1ec0f77184&amp;type=3#HUDTopPackagesText&quot;);"/>
                 <ui:Label text="0" name="TopPackages" class="top-packages"/>
             </ui:VisualElement>
+            <ui:VisualElement name="PopupContainer" class="popup-container" style="flex-grow: 1;">
+                <ui:VisualElement name="PopupMainContainer" class="popup-main-container" style="flex-grow: 1;">
+                    <ui:VisualElement name="PopupBox" class="popup-box"/>
+                    <ui:Label text="POPUP" name="Popup" class="popup"/>
+                </ui:VisualElement>
+                <ui:Label text="POPUP DESCRIPTION" name="PopupDescription" class="popup-description"/>
+            </ui:VisualElement>
             <ui:VisualElement name="BottomContainer" class="bottom-container">
                 <ui:VisualElement name="LeftContainer" class="left-container">
                     <ui:Label text="COURIER" name="Courier" class="courier" style="margin-top: 0; margin-right: 0; margin-bottom: 0; margin-left: 0; padding-top: 0; padding-right: 0; padding-bottom: 0; padding-left: 0;"/>

@@ -421,6 +421,11 @@ MonoBehaviour:
   testOverdrive: 0
   testAmped: 0
   testSlow: 0
+  testShowPopup: 0
+  testPopupTitle: POPUP
+  testPopupDescription: POPUP DESCRIPTION
+  testPopupColor: {r: 1, g: 0.37254903, b: 0, a: 0.29803923}
+  testPopupDuration: 3
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

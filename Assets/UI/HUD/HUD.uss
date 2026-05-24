@@ -58,6 +58,77 @@
     height: 51.5px;
 }
 
+.popup-container {
+    max-width: 1036.612px;
+    max-height: 96.628px;
+    margin-top: 86.14px;
+    width: 1036.612px;
+    height: 96.628px;
+    transition-property: opacity;
+    transition-duration: 0.2s;
+    transition-timing-function: ease-out-cubic;
+    opacity: 1;
+    scale: 1 1;
+}
+
+.popup-hidden {
+    opacity: 0;
+    scale: 0.8 0.8;
+}
+
+.popup-main-container {
+    justify-content: center;
+    max-width: 1036.618px;
+    max-height: 62.225px;
+    margin-bottom: 12.96px;
+}
+
+.popup-box {
+    max-width: 1036.618px;
+    max-height: 62.225px;
+    opacity: 1;
+    background-image: url("project://database/Assets/UI/HUD/Textures/HUDPopupBox.svg?fileID=7388822144124034973&guid=69bfb99e014c807af977ff49422c056d&type=3#HUDPopupBox");
+    width: 1036.618px;
+    height: 62.225px;
+}
+
+.popup {
+    align-self: center;
+    position: absolute;
+    margin-top: 0;
+    margin-right: 0;
+    margin-bottom: 0;
+    margin-left: 0;
+    padding-top: 0;
+    padding-right: 0;
+    padding-bottom: 0;
+    padding-left: 0;
+    justify-content: flex-start;
+    -unity-text-align: middle-center;
+    font-size: 47.988px;
+    -unity-font-definition: url("project://database/Assets/Fonts/Microstyle-BoldExtendedATT.ttf?fileID=12800000&guid=e7ab0c65aa8326dedb51e0e59292285a&type=3#Microstyle-BoldExtendedATT");
+    max-height: 28.851px;
+    height: 28.851px;
+    color: rgb(236, 236, 236);
+}
+
+.popup-description {
+    margin-top: 0;
+    margin-right: 0;
+    margin-bottom: 0;
+    margin-left: 0;
+    padding-top: 0;
+    padding-right: 0;
+    padding-bottom: 0;
+    padding-left: 0;
+    -unity-font-definition: url("project://database/Assets/Fonts/HankenGrotesk-ExtraBold.ttf?fileID=12800000&guid=90f6839f101d64b3b8bde266d43e186e&type=3#HankenGrotesk-ExtraBold");
+    font-size: 29.326px;
+    -unity-text-align: middle-center;
+    max-height: 21.443px;
+    height: 21.443px;
+    color: rgb(236, 236, 236);
+}
+
 .bottom-container {
     flex-direction: row;
     justify-content: space-between;
@@ -67,7 +138,7 @@
     align-content: center;
     height: 98.675px;
     max-height: 98.675px;
-    margin-top: 750.34px;
+    margin-top: 568.22px;
 }
 
 .left-container {

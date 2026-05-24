@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.UIElements;
+using System.Threading;
 using System.Threading.Tasks;
 
 [ExecuteAlways]
@@ -9,12 +10,15 @@ public class HudController : MonoBehaviour
     private UIDocument uiDoc;
     private VisualElement root;
 
+    private CancellationTokenSource popupTokenSource;
+
     private HUDHealthModule healthModule;
     private HUDAmmoModule ammoModule;
     private HUDArmorModule armorModule;
     private HUDCourierAndPassiveModule courierAndPassiveModule;
     private HUDPackagesModule packagesModule;
     private HUDActiveAbilityModule activeAbilityModule;
+    private HUDPopupModule popupModule;
 
     [Header("Editor Testing")]
     public int testMaxHealth = 100;
@@ -35,6 +39,12 @@ public class HudController : MonoBehaviour
     public bool testOverdrive = false;
     public bool testAmped = false;
     public bool testSlow = false;
+
+    public bool testShowPopup = false;
+    public string testPopupTitle = "POPUP";
+    public string testPopupDescription = "POPUP DESCRIPTION";
+    public Color testPopupColor = new Color(1f, 0f, 0f, 0.3f);
+    public float testPopupDuration = 3.0f;
 
     private void OnValidate()
     {
@@ -66,6 +76,15 @@ public class HudController : MonoBehaviour
         packagesModule?.updateDisplay(testPackagesDelivered);
 
         activeAbilityModule?.updateDisplay(testEMP, testOverdrive, testAmped, testSlow);
+
+        if (testShowPopup)
+        {
+            popupModule?.Show(testPopupTitle, testPopupDescription, testPopupColor);
+        }
+        else
+        {
+            popupModule?.Hide();
+        }
     }
 
     private void Awake()
@@ -105,6 +124,15 @@ public class HudController : MonoBehaviour
             updatePackagesDelivered(testPackagesDelivered);
 
             updateActiveAbility(testEMP, testOverdrive, testAmped, testSlow);
+
+            if (testShowPopup)
+            {
+                TriggerPopup(testPopupTitle, testPopupDescription, testPopupColor, testPopupDuration);
+            }
+            else
+            {
+                DismissPopup();
+            }
         }
 
         await Task.Delay(100);
@@ -112,6 +140,11 @@ public class HudController : MonoBehaviour
 
         root.style.transformOrigin = new StyleTransformOrigin(new TransformOrigin(Length.Percent(50), Length.Percent(50)));
         root.RemoveFromClassList("hud-hidden");
+    }
+
+    private void OnDisable()
+    {
+        CancelActivePopupTimer();
     }
 
     private void initializeModules()
@@ -126,7 +159,8 @@ public class HudController : MonoBehaviour
         armorModule = new HUDArmorModule(visualRoot.Q<VisualElement>("ArmorContainer"));
         courierAndPassiveModule = new HUDCourierAndPassiveModule(visualRoot.Q<VisualElement>("LeftContainer"), visualRoot.Q<VisualElement>("RightContainer"));
         packagesModule = new HUDPackagesModule(visualRoot.Q<VisualElement>("TopContainer"));
-        activeAbilityModule = new HUDActiveAbilityModule(visualRoot.Q<VisualElement>("ActiveContainer")); // Initialized here
+        activeAbilityModule = new HUDActiveAbilityModule(visualRoot.Q<VisualElement>("ActiveContainer"));
+        popupModule = new HUDPopupModule(visualRoot.Q<VisualElement>("PopupContainer"));
     }
 
     // Health Module Calls
@@ -201,5 +235,61 @@ public class HudController : MonoBehaviour
         testAmped = amped;
         testSlow = slow;
         activeAbilityModule?.updateDisplay(emp, overdrive, amped, slow);
+    }
+
+    // Popup Module Calls
+    public void TriggerPopup(string title, string description, Color boxColor, float durationSeconds)
+    {
+        if (!Application.isPlaying) return;
+
+        CancelActivePopupTimer();
+
+        testShowPopup = true;
+        testPopupTitle = title;
+        testPopupDescription = description;
+        testPopupColor = boxColor;
+        testPopupDuration = durationSeconds;
+
+        popupModule?.Show(title, description, boxColor);
+
+        popupTokenSource = new CancellationTokenSource();
+        StartPopupTimer(durationSeconds, popupTokenSource.Token);
+    }
+
+    private async void StartPopupTimer(float delayInSeconds, CancellationToken token)
+    {
+        try
+        {
+            int delayMs = Mathf.RoundToInt(delayInSeconds * 1000f);
+            await Task.Delay(delayMs, token);
+
+            if (!token.IsCancellationRequested)
+            {
+                DismissPopup();
+            }
+        }
+        catch (TaskCanceledException)
+        {
+
+        }
+    }
+
+    private void CancelActivePopupTimer()
+    {
+        if (popupTokenSource != null)
+        {
+            popupTokenSource.Cancel();
+            popupTokenSource.Dispose();
+            popupTokenSource = null;
+        }
+    }
+
+    public void DismissPopup()
+    {
+        if (!Application.isPlaying) return;
+        testShowPopup = false;
+
+        CancelActivePopupTimer();
+        popupModule?.Hide();
     }
 }

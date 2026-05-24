@@ -87,10 +87,10 @@ public class CarController : MonoBehaviour
     {
         if (!rb) return;
 
-        float speed = rb.velocity.magnitude;
+        float speed = rb.linearVelocity.magnitude;
 
         if (speed > maxSpeed)
-            rb.velocity = rb.velocity.normalized * maxSpeed;
+            rb.linearVelocity = rb.linearVelocity.normalized * maxSpeed;
 
         float speed01 = Mathf.Clamp01(speed / Mathf.Max(0.1f, maxSpeed));
         float currentMaxSteer = Mathf.Lerp(maxSteeringAngle, steerAtMaxSpeed, speed01);
@@ -123,7 +123,7 @@ public class CarController : MonoBehaviour
             }
         }
 
-        float forwardSpeed = Vector3.Dot(transform.forward, rb.velocity);
+        float forwardSpeed = Vector3.Dot(transform.forward, rb.linearVelocity);
 
         foreach (var wheel in wheels)
         {
