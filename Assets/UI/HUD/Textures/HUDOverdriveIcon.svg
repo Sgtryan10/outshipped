@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="61.231998"
+   height="61.231998"
+   viewBox="0 0 61.231998 61.231998"
+   version="1.1"
+   id="svg1"
+   xml:space="preserve"
+   sodipodi:docname="HUDOverdriveIcon.svg"
+   inkscape:version="1.4.2 (ebf0e940d0, 2025-05-08)"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg"><sodipodi:namedview
+     id="namedview1"
+     pagecolor="#ffffff"
+     bordercolor="#000000"
+     borderopacity="0.25"
+     inkscape:showpageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1"
+     inkscape:zoom="2.8284272"
+     inkscape:cx="44.547726"
+     inkscape:cy="-27.22361"
+     inkscape:window-width="1920"
+     inkscape:window-height="1002"
+     inkscape:window-x="0"
+     inkscape:window-y="0"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="svg1" /><defs
+     id="defs1" /><path
+     id="use2"
+     style="font-variation-settings:'wght' 800;fill:#e4ff3a;stroke-width:9.33331;paint-order:markers fill stroke"
+     d="m 3.162094,10.788182 h 9.151301 l 9.151303,19.827819 -9.151303,19.827816 H 3.162094 l 9.151301,-19.827816 z"
+     sodipodi:nodetypes="ccccccc"
+     inkscape:tile-x0="24.73346"
+     inkscape:tile-y0="17.8705" /><path
+     id="use3"
+     style="font-variation-settings:'wght' 800;fill:#1a1a1a;stroke-width:9.33331;paint-order:markers fill stroke"
+     d="m 21.464698,10.788182 h 9.151301 l 9.151302,19.827819 -9.151302,19.827816 h -9.151301 l 9.151301,-19.827816 z"
+     sodipodi:nodetypes="ccccccc"
+     inkscape:tile-x0="24.73346"
+     inkscape:tile-y0="17.8705" /><path
+     id="use4"
+     style="font-variation-settings:'wght' 800;fill:#e4ff3a;stroke-width:9.33331;paint-order:markers fill stroke"
+     d="m 39.767301,10.788182 h 9.151301 l 9.151302,19.827819 -9.151302,19.827816 h -9.151301 l 9.151301,-19.827816 z"
+     sodipodi:nodetypes="ccccccc"
+     inkscape:tile-x0="24.73346"
+     inkscape:tile-y0="17.8705" /></svg>

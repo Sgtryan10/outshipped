@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 using System.Collections.Generic;
 using UnityEngine.InputSystem;
 
-public class UIManager : MonoBehaviour
+public class PreGameUIManager : MonoBehaviour
 {
     [System.Serializable]
     public struct MenuMapping

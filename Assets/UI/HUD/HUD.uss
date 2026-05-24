@@ -1,0 +1,381 @@
+:root {
+}
+
+.root {
+    justify-content: center;
+    align-self: center;
+    transition-property: opacity, scale;
+    transition-duration: 0.6s;
+    transition-timing-function: ease-out-cubic;
+}
+
+.hud-container {
+    width: 1763.58px;
+    max-width: 1763.58px;
+    height: 958.06px;
+    max-height: 958.06px;
+    align-items: center;
+    flex-direction: column;
+    align-self: center;
+}
+
+.hud-hidden {
+    opacity: 0;
+    scale: 0.8 0.8;
+}
+
+.top-container {
+}
+
+.top-bar {
+    width: 496.973px;
+    max-width: 496.973px;
+    height: 3.042px;
+    max-height: 3.042px;
+}
+
+.top-packages-text {
+    width: 496.973px;
+    max-width: 496.973px;
+    height: 35.088px;
+    max-height: 35.088px;
+    margin-top: 6.48px;
+    margin-bottom: 12.96px;
+}
+
+.top-packages {
+    -unity-font-definition: url("project://database/Assets/Fonts/Microstyle-BoldExtendedATT.ttf?fileID=12800000&guid=e7ab0c65aa8326dedb51e0e59292285a&type=3#Microstyle-BoldExtendedATT");
+    font-size: 85.12px;
+    color: rgb(228, 255, 58);
+    -unity-text-align: middle-center;
+    margin: 0;
+    padding: 0;
+    align-items: center;
+    justify-content: center;
+    align-self: center;
+    align-content: center;
+    max-height: 51.5px;
+    height: 51.5px;
+}
+
+.bottom-container {
+    flex-direction: row;
+    justify-content: space-between;
+    width: 100%;
+    align-self: center;
+    align-items: flex-end;
+    align-content: center;
+    height: 98.675px;
+    max-height: 98.675px;
+    margin-top: 750.34px;
+}
+
+.left-container {
+    height: 98.675px;
+    max-height: 98.675px;
+    max-width: none;
+    width: 316.35px;
+    min-width: 316.35px;
+    min-height: 98.675px;
+    align-items: flex-start;
+}
+
+.courier {
+    -unity-font-definition: url("project://database/Assets/Fonts/HankenGrotesk-ExtraBold.ttf?fileID=12800000&guid=90f6839f101d64b3b8bde266d43e186e&type=3#HankenGrotesk-ExtraBold");
+    color: rgb(236, 236, 236);
+    font-size: 29.326px;
+    max-height: 21.443px;
+    -unity-text-align: middle-left;
+    left: 5.97px;
+    margin-top: 0;
+    margin-right: 0;
+    margin-bottom: 0;
+    margin-left: 0;
+    padding-top: 0;
+    padding-right: 0;
+    padding-bottom: 0;
+    padding-left: 0;
+}
+
+.bottom-left-bar {
+    width: 316.35px;
+    max-width: 316.35px;
+    height: 3.042px;
+    max-height: 3.042px;
+    margin-top: 6.48px;
+    margin-bottom: 6.48px;
+    min-width: 316.35px;
+    min-height: 3.042px;
+}
+
+.armor-container {
+    flex-direction: row;
+    max-height: 27.376px;
+    max-width: 316.35px;
+    margin-bottom: 6.48px;
+    height: 27.376px;
+    min-height: 27.376px;
+}
+
+.armor-1 {
+    width: 57.736px;
+    max-width: 57.736px;
+    height: 27.376px;
+    max-height: 27.376px;
+}
+
+.armor-2 {
+    width: 57.736px;
+    max-width: 57.736px;
+    height: 27.376px;
+    max-height: 27.376px;
+    margin-right: 6.92px;
+    margin-left: 6.92px;
+}
+
+.armor-3 {
+    height: 27.376px;
+    max-height: 27.376px;
+    width: 57.736px;
+    max-width: 57.736px;
+}
+
+.armor-4 {
+    width: 57.736px;
+    max-width: 57.736px;
+    height: 27.376px;
+    max-height: 27.376px;
+    margin-right: 6.92px;
+    margin-left: 6.92px;
+}
+
+.armor-5 {
+    width: 57.736px;
+    max-width: 57.736px;
+    height: 27.376px;
+    max-height: 27.376px;
+}
+
+.health-container {
+    position: relative;
+    width: 316.35px;
+    height: 27.376px;
+    max-height: 27.376px;
+    max-width: 316.35px;
+}
+
+.health-bar {
+    width: 100%;
+    height: 100%;
+    transform-origin: left center;
+    transition-property: scale;
+    transition-duration: 0.25s;
+    transition-timing-function: ease-out-cubic;
+}
+
+.health {
+    -unity-font-definition: url("project://database/Assets/Fonts/HankenGrotesk-ExtraBold.ttf?fileID=12800000&guid=90f6839f101d64b3b8bde266d43e186e&type=3#HankenGrotesk-ExtraBold");
+    font-size: 29.326px;
+    -unity-text-align: middle-left;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 5.97px;
+    margin-top: 0;
+    margin-right: 0;
+    margin-bottom: 0;
+    margin-left: 0;
+    padding-top: 0;
+    padding-right: 0;
+    padding-bottom: 0;
+    padding-left: 0;
+}
+
+.middle-container {
+    width: 61.232px;
+    max-width: 61.232px;
+    height: 70.753px;
+    max-height: 70.753px;
+    min-width: 61.232px;
+    min-height: 70.753px;
+}
+
+.active-container {
+    width: 61.232px;
+    height: 61.232px;
+    max-height: 61.232px;
+    max-width: 61.232px;
+    min-width: 61.232px;
+    min-height: 61.232px;
+    justify-content: center;
+    align-items: center;
+    align-content: center;
+}
+
+.emp {
+    position: absolute;
+    width: 54.908px;
+    height: 54.908px;
+    max-height: 54.908px;
+    max-width: 54.908px;
+    transition-property: opacity;
+    transition-duration: 0.15s;
+    transition-timing-function: ease-out-cubic;
+}
+
+.overdrive {
+    position: absolute;
+    width: 54.908px;
+    height: 39.656px;
+    max-height: 39.656px;
+    max-width: 54.908px;
+    transition-property: opacity;
+    transition-duration: 0.15s;
+    transition-timing-function: ease-out-cubic;
+}
+
+.amped {
+    position: absolute;
+    width: 49.216px;
+    height: 54.908px;
+    max-height: 54.908px;
+    max-width: 49.216px;
+    transition-property: opacity;
+    transition-duration: 0.15s;
+    transition-timing-function: ease-out-cubic;
+}
+
+.slow {
+    position: absolute;
+    width: 54.908px;
+    height: 54.908px;
+    max-height: 54.908px;
+    max-width: 54.908px;
+    transition-property: opacity;
+    transition-duration: 0.15s;
+    transition-timing-function: ease-out-cubic;
+}
+
+.active-box {
+    width: 61.232px;
+    height: 61.232px;
+    max-height: 61.232px;
+    max-width: 61.232px;
+}
+
+.bottom-middle-bar {
+    background-image: url("project://database/Assets/UI/HUD/Textures/HUDBottomMiddleBar.svg?fileID=7388822144124034973&guid=a49a27e518c280898a448b2e3681643f&type=3#HUDBottomMiddleBar");
+    width: 61.232px;
+    max-width: 61.232px;
+    height: 3.042px;
+    max-height: 3.042px;
+    margin-top: 6.48px;
+    min-width: 61.232px;
+    min-height: 3.042px;
+}
+
+.right-container {
+    max-height: 99.032px;
+    min-height: 99.032px;
+    min-width: 316.35px;
+    width: 316.35px;
+    align-items: flex-end;
+    height: 99.032px;
+}
+
+.passive {
+    font-size: 29.326px;
+    -unity-font-definition: url("project://database/Assets/Fonts/HankenGrotesk-ExtraBoldItalic.ttf?fileID=12800000&guid=3b89bfcd4f49831db9bfed1c6a3fca82&type=3#HankenGrotesk-ExtraBoldItalic");
+    color: rgb(236, 236, 236);
+    -unity-text-align: middle-right;
+    align-self: flex-end;
+    right: 5.97px;
+    max-height: 21.799px;
+    min-height: 21.799px;
+    height: 21.799px;
+    margin-top: 0;
+    margin-right: 0;
+    margin-bottom: 0;
+    margin-left: 0;
+    padding-top: 0;
+    padding-right: 0;
+    padding-bottom: 0;
+    padding-left: 0;
+}
+
+.bottom-right-bar {
+    align-self: flex-end;
+    margin-bottom: 6.48px;
+    margin-top: 6.48px;
+}
+
+.ammo-container {
+    background-image: url("project://database/Assets/UI/HUD/Textures/HUDBottomAmmoBox.svg?fileID=7388822144124034973&guid=5985ca50d4a4bbdfe83c3d99ebcc3459&type=3#HUDBottomAmmoBox");
+    max-height: 61.232px;
+    flex-direction: row-reverse;
+    align-items: center;
+    min-width: 316.35px;
+    min-height: 61.232px;
+}
+
+.turret-type {
+    -unity-font-definition: url("project://database/Assets/Fonts/HankenGrotesk-ExtraBold.ttf?fileID=12800000&guid=90f6839f101d64b3b8bde266d43e186e&type=3#HankenGrotesk-ExtraBold");
+    font-size: 29.326px;
+    -unity-text-align: middle-center;
+    color: rgb(228, 255, 58);
+    max-height: 20.445px;
+    height: 20.445px;
+    margin-right: 0;
+    padding-top: 0;
+    padding-right: 0;
+    padding-bottom: 0;
+    padding-left: 0;
+    margin-top: 0;
+    margin-bottom: 0;
+    margin-left: 0;
+    flex-grow: 1;
+}
+
+.magazine {
+    font-size: 42.656px;
+    -unity-font-definition: url("project://database/Assets/Fonts/HankenGrotesk-ExtraBold.ttf?fileID=12800000&guid=90f6839f101d64b3b8bde266d43e186e&type=3#HankenGrotesk-ExtraBold");
+    -unity-text-align: middle-right;
+    color: rgb(228, 255, 58);
+    max-height: 30.08px;
+    height: 30.08px;
+    margin-top: 0;
+    margin-right: 0;
+    margin-bottom: 0;
+    margin-left: 0;
+    padding-top: 0;
+    padding-right: 0;
+    padding-bottom: 0;
+    padding-left: 0;
+}
+
+.divider {
+    background-image: url("project://database/Assets/UI/HUD/Textures/HUDBottomAmmoDivider.svg?fileID=7388822144124034973&guid=2c372d35c518893399965fd19e4a9aee&type=3#HUDBottomAmmoDivider");
+    width: 2.475px;
+    max-width: 2.475px;
+    height: 49.499px;
+    max-height: 49.499px;
+    margin-right: 11.71px;
+    margin-left: 11.71px;
+}
+
+.reserve {
+    font-size: 42.656px;
+    -unity-font-definition: url("project://database/Assets/Fonts/HankenGrotesk-ExtraBold.ttf?fileID=12800000&guid=90f6839f101d64b3b8bde266d43e186e&type=3#HankenGrotesk-ExtraBold");
+    -unity-text-align: middle-right;
+    color: rgb(236, 236, 236);
+    max-height: 30.08px;
+    height: 30.08px;
+    margin-right: 14.33px;
+    margin-top: 0;
+    margin-bottom: 0;
+    margin-left: 0;
+    padding-top: 0;
+    padding-right: 0;
+    padding-bottom: 0;
+    padding-left: 0;
+}

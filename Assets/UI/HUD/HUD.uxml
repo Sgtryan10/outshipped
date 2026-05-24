@@ -1,0 +1,49 @@
+<ui:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="project://database/Assets/UI/HUD/HUD.uss?fileID=7433441132597879392&amp;guid=6a26a7cf98f4350c48b49057358527ea&amp;type=3#HUD"/>
+    <ui:VisualElement name="Root" class="root hud-hidden" style="flex-grow: 1;">
+        <ui:VisualElement name="HUDContainer" class="hud-container" style="flex-grow: 1;">
+            <ui:VisualElement name="TopContainer" class="top-container">
+                <ui:VisualElement name="TopBar" class="top-bar" style="background-image: url(&quot;project://database/Assets/UI/HUD/Textures/HUDTopBar.svg?fileID=7388822144124034973&amp;guid=fc7af89fd45432ddf964a2b43edb1a96&amp;type=3#HUDTopBar&quot;);"/>
+                <ui:VisualElement name="TopPackagesText" class="top-packages-text" style="background-image: url(&quot;project://database/Assets/UI/HUD/Textures/HUDTopPackagesText.svg?fileID=7388822144124034973&amp;guid=072b3720b897712f8ac50b1ec0f77184&amp;type=3#HUDTopPackagesText&quot;);"/>
+                <ui:Label text="0" name="TopPackages" class="top-packages"/>
+            </ui:VisualElement>
+            <ui:VisualElement name="BottomContainer" class="bottom-container">
+                <ui:VisualElement name="LeftContainer" class="left-container">
+                    <ui:Label text="COURIER" name="Courier" class="courier" style="margin-top: 0; margin-right: 0; margin-bottom: 0; margin-left: 0; padding-top: 0; padding-right: 0; padding-bottom: 0; padding-left: 0;"/>
+                    <ui:VisualElement name="BottomLeftBar" class="bottom-left-bar" style="background-image: url(&quot;project://database/Assets/UI/HUD/Textures/HUDBottomLeftBar.svg?fileID=7388822144124034973&amp;guid=0322e2abdb98c2e4eaf593e9e099eb7a&amp;type=3#HUDBottomLeftBar&quot;);"/>
+                    <ui:VisualElement name="ArmorContainer" class="armor-container">
+                        <ui:VisualElement name="Armor1" class="armor-1" style="flex-grow: 1; background-image: url(&quot;project://database/Assets/UI/HUD/Textures/HUDBottomArmor1.svg?fileID=7388822144124034973&amp;guid=499b61b64c8bb590f96e29fbd634ec3e&amp;type=3#HUDBottomArmor1&quot;);"/>
+                        <ui:VisualElement name="Armor2" class="armor-2" style="flex-grow: 1; background-image: url(&quot;project://database/Assets/UI/HUD/Textures/HUDBottomArmor2.svg?fileID=7388822144124034973&amp;guid=99c9acd3c7e9389ed893f01caefdb405&amp;type=3#HUDBottomArmor2&quot;);"/>
+                        <ui:VisualElement name="Armor3" class="armor-3" style="flex-grow: 1; background-image: url(&quot;project://database/Assets/UI/HUD/Textures/HUDBottomArmor3.svg?fileID=7388822144124034973&amp;guid=e2fac093d06a98cc08d22f47bb8184a7&amp;type=3#HUDBottomArmor3&quot;);"/>
+                        <ui:VisualElement name="Armor4" class="armor-4" style="flex-grow: 1; background-image: url(&quot;project://database/Assets/UI/HUD/Textures/HUDBottomArmor4.svg?fileID=7388822144124034973&amp;guid=30db1662c0ec957aa8f642245ba23987&amp;type=3#HUDBottomArmor4&quot;);"/>
+                        <ui:VisualElement name="Armor5" class="armor-5" style="flex-grow: 1; background-image: url(&quot;project://database/Assets/UI/HUD/Textures/HUDBottomArmor5.svg?fileID=7388822144124034973&amp;guid=109013355c4817a3eb4e84b506baf6ab&amp;type=3#HUDBottomArmor5&quot;);"/>
+                    </ui:VisualElement>
+                    <ui:VisualElement name="HealthContainer" class="health-container" style="flex-grow: 1;">
+                        <ui:VisualElement name="HealthBar" class="health-bar" style="background-image: url(&quot;project://database/Assets/UI/HUD/Textures/HUDBottomHealthBar.svg?fileID=7388822144124034973&amp;guid=8228a65266024406d96d7066d389ed2b&amp;type=3#HUDBottomHealthBar&quot;);"/>
+                        <ui:Label text="100" name="Health" class="health" style="margin-top: 0; margin-right: 0; margin-bottom: 0; margin-left: 0; padding-top: 0; padding-right: 0; padding-bottom: 0; padding-left: 0;"/>
+                    </ui:VisualElement>
+                </ui:VisualElement>
+                <ui:VisualElement name="MiddleContainer" class="middle-container">
+                    <ui:VisualElement name="ActiveContainer" class="active-container" style="flex-grow: 1;">
+                        <ui:VisualElement name="ActiveBox" class="active-box" style="background-image: url(&quot;project://database/Assets/UI/HUD/Textures/HUDBottomActiveBox.svg?fileID=7388822144124034973&amp;guid=3886abd073a8deaa999720963b732508&amp;type=3#HUDBottomActiveBox&quot;);"/>
+                        <ui:VisualElement name="EMP" class="emp" style="background-image: url(&quot;project://database/Assets/UI/HUD/Textures/HUDEMPIcon.svg?fileID=7388822144124034973&amp;guid=31629dde8abb17595af6b4ea50cd938f&amp;type=3#HUDEMPIcon&quot;);"/>
+                        <ui:VisualElement name="Overdrive" class="overdrive" style="background-image: url(&quot;project://database/Assets/UI/HUD/Textures/HUDOverdriveIcon.svg?fileID=7388822144124034973&amp;guid=fa494fcd268d044c885b781394e98670&amp;type=3#HUDOverdriveIcon&quot;);"/>
+                        <ui:VisualElement name="Amped" class="amped" style="background-image: url(&quot;project://database/Assets/UI/HUD/Textures/HUDAmpedIcon.svg?fileID=7388822144124034973&amp;guid=caaae70f050d25ee4a7ee3ccb6ad7f8e&amp;type=3#HUDAmpedIcon&quot;);"/>
+                        <ui:VisualElement name="Slow" class="slow" style="background-image: url(&quot;project://database/Assets/UI/HUD/Textures/HUDSlowIcon.svg?fileID=7388822144124034973&amp;guid=7e3214f75a7600db8bea721b3c4fef2f&amp;type=3#HUDSlowIcon&quot;);"/>
+                    </ui:VisualElement>
+                    <ui:VisualElement name="BottomMiddleBar" class="bottom-middle-bar"/>
+                </ui:VisualElement>
+                <ui:VisualElement name="RightContainer" class="right-container">
+                    <ui:Label text="PASSIVE" name="Passive" class="passive"/>
+                    <ui:VisualElement name="BottomRightBar" class="bottom-right-bar" style="flex-grow: 1; background-image: url(&quot;project://database/Assets/UI/HUD/Textures/HUDBottomRightBar.svg?fileID=7388822144124034973&amp;guid=44aa9030924197c7c9f8d57d0a313bcc&amp;type=3#HUDBottomRightBar&quot;); width: 316.35px; max-width: 316.35px; height: 3.044px; max-height: 3.044px; min-width: 316.35px; min-height: 3.044px; margin-top: 6.48px;"/>
+                    <ui:VisualElement name="AmmoContainer" class="ammo-container" style="flex-grow: 1;">
+                        <ui:Label text="30" name="Reserve" class="reserve" style="-unity-text-align: middle-left;"/>
+                        <ui:VisualElement name="Divider" class="divider"/>
+                        <ui:Label text="30" name="Magazine" class="magazine"/>
+                        <ui:Label text="TURRET" name="TurretType" class="turret-type"/>
+                    </ui:VisualElement>
+                </ui:VisualElement>
+            </ui:VisualElement>
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>

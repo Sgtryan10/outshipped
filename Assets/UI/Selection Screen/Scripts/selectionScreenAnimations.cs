@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.UIElements;
 using System.Threading.Tasks;
+using UnityEngine.SceneManagement;
 
 public class selectionScreenAnimations : MonoBehaviour
 {
@@ -99,5 +100,9 @@ public class selectionScreenAnimations : MonoBehaviour
             fadeOverlay.pickingMode = PickingMode.Position;
             fadeOverlay.AddToClassList("fade-overlay-active");
         }
+
+        await Task.Delay(1000);
+
+        SceneManager.LoadScene("InGame");
     }
 }
