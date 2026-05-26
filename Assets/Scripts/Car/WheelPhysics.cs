@@ -46,7 +46,7 @@ public class WheelPhysics : MonoBehaviour
         rb = GetComponentInParent<Rigidbody>();
         lastSpringLen = restLen;
 
-        drivable = LayerMask.GetMask("Drivable", "Floor");
+        drivable = LayerMask.GetMask("Ground", "Floor");
         if (drivable == 0)
             drivable = Physics.DefaultRaycastLayers;
     }
