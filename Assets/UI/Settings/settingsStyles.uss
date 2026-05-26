@@ -1,0 +1,375 @@
+:root {
+}
+
+.root {
+    align-items: center;
+    align-content: center;
+    justify-content: center;
+    align-self: center;
+    width: 100%;
+    height: 100%;
+}
+
+.background-image {
+    position: absolute;
+    justify-content: center;
+    align-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+}
+
+.settings-container {
+    width: 1745.072px;
+    max-width: 1745.072px;
+    height: 948.349px;
+    max-height: 948.349px;
+    align-self: center;
+    justify-content: center;
+    align-content: center;
+    align-items: center;
+}
+
+.settings {
+    width: 121.12px;
+    max-width: 121.12px;
+    height: 19.493px;
+    max-height: 19.493px;
+    margin-bottom: 32.13px;
+    min-width: 121.12px;
+    min-height: 19.493px;
+}
+
+.outline {
+    position: relative;
+    width: 1745.072px;
+    max-width: 1745.072px;
+    min-width: 1745.072px;
+    height: 896.727px;
+    min-height: 896.727px;
+    max-height: 896.727px;
+    justify-content: center;
+}
+
+.resolution-text-container {
+    width: 489.566px;
+    max-width: 489.566px;
+    height: 48.851px;
+    max-height: 48.851px;
+    padding-left: 62.87px;
+}
+
+.resolution {
+    width: 489.562px;
+    max-width: 489.562px;
+    height: 38.469px;
+    max-height: 38.469px;
+}
+
+.resolution-bar {
+    width: 489.562px;
+    max-width: 489.562px;
+    height: 4.707px;
+    max-height: 4.707px;
+    margin-top: 6.48px;
+    margin-bottom: 6.48px;
+}
+
+.resolution-container {
+    flex-direction: row;
+    width: 1619.334px;
+    max-width: 1619.334px;
+    height: 63.45px;
+    max-height: 63.45px;
+    margin-bottom: 105.17px;
+    padding-left: 62.87px;
+}
+
+.resolution-container Button,
+.quality-container Button,
+.misc-container Button {
+    border-width: 0;
+}
+
+.resolution-container Button:hover,
+.quality-container Button:hover,
+.misc-container Button:hover {
+    border-width: 4px;
+    border-color: rgb(255, 255, 255);
+}
+
+.resolution-container Button.selected,
+.quality-container Button.selected {
+    color: rgb(255,95,0);
+}
+
+.box-1024x576 {
+    width: 351.152px;
+    max-width: 351.152px;
+    height: 63.394px;
+    max-height: 63.394px;
+    margin-top: 0;
+    margin-right: 0;
+    margin-bottom: 0;
+    margin-left: 0;
+    padding-top: 0;
+    padding-right: 0;
+    padding-bottom: 0;
+    padding-left: 0;
+    font-size: 47.988px;
+    -unity-font-definition: url("project://database/Assets/Fonts/HankenGrotesk-ExtraBold.ttf?fileID=12800000&guid=90f6839f101d64b3b8bde266d43e186e&type=3#HankenGrotesk-ExtraBold");
+    -unity-background-image-tint-color: rgb(228, 255, 58);
+}
+
+.box-1280x720 {
+    width: 351.152px;
+    max-width: 351.152px;
+    height: 63.394px;
+    max-height: 63.394px;
+    margin-top: 0;
+    margin-right: 71.58px;
+    margin-bottom: 0;
+    margin-left: 71.58px;
+    padding-top: 0;
+    padding-right: 0;
+    padding-bottom: 0;
+    padding-left: 0;
+    font-size: 47.988px;
+    -unity-font-definition: url("project://database/Assets/Fonts/HankenGrotesk-ExtraBold.ttf?fileID=12800000&guid=90f6839f101d64b3b8bde266d43e186e&type=3#HankenGrotesk-ExtraBold");
+    -unity-background-image-tint-color: rgb(228, 255, 58);
+}
+
+.box-1536x864 {
+    height: 63.394px;
+    max-height: 63.394px;
+    width: 351.152px;
+    max-width: 351.152px;
+    margin-top: 0;
+    margin-right: 71.58px;
+    margin-bottom: 0;
+    margin-left: 0;
+    padding-top: 0;
+    padding-right: 0;
+    padding-bottom: 0;
+    padding-left: 0;
+    font-size: 47.988px;
+    -unity-font-definition: url("project://database/Assets/Fonts/HankenGrotesk-ExtraBold.ttf?fileID=12800000&guid=90f6839f101d64b3b8bde266d43e186e&type=3#HankenGrotesk-ExtraBold");
+    -unity-background-image-tint-color: rgb(228, 255, 58);
+}
+
+.box-1920x1080 {
+    height: 63.394px;
+    max-height: 63.394px;
+    width: 351.152px;
+    max-width: 351.152px;
+    margin-top: 0;
+    margin-right: 0;
+    margin-bottom: 0;
+    margin-left: 0;
+    padding-top: 0;
+    padding-right: 0;
+    padding-bottom: 0;
+    padding-left: 0;
+    font-size: 47.988px;
+    -unity-font-definition: url("project://database/Assets/Fonts/HankenGrotesk-ExtraBold.ttf?fileID=12800000&guid=90f6839f101d64b3b8bde266d43e186e&type=3#HankenGrotesk-ExtraBold");
+    -unity-background-image-tint-color: rgb(228, 255, 58);
+}
+
+.quality-text-container {
+    width: 337.559px;
+    max-width: 337.559px;
+    height: 49.624px;
+    max-height: 49.624px;
+    padding-left: 62.87px;
+}
+
+.quality {
+    width: 337.562px;
+    max-width: 337.562px;
+    height: 38.437px;
+    max-height: 38.437px;
+}
+
+.quality-bar {
+    margin-top: 6.48px;
+    margin-bottom: 6.48px;
+    width: 337.559px;
+    max-width: 337.559px;
+    height: 4.707px;
+    max-height: 4.707px;
+}
+
+.quality-container {
+    flex-direction: row;
+    flex-wrap: wrap;
+    padding-left: 62.87px;
+    max-height: 142.821px;
+}
+
+.very-low {
+    margin-top: 0;
+    margin-right: 282.94px;
+    margin-bottom: 16.03px;
+    margin-left: 0;
+    padding-top: 0;
+    padding-right: 0;
+    padding-bottom: 0;
+    padding-left: 0;
+    font-size: 47.988px;
+    -unity-font-definition: url("project://database/Assets/Fonts/HankenGrotesk-ExtraBold.ttf?fileID=12800000&guid=90f6839f101d64b3b8bde266d43e186e&type=3#HankenGrotesk-ExtraBold");
+    width: 351.152px;
+    max-width: 351.152px;
+    height: 63.394px;
+    max-height: 63.394px;
+    -unity-background-image-tint-color: rgb(228, 255, 58);
+}
+
+.low {
+    margin-top: 0;
+    margin-right: 282.94px;
+    margin-bottom: 16.03px;
+    margin-left: 0;
+    padding-top: 0;
+    padding-right: 0;
+    padding-bottom: 0;
+    padding-left: 0;
+    font-size: 47.988px;
+    -unity-font-definition: url("project://database/Assets/Fonts/HankenGrotesk-ExtraBold.ttf?fileID=12800000&guid=90f6839f101d64b3b8bde266d43e186e&type=3#HankenGrotesk-ExtraBold");
+    width: 351.152px;
+    max-width: 351.152px;
+    height: 63.394px;
+    max-height: 63.394px;
+    -unity-background-image-tint-color: rgb(228, 255, 58);
+}
+
+.medium {
+    margin-top: 0;
+    margin-right: 0;
+    margin-bottom: 0;
+    margin-left: 0;
+    padding-top: 0;
+    padding-right: 0;
+    padding-bottom: 0;
+    padding-left: 0;
+    font-size: 47.988px;
+    -unity-font-definition: url("project://database/Assets/Fonts/HankenGrotesk-ExtraBold.ttf?fileID=12800000&guid=90f6839f101d64b3b8bde266d43e186e&type=3#HankenGrotesk-ExtraBold");
+    width: 351.152px;
+    max-width: 351.152px;
+    height: 63.394px;
+    max-height: 63.394px;
+    -unity-background-image-tint-color: rgb(228, 255, 58);
+}
+
+.high {
+    margin-top: 0;
+    margin-right: 282.94px;
+    margin-bottom: 0;
+    margin-left: 0;
+    padding-top: 0;
+    padding-right: 0;
+    padding-bottom: 0;
+    padding-left: 0;
+    font-size: 47.988px;
+    -unity-font-definition: url("project://database/Assets/Fonts/HankenGrotesk-ExtraBold.ttf?fileID=12800000&guid=90f6839f101d64b3b8bde266d43e186e&type=3#HankenGrotesk-ExtraBold");
+    width: 351.152px;
+    max-width: 351.152px;
+    height: 63.394px;
+    max-height: 63.394px;
+    -unity-background-image-tint-color: rgb(228, 255, 58);
+}
+
+.very-high {
+    margin-top: 0;
+    margin-right: 282.94px;
+    margin-bottom: 0;
+    margin-left: 0;
+    padding-top: 0;
+    padding-right: 0;
+    padding-bottom: 0;
+    padding-left: 0;
+    font-size: 47.988px;
+    -unity-font-definition: url("project://database/Assets/Fonts/HankenGrotesk-ExtraBold.ttf?fileID=12800000&guid=90f6839f101d64b3b8bde266d43e186e&type=3#HankenGrotesk-ExtraBold");
+    width: 351.152px;
+    max-width: 351.152px;
+    height: 63.394px;
+    max-height: 63.394px;
+    -unity-background-image-tint-color: rgb(228, 255, 58);
+}
+
+.ultra {
+    margin-top: 0;
+    margin-right: 0;
+    margin-bottom: 0;
+    margin-left: 0;
+    padding-top: 0;
+    padding-right: 0;
+    padding-bottom: 0;
+    padding-left: 0;
+    font-size: 47.988px;
+    -unity-font-definition: url("project://database/Assets/Fonts/HankenGrotesk-ExtraBold.ttf?fileID=12800000&guid=90f6839f101d64b3b8bde266d43e186e&type=3#HankenGrotesk-ExtraBold");
+    width: 351.152px;
+    max-width: 351.152px;
+    height: 63.394px;
+    max-height: 63.394px;
+    -unity-background-image-tint-color: rgb(228, 255, 58);
+}
+
+.misc-container {
+    flex-direction: row;
+    justify-content: center;
+    width: 780.492px;
+    max-width: 780.492px;
+    height: 63.394px;
+    max-height: 63.394px;
+    align-items: center;
+    align-self: center;
+    position: relative;
+    align-content: flex-start;
+    margin-bottom: 0;
+    margin-top: 128.89px;
+}
+
+.apply {
+    width: 351.152px;
+    max-width: 351.152px;
+    height: 63.394px;
+    max-height: 63.394px;
+    margin-top: 0;
+    margin-right: 78.19px;
+    margin-bottom: 0;
+    margin-left: 0;
+    padding-top: 0;
+    padding-right: 0;
+    padding-bottom: 0;
+    padding-left: 0;
+    -unity-font-definition: url("project://database/Assets/Fonts/HankenGrotesk-ExtraBold.ttf?fileID=12800000&guid=90f6839f101d64b3b8bde266d43e186e&type=3#HankenGrotesk-ExtraBold");
+    font-size: 47.988px;
+    position: relative;
+    -unity-background-image-tint-color: rgb(255, 95, 0);
+}
+
+.back {
+    height: 63.394px;
+    max-height: 63.394px;
+    width: 351.152px;
+    max-width: 351.152px;
+    margin-top: 0;
+    margin-right: 0;
+    margin-bottom: 0;
+    margin-left: 0;
+    padding-top: 0;
+    padding-right: 0;
+    padding-bottom: 0;
+    padding-left: 0;
+    font-size: 47.988px;
+    -unity-font-definition: url("project://database/Assets/Fonts/HankenGrotesk-ExtraBold.ttf?fileID=12800000&guid=90f6839f101d64b3b8bde266d43e186e&type=3#HankenGrotesk-ExtraBold");
+    -unity-background-image-tint-color: rgb(255, 95, 0);
+}
+
+.apply:active {
+    color: rgb(255, 255, 255);
+}
+
+.back:active {
+    color: rgb(255, 255, 255);
+}

@@ -23,7 +23,7 @@ public class PreGameUIManager : MonoBehaviour
     private bool _hasTransitionedFromTitle = false;
     private bool _isTransitioning = false;
 
-    async void Start()
+    void Start()
     {
         if (titleScreen != null) titleScreen.SetActive(true);
         if (mainMenu != null) mainMenu.SetActive(false);
@@ -46,7 +46,11 @@ public class PreGameUIManager : MonoBehaviour
     {
         _hasTransitionedFromTitle = true;
         await TransitionEffect(titleScreen, mainMenu);
-        SetupMainMenuEvents();
+    }
+
+    public void ReturnToMainMenu(GameObject currentSubMenu)
+    {
+        _ = TransitionEffect(currentSubMenu, mainMenu);
     }
 
     private void SetupMainMenuEvents()
@@ -59,7 +63,6 @@ public class PreGameUIManager : MonoBehaviour
             if (btn != null)
             {
                 var targetMenu = mapping.menuGO;
-                // Bind the click to the transition
                 btn.clicked += () => _ = TransitionEffect(mainMenu, targetMenu);
             }
         }
@@ -76,6 +79,12 @@ public class PreGameUIManager : MonoBehaviour
         var fromRoot = fromPanelRoot.Q("Root") ?? fromPanelRoot;
 
         to.SetActive(true);
+
+        if (to == mainMenu)
+        {
+            SetupMainMenuEvents();
+        }
+
         var toPanelRoot = to.GetComponent<UIDocument>().rootVisualElement;
         var toRoot = toPanelRoot.Q("Root") ?? toPanelRoot;
         toRoot.RemoveFromClassList("fade-out");

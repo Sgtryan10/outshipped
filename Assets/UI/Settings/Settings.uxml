@@ -1,0 +1,37 @@
+<ui:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="project://database/Assets/UI/Settings/settingsStyles.uss"/>
+    <ui:VisualElement name="Root" class="root">
+        <ui:VisualElement name="BackgroundImage" class="background-image" style="flex-grow: 1; background-image: url(&quot;project://database/Assets/UI/Settings/Textures/settingsBackground.svg?fileID=7388822144124034973&amp;guid=9927d39f7d1053c84b5e310a41173592&amp;type=3#settingsBackground&quot;);"/>
+        <ui:VisualElement name="SettingsContainer" class="settings-container" style="flex-grow: 1;">
+            <ui:VisualElement name="Settings" class="settings" style="background-image: url(&quot;project://database/Assets/UI/Settings/Textures/settingsSettings.svg?fileID=7388822144124034973&amp;guid=f44e8c8f4323a84768f47b76063c7b01&amp;type=3#settingsSettings&quot;);"/>
+            <ui:VisualElement name="Outline" class="outline" style="flex-grow: 1; background-image: url(&quot;project://database/Assets/UI/Settings/Textures/settingsOutline.svg?fileID=7388822144124034973&amp;guid=d5cfdd6156f25b52ebda34e072fce010&amp;type=3#settingsOutline&quot;);">
+                <ui:VisualElement name="ResolutionTextContainer" class="resolution-text-container" style="flex-grow: 1;">
+                    <ui:VisualElement name="Resolution" class="resolution" style="flex-grow: 1; background-image: url(&quot;project://database/Assets/UI/Settings/Textures/settingsResolution.svg?fileID=7388822144124034973&amp;guid=f4d57f4b30751dcbc9329384f57c80ef&amp;type=3#settingsResolution&quot;);"/>
+                    <ui:VisualElement name="ResolutionBar" class="resolution-bar" style="flex-grow: 1; background-image: url(&quot;project://database/Assets/UI/Settings/Textures/settingsResolutionBar.svg?fileID=7388822144124034973&amp;guid=4f0eb10fbb8d446cca620e740b32a6ff&amp;type=3#settingsResolutionBar&quot;);"/>
+                </ui:VisualElement>
+                <ui:VisualElement name="ResolutionContainer" class="resolution-container" style="flex-grow: 1;">
+                    <ui:Button text="1024x576" name="1024x576" class="box-1024x576" style="background-image: url(&quot;project://database/Assets/UI/Settings/Textures/settingsButtonBox.svg?fileID=7388822144124034973&amp;guid=3510e55f82e178a6faf7cec965e39a32&amp;type=3#settingsButtonBox&quot;);"/>
+                    <ui:Button text="1280x720" name="1280x720" class="box-1280x720" style="background-image: url(&quot;project://database/Assets/UI/Settings/Textures/settingsButtonBox.svg?fileID=7388822144124034973&amp;guid=3510e55f82e178a6faf7cec965e39a32&amp;type=3#settingsButtonBox&quot;);"/>
+                    <ui:Button text="1536x864" name="1536x864" class="box-1536x864" style="background-image: url(&quot;project://database/Assets/UI/Settings/Textures/settingsButtonBox.svg?fileID=7388822144124034973&amp;guid=3510e55f82e178a6faf7cec965e39a32&amp;type=3#settingsButtonBox&quot;);"/>
+                    <ui:Button text="1920x1080" name="1920x1080" class="box-1920x1080" style="background-image: url(&quot;project://database/Assets/UI/Settings/Textures/settingsButtonBox.svg?fileID=7388822144124034973&amp;guid=3510e55f82e178a6faf7cec965e39a32&amp;type=3#settingsButtonBox&quot;);"/>
+                </ui:VisualElement>
+                <ui:VisualElement name="QualityTextContainer" class="quality-text-container" style="flex-grow: 1;">
+                    <ui:VisualElement name="Quality" class="quality" style="flex-grow: 1; background-image: url(&quot;project://database/Assets/UI/Settings/Textures/settingsQuality.svg?fileID=7388822144124034973&amp;guid=fabf7ce9fd25585deb3a9c54e860eef9&amp;type=3#settingsQuality&quot;);"/>
+                    <ui:VisualElement name="QualityBar" class="quality-bar" style="flex-grow: 1; background-image: url(&quot;project://database/Assets/UI/Settings/Textures/settingsQualityBar.svg?fileID=7388822144124034973&amp;guid=f5c855e30e239b1cabfa769ceaa12562&amp;type=3#settingsQualityBar&quot;);"/>
+                </ui:VisualElement>
+                <ui:VisualElement name="QualityContainer" class="quality-container" style="flex-grow: 1;">
+                    <ui:Button text="VERY LOW" name="VeryLow" class="very-low" style="background-image: url(&quot;project://database/Assets/UI/Settings/Textures/settingsButtonBox.svg?fileID=7388822144124034973&amp;guid=3510e55f82e178a6faf7cec965e39a32&amp;type=3#settingsButtonBox&quot;);"/>
+                    <ui:Button text="LOW" name="Low" class="low" style="background-image: url(&quot;project://database/Assets/UI/Settings/Textures/settingsButtonBox.svg?fileID=7388822144124034973&amp;guid=3510e55f82e178a6faf7cec965e39a32&amp;type=3#settingsButtonBox&quot;);"/>
+                    <ui:Button text="MEDIUM" name="Medium" class="medium" style="background-image: url(&quot;project://database/Assets/UI/Settings/Textures/settingsButtonBox.svg?fileID=7388822144124034973&amp;guid=3510e55f82e178a6faf7cec965e39a32&amp;type=3#settingsButtonBox&quot;);"/>
+                    <ui:Button text="HIGH" name="High" class="high" style="background-image: url(&quot;project://database/Assets/UI/Settings/Textures/settingsButtonBox.svg?fileID=7388822144124034973&amp;guid=3510e55f82e178a6faf7cec965e39a32&amp;type=3#settingsButtonBox&quot;);"/>
+                    <ui:Button text="VERY HIGH" name="VeryHigh" class="very-high" style="background-image: url(&quot;project://database/Assets/UI/Settings/Textures/settingsButtonBox.svg?fileID=7388822144124034973&amp;guid=3510e55f82e178a6faf7cec965e39a32&amp;type=3#settingsButtonBox&quot;);"/>
+                    <ui:Button text="ULTRA" name="Ultra" class="ultra" style="background-image: url(&quot;project://database/Assets/UI/Settings/Textures/settingsButtonBox.svg?fileID=7388822144124034973&amp;guid=3510e55f82e178a6faf7cec965e39a32&amp;type=3#settingsButtonBox&quot;);"/>
+                </ui:VisualElement>
+                <ui:VisualElement name="MiscContainer" class="misc-container" style="flex-grow: 1;">
+                    <ui:Button text="APPLY" class="apply" style="background-image: url(&quot;project://database/Assets/UI/Settings/Textures/settingsButtonBox.svg?fileID=7388822144124034973&amp;guid=3510e55f82e178a6faf7cec965e39a32&amp;type=3#settingsButtonBox&quot;);"/>
+                    <ui:Button text="BACK" class="back" style="background-image: url(&quot;project://database/Assets/UI/Settings/Textures/settingsButtonBox.svg?fileID=7388822144124034973&amp;guid=3510e55f82e178a6faf7cec965e39a32&amp;type=3#settingsButtonBox&quot;);"/>
+                </ui:VisualElement>
+            </ui:VisualElement>
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>

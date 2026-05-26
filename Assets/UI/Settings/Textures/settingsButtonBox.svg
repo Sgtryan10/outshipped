@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="351.15201"
+   height="63.394001"
+   viewBox="0 0 92.908967 16.772996"
+   version="1.1"
+   id="svg1"
+   sodipodi:docname="settingsButtonBox.svg"
+   inkscape:version="1.4.2 (ebf0e940d0, 2025-05-08)"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview1"
+     pagecolor="#ffffff"
+     bordercolor="#000000"
+     borderopacity="0.25"
+     inkscape:showpageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1"
+     inkscape:zoom="0.72592593"
+     inkscape:cx="114.33673"
+     inkscape:cy="235.56122"
+     inkscape:window-width="1920"
+     inkscape:window-height="1002"
+     inkscape:window-x="0"
+     inkscape:window-y="0"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="svg1" />
+  <defs
+     id="defs1">
+    <linearGradient
+       id="swatch2">
+      <stop
+         style="stop-color:#000000;stop-opacity:1;"
+         offset="0"
+         id="stop2" />
+    </linearGradient>
+  </defs>
+  <g
+     id="layer1"
+     transform="translate(-39.775543,-162.60846)"
+     style="fill:#ffffff">
+    <g
+       id="g5-0"
+       transform="translate(-214.22441,19.59103)"
+       style="fill:#ffffff">
+      <rect
+         style="font-variation-settings:'wght' 800;fill:#ffffff;fill-opacity:1;stroke-width:2.23051;paint-order:markers fill stroke"
+         id="rect1-6-4-5"
+         width="92.908875"
+         height="16.772972"
+         x="254"
+         y="143.01744" />
+    </g>
+  </g>
+</svg>
