@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.UIElements;
 using System.Threading;
 using System.Threading.Tasks;
+using UnityEngine.SceneManagement;
 
 [ExecuteAlways]
 [RequireComponent(typeof(UIDocument))]
@@ -19,6 +20,8 @@ public class HudController : MonoBehaviour
     private HUDPackagesModule packagesModule;
     private HUDActiveAbilityModule activeAbilityModule;
     private HUDPopupModule popupModule;
+
+    private VisualElement screenFadeOverlay;
 
     [Header("Editor Testing")]
     public int testMaxHealth = 100;
@@ -153,6 +156,8 @@ public class HudController : MonoBehaviour
 
         var visualRoot = uiDoc.rootVisualElement.Q<VisualElement>("Root");
         if (visualRoot == null) return;
+
+        screenFadeOverlay = visualRoot.Q<VisualElement>("ScreenFadeOverlay");
 
         healthModule = new HUDHealthModule(visualRoot.Q<VisualElement>("HealthContainer"));
         ammoModule = new HUDAmmoModule(visualRoot.Q<VisualElement>("AmmoContainer"));
@@ -291,5 +296,28 @@ public class HudController : MonoBehaviour
 
         CancelActivePopupTimer();
         popupModule?.Hide();
+    }
+
+    // Game End Transition Call
+    public async void GameEndTransition()
+    {
+        if (!Application.isPlaying) return;
+
+        if (root != null)
+        {
+            root.AddToClassList("hud-hidden");
+        }
+
+        if (screenFadeOverlay != null)
+        {
+            screenFadeOverlay.AddToClassList("fade-black");
+        }
+
+        await Task.Delay(600);
+
+        if (this == null) return;
+
+        scoreManager.finalScoreNumerical = 100001; // TESTING - CHANGE SO THIS ACTUALLY REFLECTS REAL VALUE
+        SceneManager.LoadScene("PostGame");
     }
 }

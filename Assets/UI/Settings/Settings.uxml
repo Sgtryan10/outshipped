@@ -1,6 +1,6 @@
 <ui:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
     <Style src="project://database/Assets/UI/Settings/settingsStyles.uss"/>
-    <ui:VisualElement name="Root" class="root">
+    <ui:VisualElement name="Root" class="root fade-out">
         <ui:VisualElement name="BackgroundImage" class="background-image" style="flex-grow: 1; background-image: url(&quot;project://database/Assets/UI/Settings/Textures/settingsBackground.svg?fileID=7388822144124034973&amp;guid=9927d39f7d1053c84b5e310a41173592&amp;type=3#settingsBackground&quot;);"/>
         <ui:VisualElement name="SettingsContainer" class="settings-container" style="flex-grow: 1;">
             <ui:VisualElement name="Settings" class="settings" style="background-image: url(&quot;project://database/Assets/UI/Settings/Textures/settingsSettings.svg?fileID=7388822144124034973&amp;guid=f44e8c8f4323a84768f47b76063c7b01&amp;type=3#settingsSettings&quot;);"/>
