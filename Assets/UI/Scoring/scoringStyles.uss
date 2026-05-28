@@ -1,0 +1,132 @@
+:root {
+}
+
+.root {
+}
+
+.background-image {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    max-width: 100%;
+    max-height: 100%;
+}
+
+.top-bar {
+    height: 108px;
+    width: 1920px;
+    transform-origin: top;
+    justify-content: center;
+}
+
+.top-bar-reveal {
+    height: 0;
+    transition: height 0.25s ease-out-sine;
+}
+
+.top-bar-expanded {
+    height: 108px;
+}
+
+.bottom-bar {
+    width: 1920px;
+    height: 108px;
+    transform-origin: bottom;
+}
+
+.bottom-bar-reveal {
+    height: 0;
+    transition: height 0.25s ease-out-sine;
+}
+
+.bottom-bar-expanded {
+    height: 108px;
+}
+
+.scoring-text-box {
+    width: 273.651px;
+    height: 46.784px;
+    position: absolute;
+    transform-origin: right;
+    margin-left: 40.96px;
+}
+
+.scoring-text-box-reveal {
+    width: 0;
+    transition: width 0.25s ease-out-sine, scale 0.25s ease-in-sine;
+}
+
+.scoring-text-box-expanded {
+    width: 273.651px;
+}
+
+.scoring-text-box-retracted {
+    scale: 0 1;
+}
+
+.scoring-text {
+    width: 273.651px;
+    height: 46.784px;
+    position: relative;
+    margin-left: 40.96px;
+}
+
+.text-hidden {
+    visibility: hidden;
+}
+
+.text-visible {
+    visibility: visible;
+}
+
+.scoring-container {
+    height: 864px;
+    width: 1920px;
+    max-width: 1920px;
+    min-width: 1920px;
+    min-height: 864px;
+    max-height: 864px;
+    justify-content: center;
+    align-items: flex-end;
+    flex-direction: row;
+}
+
+.scoring-score-container {
+    flex-direction: column;
+    justify-content: center;
+    align-self: center;
+    align-content: center;
+    align-items: center;
+    flex-grow: 1;
+}
+
+.score-letter {
+    align-items: center;
+    align-self: center;
+    justify-content: center;
+    align-content: center;
+}
+
+.score-numerical {
+    margin-top: 0;
+    margin-right: 0;
+    margin-bottom: 0;
+    margin-left: 0;
+    padding-top: 0;
+    padding-right: 0;
+    padding-bottom: 0;
+    padding-left: 0;
+    font-size: 191.952px;
+    -unity-font-definition: url("project://database/Assets/Fonts/HankenGrotesk-Regular.ttf?fileID=12800000&guid=d959e79476063c84b887521121e22a45&type=3#HankenGrotesk-Regular");
+    color: rgb(236, 236, 236);
+}
+
+.scoring-box {
+    width: 788.345px;
+    max-width: 788.345px;
+    height: 810.202px;
+    max-height: 810.202px;
+    margin-right: 85.83px;
+    justify-content: flex-start;
+    align-self: center;
+}

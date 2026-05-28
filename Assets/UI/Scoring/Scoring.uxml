@@ -1,0 +1,18 @@
+<ui:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="project://database/Assets/UI/Scoring/scoringStyles.uss?fileID=7433441132597879392&amp;guid=1327b3e6fb8f2660e9a4ff7f69574ca9&amp;type=3#scoringStyles"/>
+    <ui:VisualElement name="Root" class="root" style="flex-grow: 1;">
+        <ui:VisualElement name="BackgroundImage" class="background-image" style="flex-grow: 1; background-image: url(&quot;project://database/Assets/UI/Scoring/Textures/scoringBackground.svg?fileID=7388822144124034973&amp;guid=45764ee7bb785f44e9556af86e7178bb&amp;type=3#scoringBackground&quot;);"/>
+        <ui:VisualElement name="TopBar" class="top-bar top-bar-reveal" style="background-image: url(&quot;project://database/Assets/UI/Scoring/Textures/scoringTopBar.svg?fileID=7388822144124034973&amp;guid=d4ea55bcb483acf6e9563da2dda81408&amp;type=3#scoringTopBar&quot;);">
+            <ui:VisualElement name="ScoringText" class="scoring-text text-hidden" style="background-image: url(&quot;project://database/Assets/UI/Scoring/Textures/scoringScoring.svg?fileID=7388822144124034973&amp;guid=0faf63d0096f173f8b3fbdd3ffb4f798&amp;type=3#scoringScoring&quot;);"/>
+            <ui:VisualElement name="ScoringTextBox" class="scoring-text-box scoring-text-box-reveal" style="background-image: url(&quot;project://database/Assets/UI/Scoring/Textures/scoringScoringTextBox.svg?fileID=7388822144124034973&amp;guid=a51c42338d47d9f40ac0d3dabca8e6ed&amp;type=3#scoringScoringTextBox&quot;);"/>
+        </ui:VisualElement>
+        <ui:VisualElement name="ScoringContainer" class="scoring-container" style="flex-grow: 1;">
+            <ui:VisualElement name="ScoringScoreContainer" class="scoring-score-container" style="flex-grow: 1;">
+                <ui:VisualElement name="ScoreLetter" class="score-letter" style="flex-grow: 1; background-image: url(&quot;project://database/Assets/UI/Scoring/Textures/scoringRankS.svg?fileID=7388822144124034973&amp;guid=4cb720efdc57fe9e1b3a784bf297323e&amp;type=3#scoringRankS&quot;); width: 421.594px; height: 346.219px; min-width: 421.594px; max-width: 421.594px; max-height: 346.219px; min-height: 346.219px;"/>
+                <ui:Label text="123456789" name="ScoreNumerical" class="score-numerical"/>
+            </ui:VisualElement>
+            <ui:VisualElement name="ScoringBox" class="scoring-box" style="flex-grow: 1; background-image: url(&quot;project://database/Assets/UI/Scoring/Textures/scoringScoringBox.svg?fileID=7388822144124034973&amp;guid=13e95a2b11de82fd8b8e5f0293593d2f&amp;type=3#scoringScoringBox&quot;);"/>
+        </ui:VisualElement>
+        <ui:VisualElement name="BottomBar" class="bottom-bar bottom-bar-reveal" style="background-image: url(&quot;project://database/Assets/UI/Scoring/Textures/scoringBottomBar.svg?fileID=7388822144124034973&amp;guid=31d18b802742a9f29b7b9d303d73ea5c&amp;type=3#scoringBottomBar&quot;);"/>
+    </ui:VisualElement>
+</ui:UXML>

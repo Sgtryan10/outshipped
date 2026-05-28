@@ -450,3 +450,17 @@
     padding-bottom: 0;
     padding-left: 0;
 }
+
+.screen-fade-overlay {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-color: black;
+    opacity: 0;
+    transition-property: opacity;
+    transition-duration: 0.5s;
+}
+
+.screen-fade-overlay.fade-black {
+    opacity: 1;
+}
