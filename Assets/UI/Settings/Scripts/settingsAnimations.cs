@@ -14,7 +14,7 @@ public class settingsAnimations : MonoBehaviour
 
     void OnEnable()
     {
-        _uiManager = Object.FindFirstObjectByType<PreGameUIManager>();
+        _uiManager = Object.FindAnyObjectByType<PreGameUIManager>();
 
         var uiDoc = GetComponent<UIDocument>();
         var root = uiDoc.rootVisualElement;
@@ -164,10 +164,6 @@ public class settingsAnimations : MonoBehaviour
         if (_uiManager != null)
         {
             _uiManager.ReturnToMainMenu(this.gameObject);
-        }
-        else
-        {
-            Debug.LogError("PreGameUIManager could not be found in the scene layout!");
         }
     }
 }

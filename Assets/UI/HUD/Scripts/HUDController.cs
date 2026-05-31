@@ -317,7 +317,13 @@ public class HudController : MonoBehaviour
 
         if (this == null) return;
 
-        scoreManager.finalScoreNumerical = 100001; // TESTING - CHANGE SO THIS ACTUALLY REFLECTS REAL VALUE
+        // TESTING - CHANGE SO THESE ACTUALLY REFLECTS REAL VALUES
+        scoreManager.finalScoreNumerical = 100001;
+        scoreManager.packagesDelivered = 42;
+        scoreManager.enemiesDestroyed = 117;
+        scoreManager.activeAbilitiesUsed = 9;
+        scoreManager.timeSurvivedSeconds = 385f;
+
         SceneManager.LoadScene("PostGame");
     }
 }

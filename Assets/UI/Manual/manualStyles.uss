@@ -2,7 +2,183 @@
 }
 
 .root {
+    width: 100%;
+    height: 100%;
+    transition-property: opacity;
+    transition-duration: 0.75s;
+    transition-timing-function: ease-in-out;
+}
+
+.root.fade-out {
+    opacity: 0;
 }
 
 .background-image {
+    position: absolute;
+    width: 1920px;
+    height: 1080px;
+    max-width: 1920px;
+    max-height: 1080px;
+}
+
+.manual-container {
+    align-items: center;
+}
+
+.manual {
+    width: 106.528px;
+    max-width: 106.528px;
+    height: 19.04px;
+    max-height: 19.04px;
+    margin-top: 66.28px;
+    margin-bottom: 32.13px;
+}
+
+.outline {
+    width: 1745.072px;
+    max-width: 1745.072px;
+    height: 896.727px;
+    max-height: 896.727px;
+}
+
+.manual-tabs {
+    margin-top: 32.13px;
+    align-self: center;
+    background-image: none;
+    width: 727.744px;
+    max-width: 727.744px;
+    min-width: 727.744px;
+    height: 63.394px;
+    min-height: 63.394px;
+    max-height: 63.394px;
+}
+
+.unity-tab-view__header-container {
+    min-width: 727.744px;
+    max-height: 63.394px;
+    justify-content: space-evenly;
+}
+
+.unity-tab__header {
+    background-color: rgb(228, 255, 58);
+    -unity-font-definition: url("project://database/Assets/Fonts/HankenGrotesk-ExtraBold.ttf?fileID=12800000&guid=90f6839f101d64b3b8bde266d43e186e&type=3#HankenGrotesk-ExtraBold");
+    font-size: 47.988px;
+    color: rgb(58, 58, 58);
+    width: 351.152px;
+    max-width: 351.152px;
+    min-width: 351.152px;
+    height: 63.394px;
+    min-height: 63.394px;
+    max-height: 63.394px;
+    padding-left: 0;
+    padding-right: 0;
+    justify-content: center;
+}
+
+.unity-tab__header-label {
+    margin: 0;
+}
+
+.unity-tab__header:checked {
+    color: rgb(255, 95, 0);
+}
+
+.unity-repeat-button {
+    opacity: 0;
+}
+
+.tab-content {
+    background-color: rgb(58, 58, 58);
+    font-size: 20px;
+    margin-top: 0;
+    margin-right: 0;
+    margin-bottom: 0;
+    margin-left: 0;
+    padding-top: 0;
+    padding-right: 0;
+    padding-bottom: 0;
+    padding-left: 0;
+}
+
+.unity-tab__header-underline {
+    opacity: 0;
+}
+
+.mission {
+    height: 626.034px;
+    width: 1698.399px;
+    min-width: 1698.399px;
+    max-width: 1698.399px;
+    min-height: 626.034px;
+    max-height: 626.034px;
+    align-self: center;
+    margin-top: 76.78px;
+}
+
+.scoring {
+    align-self: center;
+    width: 1446.177px;
+    max-width: 1446.177px;
+    min-width: 1446.177px;
+    height: 689.23px;
+    min-height: 689.23px;
+    max-height: 689.23px;
+    margin-top: 42.18px;
+    -unity-background-scale-mode: scale-to-fit;
+}
+
+.main-menu {
+    margin-top: 0;
+    margin-right: 0;
+    margin-bottom: 0;
+    margin-left: 0;
+    padding-top: 0;
+    padding-right: 0;
+    padding-bottom: 0;
+    padding-left: 0;
+    border-top-width: 0;
+    border-right-width: 0;
+    border-bottom-width: 0;
+    border-left-width: 0;
+    width: 351.152px;
+    max-width: 351.152px;
+    min-width: 351.152px;
+    height: 63.394px;
+    min-height: 63.394px;
+    max-height: 63.394px;
+    position: absolute;
+    align-self: center;
+    justify-content: flex-start;
+    align-items: stretch;
+    font-size: 47.988px;
+    -unity-font-definition: url("project://database/Assets/Fonts/HankenGrotesk-ExtraBold.ttf?fileID=12800000&guid=90f6839f101d64b3b8bde266d43e186e&type=3#HankenGrotesk-ExtraBold");
+    bottom: 34.13px;
+    color: rgb(236, 236, 236);
+}
+
+.main-menu:active {
+    color: rgb(58, 58, 58);
+}
+
+.main-menu:hover {
+    border-width: 4px;
+    border-color: rgb(255, 255, 255);
+}
+
+.screen-fader {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-color: rgb(0, 0, 0);
+    transition: opacity 0.6s ease-in-out;
+}
+
+.fader-hidden {
+    opacity: 0;
+    display: none;
+}
+
+.fader-visible {
+    opacity: 1;
+    display: flex;
 }
