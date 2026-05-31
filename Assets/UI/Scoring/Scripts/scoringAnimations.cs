@@ -25,12 +25,7 @@ public class scoringAnimations : MonoBehaviour
 
     async void OnEnable()
     {
-        // TEMPORARY MOCK DATA FOR TESTING
-        scoreManager.finalScoreNumerical = 100001;
-        scoreManager.packagesDelivered = 42;
-        scoreManager.enemiesDestroyed = 117;
-        scoreManager.activeAbilitiesUsed = 9;
-        scoreManager.timeSurvivedSeconds = 385f;
+        scoreManager.calculateFinalScore();
 
         var root = GetComponent<UIDocument>().rootVisualElement;
 

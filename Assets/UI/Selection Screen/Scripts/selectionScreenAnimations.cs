@@ -3,12 +3,28 @@ using UnityEngine.UIElements;
 using System.Threading.Tasks;
 using UnityEngine.SceneManagement;
 
+public static class GameSelection
+{
+    public static string SelectedCourier { get; set; } = "WORKHORSE";
+    public static string SelectedPassive { get; set; } = "HEAL ON DELIVERY";
+    public static int SelectedMagazine { get; set; } = 30;
+    public static int SelectedReserve { get; set; } = 30;
+    public static string SelectedTurretType { get; set; } = "AUTOMATIC";
+    public static float SelectedFireRate { get; set; } = 0.2f;
+    public static float SelectedReloadTime { get; set; } = 1.5f;
+}
+
 public class selectionScreenAnimations : MonoBehaviour
 {
     private VisualElement[] columns;
     private VisualElement topBar;
     private VisualElement bottomBar;
     private VisualElement fadeOverlay;
+
+    private VisualElement workhorse;
+    private VisualElement cruiser;
+    private VisualElement freighter;
+    private VisualElement monarch;
 
     async void OnEnable()
     {
@@ -44,10 +60,10 @@ public class selectionScreenAnimations : MonoBehaviour
 
         await Task.Delay(200);
 
-        var workhorse = root.Q<VisualElement>("WorkhorseContainer");
-        var cruiser = root.Q<VisualElement>("CruiserContainer");
-        var freighter = root.Q<VisualElement>("FreighterContainer");
-        var monarch = root.Q<VisualElement>("MonarchContainer");
+        workhorse = root.Q<VisualElement>("WorkhorseContainer");
+        cruiser = root.Q<VisualElement>("CruiserContainer");
+        freighter = root.Q<VisualElement>("FreighterContainer");
+        monarch = root.Q<VisualElement>("MonarchContainer");
 
         workhorse.RemoveFromClassList("column-hidden");
         await Task.Delay(200);
@@ -73,6 +89,47 @@ public class selectionScreenAnimations : MonoBehaviour
         VisualElement clickedColumn = evt.currentTarget as VisualElement;
 
         if (clickedColumn == null) return;
+
+        if (clickedColumn == workhorse)
+        {
+            GameSelection.SelectedCourier = "WORKHORSE";
+            GameSelection.SelectedPassive = "HEAL ON DELIVERY";
+            GameSelection.SelectedMagazine = 30;
+            GameSelection.SelectedReserve = 30;
+            GameSelection.SelectedTurretType = "AUTOMATIC";
+            GameSelection.SelectedFireRate = 0.2f;
+            GameSelection.SelectedReloadTime = 1.5f;
+        }
+        else if (clickedColumn == cruiser)
+        {
+            GameSelection.SelectedCourier = "CRUISER";
+            GameSelection.SelectedPassive = "LIFESTEAL ON KILL";
+            GameSelection.SelectedMagazine = 10;
+            GameSelection.SelectedReserve = 10;
+            GameSelection.SelectedTurretType = "BUCKSHOT";
+            GameSelection.SelectedFireRate = 0.6f;
+            GameSelection.SelectedReloadTime = 2.0f;
+        }
+        else if (clickedColumn == freighter)
+        {
+            GameSelection.SelectedCourier = "FREIGHTER";
+            GameSelection.SelectedPassive = "DELIVERY DUPLICATION";
+            GameSelection.SelectedMagazine = 5;
+            GameSelection.SelectedReserve = 5;
+            GameSelection.SelectedTurretType = "PIERCING";
+            GameSelection.SelectedFireRate = 1.0f;
+            GameSelection.SelectedReloadTime = 3.0f;
+        }
+        else if (clickedColumn == monarch)
+        {
+            GameSelection.SelectedCourier = "MONARCH";
+            GameSelection.SelectedPassive = "XP MULTIPLIER";
+            GameSelection.SelectedMagazine = 45;
+            GameSelection.SelectedReserve = 45;
+            GameSelection.SelectedTurretType = "RAPID-FIRE";
+            GameSelection.SelectedFireRate = 0.08f;
+            GameSelection.SelectedReloadTime = 1.2f;
+        }
 
         clickedColumn.parent?.RemoveFromClassList("allow-hover");
 
