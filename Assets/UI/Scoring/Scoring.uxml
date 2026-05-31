@@ -11,8 +11,20 @@
                 <ui:VisualElement name="ScoreLetter" class="score-letter" style="flex-grow: 1; background-image: url(&quot;project://database/Assets/UI/Scoring/Textures/scoringRankS.svg?fileID=7388822144124034973&amp;guid=4cb720efdc57fe9e1b3a784bf297323e&amp;type=3#scoringRankS&quot;); width: 421.594px; height: 346.219px; min-width: 421.594px; max-width: 421.594px; max-height: 346.219px; min-height: 346.219px;"/>
                 <ui:Label text="123456789" name="ScoreNumerical" class="score-numerical"/>
             </ui:VisualElement>
-            <ui:VisualElement name="ScoringBox" class="scoring-box" style="flex-grow: 1; background-image: url(&quot;project://database/Assets/UI/Scoring/Textures/scoringScoringBox.svg?fileID=7388822144124034973&amp;guid=13e95a2b11de82fd8b8e5f0293593d2f&amp;type=3#scoringScoringBox&quot;);"/>
+            <ui:VisualElement name="ScoringBoxContainer" class="scoring-box-container" style="flex-grow: 1; background-image: url(&quot;project://database/Assets/UI/Scoring/Textures/scoringScoringBox.svg?fileID=7388822144124034973&amp;guid=13e95a2b11de82fd8b8e5f0293593d2f&amp;type=3#scoringScoringBox&quot;);">
+                <ui:VisualElement name="PackagesDeliveredLabel" class="packages-delivered-label" style="background-image: url(&quot;project://database/Assets/UI/Scoring/Textures/scoringPackagesDeliveredLabel.svg?fileID=7388822144124034973&amp;guid=aae9b552bb5d4fd989dbfa551386eebd&amp;type=3#scoringPackagesDeliveredLabel&quot;);"/>
+                <ui:Label text="123456789" name="PackagesDelivered" class="packages-delivered"/>
+                <ui:VisualElement name="EnemiesDestroyedLabel" class="enemies-destroyed-label" style="background-image: url(&quot;project://database/Assets/UI/Scoring/Textures/scoringEnemiesDestroyedLabel.svg?fileID=7388822144124034973&amp;guid=b9cc486d2e8405a35b0449a6c807b45d&amp;type=3#scoringEnemiesDestroyedLabel&quot;);"/>
+                <ui:Label text="123456789" name="EnemiesDestroyed" class="enemies-destroyed"/>
+                <ui:VisualElement name="ActiveAbilitiesUsedLabel" class="active-abilities-used-label" style="background-image: url(&quot;project://database/Assets/UI/Scoring/Textures/scoringActiveAbilitiesUsedLabel.svg?fileID=7388822144124034973&amp;guid=864ca90ef0ed8caa68baac5067deb00e&amp;type=3#scoringActiveAbilitiesUsedLabel&quot;);"/>
+                <ui:Label text="123456789" name="ActiveAbilitiesUsed" class="active-abilities-used"/>
+                <ui:VisualElement name="TimeSurvivedLabel" class="time-survived-label" style="background-image: url(&quot;project://database/Assets/UI/Scoring/Textures/scoringTimeSurvivedLabel.svg?fileID=7388822144124034973&amp;guid=82319b229c34bd9179a74b1307333b99&amp;type=3#scoringTimeSurvivedLabel&quot;);"/>
+                <ui:Label text="00:00" name="TimeSurvived" class="time-survived"/>
+            </ui:VisualElement>
         </ui:VisualElement>
-        <ui:VisualElement name="BottomBar" class="bottom-bar bottom-bar-reveal" style="background-image: url(&quot;project://database/Assets/UI/Scoring/Textures/scoringBottomBar.svg?fileID=7388822144124034973&amp;guid=31d18b802742a9f29b7b9d303d73ea5c&amp;type=3#scoringBottomBar&quot;);"/>
+        <ui:VisualElement name="BottomBar" class="bottom-bar bottom-bar-reveal" style="background-image: url(&quot;project://database/Assets/UI/Scoring/Textures/scoringBottomBar.svg?fileID=7388822144124034973&amp;guid=31d18b802742a9f29b7b9d303d73ea5c&amp;type=3#scoringBottomBar&quot;);">
+            <ui:Button text="MAIN MENU" name="MainMenu" class="main-menu" style="font-size: 47.988px; -unity-font-definition: url(&quot;project://database/Assets/Fonts/HankenGrotesk-ExtraBold.ttf?fileID=12800000&amp;guid=90f6839f101d64b3b8bde266d43e186e&amp;type=3#HankenGrotesk-ExtraBold&quot;);"/>
+        </ui:VisualElement>
+        <ui:VisualElement name="ScreenFader" class="screen-fader fader-hidden" picking-mode="Ignore" />
     </ui:VisualElement>
 </ui:UXML>

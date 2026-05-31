@@ -23,7 +23,9 @@ public class PreGameUIManager : MonoBehaviour
     private bool _hasTransitionedFromTitle = false;
     private bool _isTransitioning = false;
 
-    void Start()
+    private bool _mainMenuEventsSetup = false;
+
+    async void Start()
     {
         if (titleScreen != null) titleScreen.SetActive(true);
         if (mainMenu != null) mainMenu.SetActive(false);
@@ -32,6 +34,8 @@ public class PreGameUIManager : MonoBehaviour
         {
             if (map.menuGO != null) map.menuGO.SetActive(false);
         }
+
+        await Task.Yield();
     }
 
     public void OnSubmit(InputValue value)
@@ -55,7 +59,13 @@ public class PreGameUIManager : MonoBehaviour
 
     private void SetupMainMenuEvents()
     {
-        var root = mainMenu.GetComponent<UIDocument>().rootVisualElement;
+        if (_mainMenuEventsSetup) return;
+
+        var uiDoc = mainMenu.GetComponent<UIDocument>();
+        if (uiDoc == null) return;
+
+        var root = uiDoc.rootVisualElement;
+        if (root == null) return;
 
         foreach (var mapping in menuMappings)
         {
@@ -66,6 +76,8 @@ public class PreGameUIManager : MonoBehaviour
                 btn.clicked += () => _ = TransitionEffect(mainMenu, targetMenu);
             }
         }
+
+        _mainMenuEventsSetup = true;
     }
 
     private async Task TransitionEffect(GameObject from, GameObject to)
@@ -75,37 +87,42 @@ public class PreGameUIManager : MonoBehaviour
 
         _isTransitioning = true;
 
-        var fromPanelRoot = from.GetComponent<UIDocument>().rootVisualElement;
-        var fromRoot = fromPanelRoot.Q("Root") ?? fromPanelRoot;
-
-        to.SetActive(true);
-
-        if (to == mainMenu)
+        try
         {
-            SetupMainMenuEvents();
+            var fromPanelRoot = from.GetComponent<UIDocument>().rootVisualElement;
+            var fromRoot = fromPanelRoot.Q("Root") ?? fromPanelRoot;
+
+            to.SetActive(true);
+
+            if (to == mainMenu)
+            {
+                SetupMainMenuEvents();
+            }
+
+            var toPanelRoot = to.GetComponent<UIDocument>().rootVisualElement;
+            var toRoot = toPanelRoot.Q("Root") ?? toPanelRoot;
+            toRoot.RemoveFromClassList("fade-out");
+
+            var fromUiDoc = from.GetComponent<UIDocument>();
+            var toUiDoc = to.GetComponent<UIDocument>();
+
+            float baseSortOrder = fromUiDoc.sortingOrder;
+            toUiDoc.sortingOrder = baseSortOrder - 1f;
+
+            await Task.Yield();
+
+            fromRoot.AddToClassList("fade-out");
+
+            await Task.Delay(750);
+
+            from.SetActive(false);
+            fromRoot.RemoveFromClassList("fade-out");
+
+            toUiDoc.sortingOrder = baseSortOrder;
         }
-
-        var toPanelRoot = to.GetComponent<UIDocument>().rootVisualElement;
-        var toRoot = toPanelRoot.Q("Root") ?? toPanelRoot;
-        toRoot.RemoveFromClassList("fade-out");
-
-        var fromUiDoc = from.GetComponent<UIDocument>();
-        var toUiDoc = to.GetComponent<UIDocument>();
-
-        float baseSortOrder = fromUiDoc.sortingOrder;
-        toUiDoc.sortingOrder = baseSortOrder - 1f;
-
-        await Task.Yield();
-
-        fromRoot.AddToClassList("fade-out");
-
-        await Task.Delay(750);
-
-        from.SetActive(false);
-        fromRoot.RemoveFromClassList("fade-out");
-
-        toUiDoc.sortingOrder = baseSortOrder;
-
-        _isTransitioning = false;
+        finally
+        {
+            _isTransitioning = false;
+        }
     }
 }

@@ -1,10 +1,17 @@
 <ui:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
     <Style src="project://database/Assets/UI/Manual/manualStyles.uss?fileID=7433441132597879392&amp;guid=ac2fdc0ba0db1d17587e1ea414436f7e&amp;type=3#manualStyles"/>
-    <ui:VisualElement name="Root" style="flex-grow: 1;">
-        <ui:TabView>
-            <ui:Tab label="Tab"/>
-            <ui:Tab label="Tab"/>
-        </ui:TabView>
-        <ui:VisualElement name="BackgroundImage" style="flex-grow: 1;"/>
+    <ui:VisualElement name="Root" class="root" style="flex-grow: 1;">
+        <ui:VisualElement name="BackgroundImage" class="background-image" style="flex-grow: 1; background-image: url(&quot;project://database/Assets/UI/Manual/Textures/manualBackground.svg?fileID=7388822144124034973&amp;guid=b8933c7aa4760c8e3aaeba987d4ac25d&amp;type=3#manualBackground&quot;);"/>
+        <ui:VisualElement name="ManualContainer" class="manual-container" style="flex-grow: 1;">
+            <ui:VisualElement name="Manual" class="manual" style="background-image: url(&quot;project://database/Assets/UI/Manual/Textures/manualManual.svg?fileID=7388822144124034973&amp;guid=2c700836483a863818fdcd5e9a11253e&amp;type=3#manualManual&quot;);"/>
+            <ui:VisualElement name="Outline" class="outline" style="background-image: url(&quot;project://database/Assets/UI/Manual/Textures/manualOutline.svg?fileID=7388822144124034973&amp;guid=614af8080034d36419ebc15428030b63&amp;type=3#manualOutline&quot;);">
+                <ui:TabView name="ManualTabs" view-data-key="TabbedMenu" class="manual-tabs">
+                    <ui:Tab label="MISSION" name="Mission" view-data-key="MissionTab" class="mission" style="background-image: url(&quot;project://database/Assets/UI/Manual/Textures/manualMissionTab.svg?fileID=7388822144124034973&amp;guid=9fd20de1b1805ea909531b2b4b62e628&amp;type=3#manualMissionTab&quot;);"/>
+                    <ui:Tab label="SCORING" name="Scoring" view-data-key="ScoringTab" class="scoring" style="background-image: url(&quot;project://database/Assets/UI/Manual/Textures/manualScoringTab.svg?fileID=7388822144124034973&amp;guid=5ec6e4d178a195fa987af7494f867d76&amp;type=3#manualScoringTab&quot;);"/>
+                </ui:TabView>
+            </ui:VisualElement>
+        </ui:VisualElement>
+        <ui:Button text="MAIN MENU" name="MainMenu" class="main-menu" style="background-image: url(&quot;project://database/Assets/UI/Manual/Textures/manualMainMenu.svg?fileID=7388822144124034973&amp;guid=cb2033f8b63414311bd08756394ea02b&amp;type=3#manualMainMenu&quot;);"/>
+        <ui:VisualElement name="ScreenFader" picking-mode="Ignore" class="screen-fader fader-hidden"/>
     </ui:VisualElement>
 </ui:UXML>
