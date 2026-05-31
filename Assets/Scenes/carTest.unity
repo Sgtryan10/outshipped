@@ -293,9 +293,6 @@ PrefabInstance:
       addedObject: {fileID: 1971009905}
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: d5923398c6b0649c9b4c6f5e796844cb, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 1971009904}
-    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: d5923398c6b0649c9b4c6f5e796844cb, type: 3}
-      insertIndex: -1
       addedObject: {fileID: 1971009903}
   m_SourcePrefab: {fileID: 100100000, guid: d5923398c6b0649c9b4c6f5e796844cb, type: 3}
 --- !u!1 &1581516364
@@ -520,46 +517,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 75334208458ff458e88964eb143d0628, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CarController
-  config: {fileID: 0}
-  visualRoot: {fileID: 0}
+  rb: {fileID: 0}
+  wheels: []
+  isAIControlled: 0
   acceleration: 38
-  reverseAcceleration: 24
+  brakeForce: 8000
   maxSpeed: 20
-  turnSpeed: 145
-  grip: 9
-  driftGrip: 3.5
-  brakingForce: 18
-  weight: 800
-  sphereRadius: 0.65
-  sphereCenter: {x: 0, y: -0.15, z: 0}
-  groundMask:
-    serializedVersion: 2
-    m_Bits: 8
-  groundRayLength: 1.4
-  stickToGroundForce: 28
-  slopeAlignSpeed: 10
-  faceMoveDirectionSpeed: 8
---- !u!135 &1971009904
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1971009902}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Radius: 0.65
-  m_Center: {x: 0, y: -0.15, z: 0}
+  maxSteeringAngle: 35
+  steerAtMaxSpeed: 20
+  downforce: 70
+  rollStabilize: 12000
+  yawDamping: 2
+  frontAntiRoll: 22000
+  rearAntiRoll: 20000
+  throttleInput: 0
+  steerInput: 0
+  brakeInput: 0
 --- !u!54 &1971009905
 Rigidbody:
   m_ObjectHideFlags: 0

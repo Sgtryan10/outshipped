@@ -1,10 +1,10 @@
-using System;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class WheelPhysics : MonoBehaviour
 {
     private Rigidbody rb;
+    private WheelConfig config;
+    private LayerMask groundMask;
 
     public bool isFrontWheel;
     public bool isLeftWheel;
@@ -19,46 +19,39 @@ public class WheelPhysics : MonoBehaviour
 
     private RaycastHit lastHit;
     private float lastSpringLen;
-    private LayerMask drivable;
-
 
     [Header("References")]
     [SerializeField] private Transform wheelMesh;
 
-    [Header("Suspension")]
-    [SerializeField] private float springStrength = 55000f;
-    [SerializeField] private float dampenStrength = 6500f;
-
-    [SerializeField] private float restLen = 0.5f;
-    [SerializeField] private float springTravel = 0.2f;
-    [SerializeField] private float wheelRadius = 0.3f;
-
-    [Header("Tire")]
-    [SerializeField] private float cornerStiffness = 16000f;
-    [SerializeField] private float maxLateralMu = 2.4f;
-    [SerializeField] private float maxLongitudinalMu = 2.0f;
-
-    [Header("Rolling Resistance")]
-    [SerializeField] private float coastDragStiffness = 550f;
-
     void Start()
     {
         rb = GetComponentInParent<Rigidbody>();
-        lastSpringLen = restLen;
+        config = GetComponentInParent<WheelConfig>();
 
-        drivable = LayerMask.GetMask("Ground", "Floor");
-        if (drivable == 0)
-            drivable = Physics.DefaultRaycastLayers;
+        if (!rb || !config)
+        {
+            Debug.LogError("WheelPhysics needs a Rigidbody and WheelConfig on the car root.", this);
+            enabled = false;
+            return;
+        }
+
+        lastSpringLen = config.restLen;
+
+        groundMask = config.groundMask;
+        if (groundMask == 0)
+            groundMask = LayerMask.GetMask("Ground", "Floor");
+        if (groundMask == 0)
+            groundMask = Physics.DefaultRaycastLayers;
     }
 
     void FixedUpdate()
     {
-        float maxLen = restLen + springTravel;
+        float maxLen = config.restLen + config.springTravel;
 
         RaycastHit hit;
-        bool rayHit = Physics.Raycast(transform.position, -transform.up, out hit, maxLen + wheelRadius, drivable);
+        bool rayHit = Physics.Raycast(transform.position, -transform.up, out hit, maxLen + config.wheelRadius, groundMask);
 
-        float visualHitDist = restLen + wheelRadius;
+        float visualHitDist = config.restLen + config.wheelRadius;
 
         if (rayHit)
         {
@@ -88,29 +81,26 @@ public class WheelPhysics : MonoBehaviour
     {
         Vector3 contact = hit.point;
 
-        float springLen = Mathf.Max(0f, hit.distance - wheelRadius);
+        float springLen = Mathf.Max(0f, hit.distance - config.wheelRadius);
 
-        compressionDist = Mathf.Clamp(restLen - springLen, 0f, springTravel);
+        compressionDist = Mathf.Clamp(config.restLen - springLen, 0f, config.springTravel);
 
-        compression = (springTravel <= 0.0001f) ? 0f : Mathf.Clamp01(compressionDist / springTravel);
+        compression = (config.springTravel <= 0.0001f) ? 0f : Mathf.Clamp01(compressionDist / config.springTravel);
 
 
         float springVel = (springLen - lastSpringLen) / Time.fixedDeltaTime;
         lastSpringLen = springLen;
 
-        float springForce = springStrength * compressionDist; 
-        float damperForce = dampenStrength * springVel;       
+        float springForce = config.springStrength * compressionDist; 
+        float damperForce = config.dampenStrength * springVel;       
 
         float net = springForce - damperForce;
         net = Mathf.Max(0f, net);
 
-        const float bumpStart = 0.80f;          
-        const float bumpStrength = 90000f;      
-
-        if (compression > bumpStart)
+        if (compression > config.bumpStart && config.bumpStart < 1f)
         {
-            float t = (compression - bumpStart) / (1f - bumpStart); 
-            float bumpForce = bumpStrength * t * t;   
+            float t = (compression - config.bumpStart) / (1f - config.bumpStart); 
+            float bumpForce = config.bumpStrength * t * t;   
             net += bumpForce;
         }
 
@@ -133,7 +123,7 @@ public class WheelPhysics : MonoBehaviour
         float forwardVel = Vector3.Dot(v, wheelFwd);
         float lateralVel = Vector3.Dot(v, wheelRight);
 
-        float desiredLatForce = (-lateralVel) * cornerStiffness;
+        float desiredLatForce = (-lateralVel) * config.cornerStiffness;
 
         float slipRatio = Mathf.Abs(lateralVel) / (Mathf.Abs(forwardVel) + 4f);
         float slideT = Mathf.InverseLerp(0.15f, 0.40f, slipRatio);
@@ -141,7 +131,7 @@ public class WheelPhysics : MonoBehaviour
 
         desiredLatForce *= gripMult;
 
-        float maxLatForce = maxLateralMu * normalForce;
+        float maxLatForce = config.maxLateralMu * normalForce;
         float latForce = Mathf.Clamp(desiredLatForce, -maxLatForce, maxLatForce);
 
         rb.AddForceAtPosition(wheelRight * latForce, contact);
@@ -171,7 +161,7 @@ public class WheelPhysics : MonoBehaviour
         float drive = accelForce * Mathf.Clamp(accelInput, -1f, 1f);
         Vector3 rawDrive = fwd * drive;
 
-        float maxLongForce = maxLongitudinalMu * normalForce;
+        float maxLongForce = config.maxLongitudinalMu * normalForce;
         Vector3 driveForce = Vector3.ClampMagnitude(rawDrive, maxLongForce);
 
         rb.AddForceAtPosition(driveForce, contact);
@@ -190,7 +180,7 @@ public class WheelPhysics : MonoBehaviour
 
         float desired = (-forwardVel) * brakeStrength * Mathf.Clamp01(brakeInput);
 
-        float maxLongForce = maxLongitudinalMu * normalForce;
+        float maxLongForce = config.maxLongitudinalMu * normalForce;
         float clamped = Mathf.Clamp(desired, -maxLongForce, maxLongForce);
 
         rb.AddForceAtPosition(fwd * clamped, contact);
@@ -207,9 +197,9 @@ public class WheelPhysics : MonoBehaviour
         Vector3 fwd = Vector3.ProjectOnPlane(transform.forward, n).normalized;
         float forwardVel = Vector3.Dot(rb.GetPointVelocity(contact), fwd);
 
-        float desired = (-forwardVel) * coastDragStiffness;
+        float desired = (-forwardVel) * config.coastDragStiffness;
 
-        float maxLongForce = maxLongitudinalMu * normalForce;
+        float maxLongForce = config.maxLongitudinalMu * normalForce;
         float clamped = Mathf.Clamp(desired, -maxLongForce, maxLongForce);
 
         rb.AddForceAtPosition(fwd * clamped, contact);
@@ -217,12 +207,12 @@ public class WheelPhysics : MonoBehaviour
 
     void WheelVisual(float hitDist)
     {
-        if (!wheelMesh) return;
+        if (!wheelMesh || !config.animateWheelMesh) return;
 
-        float springLen = Mathf.Max(0f, hitDist - wheelRadius);
+        float springLen = Mathf.Max(0f, hitDist - config.wheelRadius);
 
-        float minLen = restLen - springTravel;
-        float maxLen = restLen + springTravel;
+        float minLen = config.restLen - config.springTravel;
+        float maxLen = config.restLen + config.springTravel;
 
         springLen = Mathf.Clamp(springLen, minLen, maxLen);
 
