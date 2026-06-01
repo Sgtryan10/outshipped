@@ -24,6 +24,7 @@ public class gameManager : MonoBehaviour
     [Header("Camera & FOV Settings")]
     [SerializeField] private float overdriveFOV = 80f;
     private float baseFOV = 60f;
+    [SerializeField] private float fovTransitionSpeed = 100f;
 
     private string currentTurretType;
     private int currentMagazine;
@@ -149,6 +150,13 @@ public class gameManager : MonoBehaviour
         if (isGameOver) return;
         storedAbility = abilityName;
 
+        hudController?.updateActiveAbility(
+            abilityName == "EMP",
+            abilityName == "OVERDRIVE",
+            abilityName == "AMPED",
+            abilityName == "SLOW"
+        );
+
         if (hudController != null)
         {
             switch (abilityName)
@@ -198,62 +206,67 @@ public class gameManager : MonoBehaviour
     {
         ampedActive = true;
         damageMultiplier = 1.5f;
-        hudController?.updateActiveAbility(empActive, overdriveActive, ampedActive, slowActive);
 
+        hudController?.updateActiveAbility(false, false, false, false);
         yield return new WaitForSeconds(20f);
 
         damageMultiplier = 1f;
         ampedActive = false;
-        hudController?.updateActiveAbility(empActive, overdriveActive, ampedActive, slowActive);
+
     }
 
     private IEnumerator OverdriveRoutine()
     {
         overdriveActive = true;
         speedMultiplier = 1.5f;
-        hudController?.updateActiveAbility(empActive, overdriveActive, ampedActive, slowActive);
 
         if (vCam != null)
         {
-            vCam.Lens.FieldOfView = overdriveFOV;
+            while (!Mathf.Approximately(vCam.Lens.FieldOfView, overdriveFOV))
+            {
+                vCam.Lens.FieldOfView = Mathf.MoveTowards(vCam.Lens.FieldOfView, overdriveFOV, fovTransitionSpeed * Time.deltaTime);
+                yield return null; // Wait for the next frame
+            }
         }
 
+        hudController?.updateActiveAbility(false, false, false, false);
         yield return new WaitForSeconds(20f);
 
         speedMultiplier = 1f;
         overdriveActive = false;
-        hudController?.updateActiveAbility(empActive, overdriveActive, ampedActive, slowActive);
 
         if (vCam != null)
         {
-            vCam.Lens.FieldOfView = baseFOV;
+            while (!Mathf.Approximately(vCam.Lens.FieldOfView, baseFOV))
+            {
+                vCam.Lens.FieldOfView = Mathf.MoveTowards(vCam.Lens.FieldOfView, baseFOV, fovTransitionSpeed * Time.deltaTime);
+                yield return null;
+            }
         }
     }
 
     private IEnumerator EmpRoutine()
     {
         empActive = true;
-        hudController?.updateActiveAbility(empActive, overdriveActive, ampedActive, slowActive);
 
         // TODO: EMP logic here
 
+        hudController?.updateActiveAbility(false, false, false, false);
         yield return new WaitForSeconds(20f);
 
         empActive = false;
-        hudController?.updateActiveAbility(empActive, overdriveActive, ampedActive, slowActive);
     }
 
     private IEnumerator SlowRoutine()
     {
         slowActive = true;
-        hudController?.updateActiveAbility(empActive, overdriveActive, ampedActive, slowActive);
 
         // TODO: Slow logic here
 
+        hudController?.updateActiveAbility(false, false, false, false);
         yield return new WaitForSeconds(20f);
 
         slowActive = false;
-        hudController?.updateActiveAbility(empActive, overdriveActive, ampedActive, slowActive);
     }
 
     // Health and Armor Management
