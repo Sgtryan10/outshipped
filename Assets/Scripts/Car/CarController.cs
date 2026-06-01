@@ -15,15 +15,20 @@ public class CarController : MonoBehaviour
     [SerializeField] private float throttleResponse = 3.5f;
     [SerializeField] private float throttleReleaseSpeed = 6f;
     [SerializeField] private float speedLimiterResponse = 4f;
+    [SerializeField, Range(0f, 0.25f)] private float throttleInputDeadZone = 0.04f;
+    [SerializeField] private float directionChangeBrakeSpeed = 1.5f;
+    [SerializeField, Range(0f, 1f)] private float directionChangeBrakeScale = 0.85f;
     [SerializeField, Range(0f, 1f)] private float frontLiftDriveScale = 0.35f;
     [SerializeField, Range(0f, 1f)] private float rearLiftReverseScale = 0.55f;
     [SerializeField, Range(0.1f, 1f)] private float axleSupportReference = 0.45f;
+    [SerializeField] private float driveGroundingResponse = 8f;
 
     [Header("Steering")]
     [SerializeField] private float maxSteeringAngle = 32f;
     [SerializeField] private float steerAtMaxSpeed = 12f;
     [SerializeField] private float steerResponse = 3.5f;
     [SerializeField] private float steerReturnSpeed = 6f;
+    [SerializeField, Range(0f, 0.25f)] private float steerInputDeadZone = 0.05f;
     [SerializeField, Range(0.1f, 2f)] private float highSpeedSteerCurve = 0.65f;
     [SerializeField] private float turnAssist = 1500f;
     [SerializeField] private float turnAssistResponse = 6f;
@@ -34,6 +39,7 @@ public class CarController : MonoBehaviour
     private float smoothedThrottleInput;
     private float smoothedSteerInput;
     private float smoothedTurnAssist;
+    private float smoothedDriveGroundingScale = 1f;
 
     [Header("Stability")]
     [SerializeField] private float downforce = 80f;
@@ -198,7 +204,12 @@ public class CarController : MonoBehaviour
 
         Vector3 carForward = rb.transform.TransformDirection(localForwardAxis).normalized;
         float forwardSpeed = Vector3.Dot(carForward, rb.linearVelocity);
-        float groundedDriveScale = DriveGroundingScale(smoothedThrottleInput);
+        float targetDriveGroundingScale = DriveGroundingScale(smoothedThrottleInput);
+        smoothedDriveGroundingScale = Mathf.Lerp(
+            smoothedDriveGroundingScale,
+            targetDriveGroundingScale,
+            SmoothFactor(driveGroundingResponse));
+        bool changingDirection = IsChangingDirection(smoothedThrottleInput, forwardSpeed);
 
         foreach (var wheel in wheels)
         {
@@ -218,10 +229,14 @@ public class CarController : MonoBehaviour
             {
                 float reverseLimit = -maxSpeed * 0.5f;
 
-                if (Mathf.Abs(smoothedThrottleInput) > 0.001f &&
+                if (changingDirection)
+                {
+                    wheel.Brake(directionChangeBrakeScale, brakeForce);
+                }
+                else if (Mathf.Abs(smoothedThrottleInput) > 0.001f &&
                     (smoothedThrottleInput > 0f ? forwardSpeed < maxSpeed : forwardSpeed > reverseLimit))
                 {
-                    wheel.AccelForce(smoothedThrottleInput * groundedDriveScale, acceleration);
+                    wheel.AccelForce(smoothedThrottleInput * smoothedDriveGroundingScale, acceleration);
                 }
                 else if (!isAIControlled)
                 {
@@ -252,7 +267,11 @@ public class CarController : MonoBehaviour
             float assistAtSpeed = Mathf.InverseLerp(2f, 18f, turnSpeed);
             float highSpeedFade = Mathf.Lerp(1f, 0.65f, speed01);
             float groundedRatio = groundedWheels / 4f;
-            targetTurnAssist = smoothedSteerInput * turnAssist * assistAtSpeed * highSpeedFade * groundedRatio;
+            float travelDirection = Mathf.Abs(forwardSpeed) > 0.5f
+                ? Mathf.Sign(forwardSpeed)
+                : Mathf.Sign(smoothedThrottleInput);
+            targetTurnAssist =
+                smoothedSteerInput * travelDirection * turnAssist * assistAtSpeed * highSpeedFade * groundedRatio;
         }
 
         smoothedTurnAssist = Mathf.Lerp(smoothedTurnAssist, targetTurnAssist, SmoothFactor(turnAssistResponse));
@@ -330,6 +349,13 @@ public class CarController : MonoBehaviour
         return Mathf.Clamp01(normalForce / referenceForce);
     }
 
+    bool IsChangingDirection(float throttle, float forwardSpeed)
+    {
+        return Mathf.Abs(throttle) > 0.001f &&
+            Mathf.Abs(forwardSpeed) > directionChangeBrakeSpeed &&
+            Mathf.Sign(throttle) != Mathf.Sign(forwardSpeed);
+    }
+
     static float SmoothFactor(float response)
     {
         return 1f - Mathf.Exp(-Mathf.Max(0f, response) * Time.fixedDeltaTime);
@@ -337,9 +363,18 @@ public class CarController : MonoBehaviour
 
     public void SetInputs(float throttle, float steer, bool brake)
     {
-        throttleInput = Mathf.Clamp(throttle, -1f, 1f);
-        steerInput = Mathf.Clamp(steer, -1f, 1f);
+        throttleInput = ApplyDeadZone(Mathf.Clamp(throttle, -1f, 1f), throttleInputDeadZone);
+        steerInput = ApplyDeadZone(Mathf.Clamp(steer, -1f, 1f), steerInputDeadZone);
         brakeInput = brake;
+    }
+
+    static float ApplyDeadZone(float value, float deadZone)
+    {
+        float magnitude = Mathf.Abs(value);
+        if (magnitude <= deadZone)
+            return 0f;
+
+        return Mathf.Sign(value) * Mathf.InverseLerp(deadZone, 1f, magnitude);
     }
 
 }

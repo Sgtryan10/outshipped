@@ -13,6 +13,7 @@ public class WheelPhysics : MonoBehaviour
     private Vector3 wheelMeshTargetLocalPosition;
     private float smoothedLateralForce;
     private float smoothedLongitudinalForce;
+    private bool hasGroundReference;
 
     public bool isFrontWheel;
     public bool isLeftWheel;
@@ -73,25 +74,41 @@ public class WheelPhysics : MonoBehaviour
         float maxLen = config.restLen + config.springTravel;
         Vector3 suspensionUp = rb.transform.up;
         Vector3 rayOrigin = transform.position + suspensionUp * config.raycastRecoveryMargin;
-        float rayDistance = maxLen + config.wheelRadius + config.raycastRecoveryMargin;
+        float rayDistance =
+            maxLen + config.wheelRadius + config.raycastRecoveryMargin + config.raycastReacquireExtension;
 
-        bool rayHit = TryGetGroundHit(
+        bool downwardRayHit = TryGetGroundHit(
             rayOrigin,
             -suspensionUp,
             rayDistance,
             out RaycastHit hit);
+        bool recoveredFromPenetration = false;
+
+        if (!downwardRayHit &&
+            TryGetGroundHit(rayOrigin, suspensionUp, rayDistance, out RaycastHit recoveryHit) &&
+            Vector3.Dot(recoveryHit.normal, suspensionUp) > 0.25f)
+        {
+            hit = recoveryHit;
+            recoveredFromPenetration = true;
+        }
+
+        bool rayHit = downwardRayHit || recoveredFromPenetration;
 
         if (config.drawDebugForces)
         {
-            Color rayColor = rayHit ? Color.green : Color.red;
-            Debug.DrawRay(rayOrigin, -suspensionUp * rayDistance, rayColor);
+            Debug.DrawRay(rayOrigin, -suspensionUp * rayDistance, downwardRayHit ? Color.green : Color.red);
+            if (!downwardRayHit)
+                Debug.DrawRay(rayOrigin, suspensionUp * rayDistance, recoveredFromPenetration ? Color.yellow : Color.red);
         }
 
         if (rayHit)
         {
-            float suspensionHitDistance = Mathf.Max(0f, hit.distance - config.raycastRecoveryMargin);
+            float suspensionHitDistance = recoveredFromPenetration
+                ? 0f
+                : Mathf.Max(0f, hit.distance - config.raycastRecoveryMargin);
             isGrounded = true;
             lastHit = hit;
+            hasGroundReference = true;
             contactPoint = hit.point;
             groundNormal = hit.normal;
 
@@ -224,10 +241,12 @@ public class WheelPhysics : MonoBehaviour
             smoothedLateralForce,
             targetLateralForce,
             config.lateralGripResponse);
+        smoothedLateralForce = Mathf.Clamp(smoothedLateralForce, -maxForce, maxForce);
 
         Vector3 gripForce = wheelRight * smoothedLateralForce;
-        rb.AddForceAtPosition(gripForce, hit.point);
-        DrawForce(hit.point, gripForce, Color.magenta);
+        Vector3 forcePoint = TractionForcePoint(hit.point);
+        rb.AddForceAtPosition(gripForce, forcePoint);
+        DrawForce(forcePoint, gripForce, Color.magenta);
     }
 
     public void UpdateSteering(float angleDeg)
@@ -250,15 +269,17 @@ public class WheelPhysics : MonoBehaviour
 
         Vector3 forward = WheelForward(lastHit.normal);
         Vector3 rawDrive = forward * accelForce * Mathf.Clamp(accelInput, -1f, 1f);
-        float targetForce = Vector3.ClampMagnitude(rawDrive, config.maxLongitudinalMu * normalForce).magnitude;
+        float gripLimit = LongitudinalGripLimit();
+        float targetForce = Vector3.ClampMagnitude(rawDrive, gripLimit).magnitude;
         targetForce *= Mathf.Sign(accelInput);
         smoothedLongitudinalForce = SmoothForce(
             smoothedLongitudinalForce,
             targetForce,
             config.longitudinalGripResponse);
+        smoothedLongitudinalForce = Mathf.Clamp(smoothedLongitudinalForce, -gripLimit, gripLimit);
 
         Vector3 driveForce = forward * smoothedLongitudinalForce;
-        Vector3 forcePoint = LongitudinalForcePoint(lastHit.point);
+        Vector3 forcePoint = TractionForcePoint(lastHit.point);
         rb.AddForceAtPosition(driveForce, forcePoint);
         DrawForce(forcePoint, driveForce, Color.blue);
     }
@@ -282,15 +303,16 @@ public class WheelPhysics : MonoBehaviour
         Vector3 forward = WheelForward(lastHit.normal);
         float forwardVel = Vector3.Dot(rb.GetPointVelocity(lastHit.point), forward);
         float desiredForce = -forwardVel * dragStrength;
-        float maxForce = config.maxLongitudinalMu * normalForce;
+        float maxForce = LongitudinalGripLimit();
         float targetForce = Mathf.Clamp(desiredForce, -maxForce, maxForce);
         smoothedLongitudinalForce = SmoothForce(
             smoothedLongitudinalForce,
             targetForce,
             config.longitudinalGripResponse);
+        smoothedLongitudinalForce = Mathf.Clamp(smoothedLongitudinalForce, -maxForce, maxForce);
 
         Vector3 dragForce = forward * smoothedLongitudinalForce;
-        Vector3 forcePoint = LongitudinalForcePoint(lastHit.point);
+        Vector3 forcePoint = TractionForcePoint(lastHit.point);
         rb.AddForceAtPosition(dragForce, forcePoint);
         DrawForce(forcePoint, dragForce, Color.yellow);
     }
@@ -308,9 +330,25 @@ public class WheelPhysics : MonoBehaviour
         return Mathf.Lerp(current, target, t);
     }
 
-    Vector3 LongitudinalForcePoint(Vector3 contact)
+    Vector3 TractionForcePoint(Vector3 contact)
     {
-        return contact + rb.transform.up * config.longitudinalForceHeightOffset;
+        Vector3 suspensionUp = rb.transform.up;
+        float heightToCenterOfMass = Vector3.Dot(rb.worldCenterOfMass - contact, suspensionUp);
+        return contact + suspensionUp * heightToCenterOfMass;
+    }
+
+    float LongitudinalGripLimit()
+    {
+        float longitudinalLimit = config.maxLongitudinalMu * normalForce;
+        float axleGrip = isFrontWheel ? config.frontGripMultiplier : config.rearGripMultiplier;
+        float lateralLimit = config.maxLateralMu * normalForce * axleGrip;
+        if (lateralLimit <= 0.01f || config.combinedGripBlend <= 0f)
+            return longitudinalLimit;
+
+        float lateralLoad = Mathf.Clamp01(Mathf.Abs(smoothedLateralForce) / lateralLimit);
+        float frictionCircleScale = Mathf.Sqrt(Mathf.Max(0f, 1f - lateralLoad * lateralLoad));
+        float retainedScale = Mathf.Max(config.minimumLongitudinalGripScale, frictionCircleScale);
+        return longitudinalLimit * Mathf.Lerp(1f, retainedScale, config.combinedGripBlend);
     }
 
     void WheelVisual(RaycastHit hit)
@@ -326,11 +364,33 @@ public class WheelPhysics : MonoBehaviour
         if (!wheelMesh || !config.animateWheelMesh) return;
 
         float droop = config.restLen + Mathf.Min(config.springTravel, config.airborneVisualDroop);
-        SetWheelVisualOffset(-rb.transform.up * droop);
+        Vector3 wheelCenter = transform.position - rb.transform.up * droop;
+
+        if (hasGroundReference)
+        {
+            float pointHeight = Vector3.Dot(transform.position - lastHit.point, lastHit.normal);
+            float maxUsefulDistance =
+                config.restLen + config.springTravel + config.wheelRadius + config.raycastReacquireExtension;
+
+            if (Mathf.Abs(pointHeight) <= maxUsefulDistance)
+            {
+                float planeHeight = Vector3.Dot(wheelCenter - lastHit.point, lastHit.normal);
+                if (planeHeight < config.wheelRadius)
+                    wheelCenter += lastHit.normal * (config.wheelRadius - planeHeight);
+            }
+        }
+
+        SetWheelVisualOffset(wheelCenter - transform.position);
     }
 
     void SetWheelVisualOffset(Vector3 worldOffset)
     {
+        Vector3 suspensionUp = rb.transform.up;
+        float maxDroop = config.restLen + config.springTravel;
+        float suspensionOffset = Vector3.Dot(worldOffset, suspensionUp);
+        float clampedSuspensionOffset = Mathf.Clamp(suspensionOffset, -maxDroop, 0f);
+        worldOffset += suspensionUp * (clampedSuspensionOffset - suspensionOffset);
+
         Transform visualParent = wheelMesh.parent;
         Vector3 localOffset = visualParent
             ? visualParent.InverseTransformVector(worldOffset)

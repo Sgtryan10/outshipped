@@ -91,21 +91,26 @@ MonoBehaviour:
   throttleResponse: 3.5
   throttleReleaseSpeed: 6
   speedLimiterResponse: 4
+  throttleInputDeadZone: 0.04
+  directionChangeBrakeSpeed: 1.5
+  directionChangeBrakeScale: 0.85
   frontLiftDriveScale: 0.35
   rearLiftReverseScale: 0.55
   axleSupportReference: 0.45
-  maxSteeringAngle: 32
-  steerAtMaxSpeed: 12
-  steerResponse: 3.5
+  driveGroundingResponse: 8
+  maxSteeringAngle: 36
+  steerAtMaxSpeed: 14
+  steerResponse: 4.5
   steerReturnSpeed: 6
+  steerInputDeadZone: 0.05
   highSpeedSteerCurve: 0.65
-  turnAssist: 1500
-  turnAssistResponse: 6
+  turnAssist: 1850
+  turnAssistResponse: 7
   downforce: 80
   corneringDownforce: 85
   rollStabilize: 9500
   rollPitchDamping: 2200
-  yawDamping: 1.25
+  yawDamping: 1.05
   centerOfMassOverride: {fileID: 0}
   fallbackCenterOfMass: {x: 0, y: -0.48, z: 0}
   maxAngularSpeed: 2.5
@@ -137,18 +142,20 @@ MonoBehaviour:
   springTravel: 0.2
   wheelRadius: 0.69
   raycastRecoveryMargin: 0.2
+  raycastReacquireExtension: 0.18
   suspensionDeadZone: 0.005
   bumpStart: 0.72
   bumpStrength: 12000
   suspensionForceResponse: 28
   cornerStiffness: 9000
   maxLateralMu: 1.3
-  frontGripMultiplier: 1.1
-  rearGripMultiplier: 0.92
+  frontGripMultiplier: 1.18
+  rearGripMultiplier: 0.9
   maxLongitudinalMu: 1.15
   lateralGripResponse: 18
   longitudinalGripResponse: 12
-  longitudinalForceHeightOffset: 0.42
+  combinedGripBlend: 0.55
+  minimumLongitudinalGripScale: 0.55
   coastDragStiffness: 300
   animateWheelMesh: 1
   wheelVisualFollowSpeed: 12
