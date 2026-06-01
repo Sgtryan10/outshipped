@@ -9,6 +9,7 @@ public class gameManager : MonoBehaviour
 
     [Header("References")]
     [SerializeField] private HudController hudController;
+    [SerializeField] private CarController playerCar;
     [SerializeField] private CinemachineCamera vCam;
 
     [Header("Player Health & Armor Settings")]
@@ -43,6 +44,9 @@ public class gameManager : MonoBehaviour
     public float damageMultiplier { get; private set; } = 1f;
     public float speedMultiplier { get; private set; } = 1f;
 
+    private float originalMaxSpeed;
+    private float originalAcceleration;
+
     private string storedAbility = "";
 
     private bool isGameOver = false;
@@ -64,6 +68,12 @@ public class gameManager : MonoBehaviour
         scoreManager.resetScores();
         isGameOver = false;
         Time.timeScale = 1f;
+
+        if (playerCar != null)
+        {
+            originalMaxSpeed = playerCar.MaxSpeed;
+            originalAcceleration = playerCar.Acceleration;
+        }
 
         if (vCam != null)
         {
@@ -220,12 +230,17 @@ public class gameManager : MonoBehaviour
         overdriveActive = true;
         speedMultiplier = 1.5f;
 
+        if (playerCar != null)
+        {
+            playerCar.SetOverdriveSpeeds(originalMaxSpeed * 1.5f, originalAcceleration * 1.5f);
+        }
+
         if (vCam != null)
         {
             while (!Mathf.Approximately(vCam.Lens.FieldOfView, overdriveFOV))
             {
                 vCam.Lens.FieldOfView = Mathf.MoveTowards(vCam.Lens.FieldOfView, overdriveFOV, fovTransitionSpeed * Time.deltaTime);
-                yield return null; // Wait for the next frame
+                yield return null;
             }
         }
 
@@ -234,6 +249,11 @@ public class gameManager : MonoBehaviour
 
         speedMultiplier = 1f;
         overdriveActive = false;
+
+        if (playerCar != null)
+        {
+            playerCar.SetOverdriveSpeeds(originalMaxSpeed, originalAcceleration);
+        }
 
         if (vCam != null)
         {
