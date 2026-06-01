@@ -26,7 +26,7 @@ public class scoringAnimations : MonoBehaviour
     async void OnEnable()
     {
         // TEMPORARY MOCK DATA FOR TESTING
-        scoreManager.finalScoreNumerical = 100001;
+        scoreManager.finalScoreNumerical = 1000000000;
         scoreManager.packagesDelivered = 42;
         scoreManager.enemiesDestroyed = 117;
         scoreManager.activeAbilitiesUsed = 9;

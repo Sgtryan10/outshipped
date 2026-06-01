@@ -1,8 +1,6 @@
-using System;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.EventSystems;
 
+[RequireComponent(typeof(Rigidbody))]
 public class CarController : MonoBehaviour
 {
     [Header("References")]
@@ -11,24 +9,46 @@ public class CarController : MonoBehaviour
     public bool isAIControlled = false;
 
     [Header("Acceleration")]
-    [SerializeField] private float acceleration = 12000f;   
-    [SerializeField] private float brakeForce = 8000f;      
-    [SerializeField] private float maxSpeed = 55f;         
+    [SerializeField] private float acceleration = 7500f;
+    [SerializeField] private float brakeForce = 8000f;
+    [SerializeField] private float maxSpeed = 55f;
+    [SerializeField] private float throttleResponse = 3.5f;
+    [SerializeField] private float throttleReleaseSpeed = 6f;
+    [SerializeField] private float speedLimiterResponse = 4f;
+    [SerializeField, Range(0f, 1f)] private float frontLiftDriveScale = 0.35f;
+    [SerializeField, Range(0f, 1f)] private float rearLiftReverseScale = 0.55f;
+    [SerializeField, Range(0.1f, 1f)] private float axleSupportReference = 0.45f;
 
     [Header("Steering")]
-    [SerializeField] private float maxSteeringAngle = 35f; 
-    [SerializeField] private float steerAtMaxSpeed = 20f;  
+    [SerializeField] private float maxSteeringAngle = 32f;
+    [SerializeField] private float steerAtMaxSpeed = 12f;
+    [SerializeField] private float steerResponse = 3.5f;
+    [SerializeField] private float steerReturnSpeed = 6f;
+    [SerializeField, Range(0.1f, 2f)] private float highSpeedSteerCurve = 0.65f;
+    [SerializeField] private float turnAssist = 1500f;
+    [SerializeField] private float turnAssistResponse = 6f;
     private float trackWidth;
     private float wheelBase;
+    private Vector3 localForwardAxis = Vector3.forward;
+    private Vector3 localRightAxis = Vector3.right;
+    private float smoothedThrottleInput;
+    private float smoothedSteerInput;
+    private float smoothedTurnAssist;
 
     [Header("Stability")]
-    [SerializeField] private float downforce = 70f;         
-    [SerializeField] private float rollStabilize = 12000f; 
-    [SerializeField] private float yawDamping = 2.0f;      
+    [SerializeField] private float downforce = 80f;
+    [SerializeField] private float corneringDownforce = 85f;
+    [SerializeField] private float rollStabilize = 9500f;
+    [SerializeField] private float rollPitchDamping = 2200f;
+    [SerializeField] private float yawDamping = 1.25f;
+    [SerializeField] private Transform centerOfMassOverride;
+    [SerializeField] private Vector3 fallbackCenterOfMass = new Vector3(0f, -0.48f, 0f);
+    [SerializeField] private float maxAngularSpeed = 2.5f;
 
     [Header("Anti-Roll")]
-    [SerializeField] private float frontAntiRoll = 22000f;
-    [SerializeField] private float rearAntiRoll = 20000f;
+    [SerializeField] private float frontAntiRoll = 9500f;
+    [SerializeField] private float rearAntiRoll = 8000f;
+    [SerializeField] private float antiRollResponse = 14f;
 
     [HideInInspector] public float throttleInput;
     [HideInInspector] public float steerInput;
@@ -36,31 +56,53 @@ public class CarController : MonoBehaviour
 
     private WheelPhysics FL, FR, BL, BR;
 
+    public Rigidbody Body => rb;
+    public WheelPhysics[] Wheels => wheels;
+    public float Speed => rb ? rb.linearVelocity.magnitude : 0f;
+    public float Speed01 => Mathf.Clamp01(Speed / Mathf.Max(0.1f, maxSpeed));
+    public float ThrottleInput => smoothedThrottleInput;
+
     void Start()
     {
         if (!rb) rb = GetComponent<Rigidbody>();
+        if (!rb)
+        {
+            Debug.LogError("CarController needs a Rigidbody on the car root.", this);
+            enabled = false;
+            return;
+        }
 
-        // Major anti-lean lever
-        rb.centerOfMass = new Vector3(0f, -0.035f, 0f);
+        if (wheels == null || wheels.Length == 0)
+            wheels = GetComponentsInChildren<WheelPhysics>();
+
+        rb.linearDamping = Mathf.Max(rb.linearDamping, 0.05f);
+        rb.angularDamping = Mathf.Max(rb.angularDamping, 1f);
+        rb.interpolation = RigidbodyInterpolation.Interpolate;
+        rb.maxAngularVelocity = Mathf.Max(0.1f, maxAngularSpeed);
+
+        if (rb.collisionDetectionMode == CollisionDetectionMode.Discrete)
+            rb.collisionDetectionMode = CollisionDetectionMode.ContinuousDynamic;
+
+        rb.centerOfMass = centerOfMassOverride
+            ? transform.InverseTransformPoint(centerOfMassOverride.position)
+            : fallbackCenterOfMass;
 
         CalculateDimensions();
+
+        foreach (var wheel in wheels)
+        {
+            if (wheel)
+                wheel.SetBody(rb, localForwardAxis, localRightAxis);
+        }
     }
 
     void CalculateDimensions()
     {
-        WheelPhysics frontMost = null, rearMost = null;
-        WheelPhysics leftMost = null, rightMost = null;
+        FL = FR = BL = BR = null;
 
         foreach (var w in wheels)
         {
             if (!w) continue;
-
-            Vector3 lp = transform.InverseTransformPoint(w.transform.position);
-
-            if (frontMost == null || lp.z > transform.InverseTransformPoint(frontMost.transform.position).z) frontMost = w;
-            if (rearMost == null || lp.z < transform.InverseTransformPoint(rearMost.transform.position).z) rearMost = w;
-            if (leftMost == null || lp.x < transform.InverseTransformPoint(leftMost.transform.position).x) leftMost = w;
-            if (rightMost == null || lp.x > transform.InverseTransformPoint(rightMost.transform.position).x) rightMost = w;
 
             if (w.isFrontWheel && w.isLeftWheel) FL = w;
             if (w.isFrontWheel && !w.isLeftWheel) FR = w;
@@ -68,18 +110,29 @@ public class CarController : MonoBehaviour
             if (!w.isFrontWheel && !w.isLeftWheel) BR = w;
         }
 
-        if (frontMost && rearMost && leftMost && rightMost)
+        if (FL && FR && BL && BR)
         {
-            wheelBase = Mathf.Abs(transform.InverseTransformPoint(frontMost.transform.position).z -
-                                  transform.InverseTransformPoint(rearMost.transform.position).z);
+            Vector3 fl = transform.InverseTransformPoint(FL.transform.position);
+            Vector3 fr = transform.InverseTransformPoint(FR.transform.position);
+            Vector3 bl = transform.InverseTransformPoint(BL.transform.position);
+            Vector3 br = transform.InverseTransformPoint(BR.transform.position);
 
-            trackWidth = Mathf.Abs(transform.InverseTransformPoint(leftMost.transform.position).x -
-                                   transform.InverseTransformPoint(rightMost.transform.position).x);
+            Vector3 frontCenter = (fl + fr) * 0.5f;
+            Vector3 rearCenter = (bl + br) * 0.5f;
+            Vector3 leftCenter = (fl + bl) * 0.5f;
+            Vector3 rightCenter = (fr + br) * 0.5f;
+
+            localForwardAxis = (frontCenter - rearCenter).normalized;
+            localRightAxis = (rightCenter - leftCenter).normalized;
+            wheelBase = Vector3.Distance(frontCenter, rearCenter);
+            trackWidth = Vector3.Distance(leftCenter, rightCenter);
         }
         else
         {
             wheelBase = 2f;
             trackWidth = 1.2f;
+            localForwardAxis = Vector3.forward;
+            localRightAxis = Vector3.right;
         }
     }
 
@@ -90,17 +143,37 @@ public class CarController : MonoBehaviour
         float speed = rb.linearVelocity.magnitude;
 
         if (speed > maxSpeed)
-            rb.linearVelocity = rb.linearVelocity.normalized * maxSpeed;
+        {
+            Vector3 limitedVelocity = rb.linearVelocity.normalized * maxSpeed;
+            rb.linearVelocity = Vector3.Lerp(
+                rb.linearVelocity,
+                limitedVelocity,
+                SmoothFactor(speedLimiterResponse));
+            speed = rb.linearVelocity.magnitude;
+        }
 
         float speed01 = Mathf.Clamp01(speed / Mathf.Max(0.1f, maxSpeed));
-        float currentMaxSteer = Mathf.Lerp(maxSteeringAngle, steerAtMaxSpeed, speed01);
+        float throttleRate = Mathf.Abs(throttleInput) > Mathf.Abs(smoothedThrottleInput)
+            ? throttleResponse
+            : throttleReleaseSpeed;
+        smoothedThrottleInput = Mathf.MoveTowards(
+            smoothedThrottleInput,
+            throttleInput,
+            throttleRate * Time.fixedDeltaTime);
+        float steerRate = Mathf.Abs(steerInput) > 0.001f ? steerResponse : steerReturnSpeed;
+        smoothedSteerInput = Mathf.MoveTowards(
+            smoothedSteerInput,
+            steerInput,
+            steerRate * Time.fixedDeltaTime);
+        float steerSpeed01 = Mathf.Pow(speed01, highSpeedSteerCurve);
+        float currentMaxSteer = Mathf.Lerp(maxSteeringAngle, steerAtMaxSpeed, steerSpeed01);
 
         float steerAngleLeft = 0f;
         float steerAngleRight = 0f;
 
-        if (Mathf.Abs(steerInput) > 0.001f)
+        if (Mathf.Abs(smoothedSteerInput) > 0.001f)
         {
-            float steerAngle = Mathf.Abs(steerInput) * currentMaxSteer;
+            float steerAngle = Mathf.Abs(smoothedSteerInput) * currentMaxSteer;
             float steerRad = steerAngle * Mathf.Deg2Rad;
 
             float tan = Mathf.Tan(steerRad);
@@ -111,7 +184,7 @@ public class CarController : MonoBehaviour
             float inner = Mathf.Atan(wheelBase / (radius - trackWidth * 0.5f)) * Mathf.Rad2Deg;
             float outer = Mathf.Atan(wheelBase / (radius + trackWidth * 0.5f)) * Mathf.Rad2Deg;
 
-            if (steerInput > 0f) // right
+            if (smoothedSteerInput > 0f) // right
             {
                 steerAngleLeft = outer;
                 steerAngleRight = inner;
@@ -123,7 +196,9 @@ public class CarController : MonoBehaviour
             }
         }
 
-        float forwardSpeed = Vector3.Dot(transform.forward, rb.linearVelocity);
+        Vector3 carForward = rb.transform.TransformDirection(localForwardAxis).normalized;
+        float forwardSpeed = Vector3.Dot(carForward, rb.linearVelocity);
+        float groundedDriveScale = DriveGroundingScale(smoothedThrottleInput);
 
         foreach (var wheel in wheels)
         {
@@ -143,10 +218,10 @@ public class CarController : MonoBehaviour
             {
                 float reverseLimit = -maxSpeed * 0.5f;
 
-                if (Mathf.Abs(throttleInput) > 0.001f &&
-                    (throttleInput > 0f ? forwardSpeed < maxSpeed : forwardSpeed > reverseLimit))
+                if (Mathf.Abs(smoothedThrottleInput) > 0.001f &&
+                    (smoothedThrottleInput > 0f ? forwardSpeed < maxSpeed : forwardSpeed > reverseLimit))
                 {
-                    wheel.AccelForce(throttleInput, acceleration);
+                    wheel.AccelForce(smoothedThrottleInput * groundedDriveScale, acceleration);
                 }
                 else if (!isAIControlled)
                 {
@@ -157,47 +232,107 @@ public class CarController : MonoBehaviour
 
         AntiRoll();
 
-        rb.AddForce(-transform.up * downforce * speed, ForceMode.Force);
+        Vector3 carUp = rb.transform.up;
+        float corneringLoad = corneringDownforce * speed * Mathf.Abs(smoothedSteerInput);
+        rb.AddForce(-carUp * (downforce * speed + corneringLoad), ForceMode.Force);
 
-        Vector3 torqueAxis = Vector3.Cross(transform.up, Vector3.up);
+        Vector3 torqueAxis = Vector3.Cross(carUp, Vector3.up);
         rb.AddTorque(torqueAxis * rollStabilize, ForceMode.Force);
 
-        Vector3 ang = rb.angularVelocity;
-        ang.y = ang.y / (1f + yawDamping * Time.fixedDeltaTime);
-        rb.angularVelocity = ang;
+        Vector3 yawVelocity = Vector3.Project(rb.angularVelocity, carUp);
+        Vector3 rollPitchVelocity = rb.angularVelocity - yawVelocity;
+        rb.AddTorque(-rollPitchVelocity * rollPitchDamping, ForceMode.Force);
+        rb.angularVelocity -= yawVelocity * Mathf.Clamp01(yawDamping * Time.fixedDeltaTime);
+
+        float targetTurnAssist = 0f;
+        int groundedWheels = GroundedWheelCount();
+        if (groundedWheels >= 2)
+        {
+            float turnSpeed = Mathf.Abs(forwardSpeed);
+            float assistAtSpeed = Mathf.InverseLerp(2f, 18f, turnSpeed);
+            float highSpeedFade = Mathf.Lerp(1f, 0.65f, speed01);
+            float groundedRatio = groundedWheels / 4f;
+            targetTurnAssist = smoothedSteerInput * turnAssist * assistAtSpeed * highSpeedFade * groundedRatio;
+        }
+
+        smoothedTurnAssist = Mathf.Lerp(smoothedTurnAssist, targetTurnAssist, SmoothFactor(turnAssistResponse));
+        rb.AddTorque(carUp * smoothedTurnAssist, ForceMode.Force);
     }
 
     void AntiRoll()
     {
-        AxleAntiRoll(FL, FR, frontAntiRoll);
-        AxleAntiRoll(BL, BR, rearAntiRoll);
+        AxleAntiRoll(FL, FR, frontAntiRoll, ref smoothedFrontAntiRoll);
+        AxleAntiRoll(BL, BR, rearAntiRoll, ref smoothedRearAntiRoll);
     }
 
-    void AxleAntiRoll(WheelPhysics left, WheelPhysics right, float strength)
+    private float smoothedFrontAntiRoll;
+    private float smoothedRearAntiRoll;
+
+    void AxleAntiRoll(WheelPhysics left, WheelPhysics right, float strength, ref float smoothedForce)
     {
         if (!left || !right) return;
 
         bool leftGround = left.isGrounded;
         bool rightGround = right.isGrounded;
-        if (!leftGround && !rightGround) return;
+        if (!leftGround && !rightGround)
+        {
+            smoothedForce = Mathf.Lerp(smoothedForce, 0f, SmoothFactor(antiRollResponse));
+            return;
+        }
 
         float travelL = leftGround ? left.compressionDist : 0f;
         float travelR = rightGround ? right.compressionDist : 0f;
 
         float diff = travelL - travelR; // + if left more compressed
-        float antiRollForce = diff * strength;
+        float targetForce = diff * strength;
+        float maxForcePerSide = rb.mass * Physics.gravity.magnitude * 0.6f;
+        targetForce = Mathf.Clamp(targetForce, -maxForcePerSide, maxForcePerSide);
+        smoothedForce = Mathf.Lerp(smoothedForce, targetForce, SmoothFactor(antiRollResponse));
 
+        Vector3 up = rb.transform.up;
 
-        float maxForcePerSide = rb.mass * Physics.gravity.magnitude * 0.75f;
-        antiRollForce = Mathf.Clamp(antiRollForce, -maxForcePerSide, maxForcePerSide);
+        Vector3 leftForcePoint = leftGround ? left.contactPoint : left.transform.position;
+        Vector3 rightForcePoint = rightGround ? right.contactPoint : right.transform.position;
+        rb.AddForceAtPosition(up * smoothedForce, leftForcePoint);
+        rb.AddForceAtPosition(-up * smoothedForce, rightForcePoint);
+    }
 
-        Vector3 up = transform.up;
+    int GroundedWheelCount()
+    {
+        int count = 0;
+        foreach (var wheel in wheels)
+        {
+            if (wheel && wheel.isGrounded)
+                count++;
+        }
 
-        if (leftGround)
-            rb.AddForceAtPosition(up * antiRollForce, left.contactPoint);
+        return count;
+    }
 
-        if (rightGround)
-            rb.AddForceAtPosition(-up * antiRollForce, right.contactPoint);
+    float DriveGroundingScale(float throttle)
+    {
+        if (throttle > 0.001f)
+            return Mathf.Lerp(frontLiftDriveScale, 1f, AxleSupport01(FL, FR));
+
+        if (throttle < -0.001f)
+            return Mathf.Lerp(rearLiftReverseScale, 1f, AxleSupport01(BL, BR));
+
+        return 1f;
+    }
+
+    float AxleSupport01(WheelPhysics left, WheelPhysics right)
+    {
+        float normalForce = 0f;
+        if (left && left.isGrounded) normalForce += left.normalForce;
+        if (right && right.isGrounded) normalForce += right.normalForce;
+
+        float referenceForce = rb.mass * Physics.gravity.magnitude * Mathf.Max(0.1f, axleSupportReference);
+        return Mathf.Clamp01(normalForce / referenceForce);
+    }
+
+    static float SmoothFactor(float response)
+    {
+        return 1f - Mathf.Exp(-Mathf.Max(0f, response) * Time.fixedDeltaTime);
     }
 
     public void SetInputs(float throttle, float steer, bool brake)
