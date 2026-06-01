@@ -25,12 +25,7 @@ public class scoringAnimations : MonoBehaviour
 
     async void OnEnable()
     {
-        // TEMPORARY MOCK DATA FOR TESTING
-        scoreManager.finalScoreNumerical = 100001;
-        scoreManager.packagesDelivered = 42;
-        scoreManager.enemiesDestroyed = 117;
-        scoreManager.activeAbilitiesUsed = 9;
-        scoreManager.timeSurvivedSeconds = 385f;
+        scoreManager.calculateFinalScore();
 
         var root = GetComponent<UIDocument>().rootVisualElement;
 
@@ -43,7 +38,7 @@ public class scoringAnimations : MonoBehaviour
         var selectionText = root.Q<VisualElement>("ScoringText");
 
         var scoringScoreContainer = root.Q<VisualElement>("ScoringScoreContainer");
-        var mainMenuButton = root.Q<Button>("MainMenu");
+        mainMenuButton = root.Q<Button>("MainMenu");
 
         var scoringBoxContainer = root.Q<VisualElement>("ScoringBoxContainer");
         var packagesDeliveredLabel = root.Q<VisualElement>("PackagesDeliveredLabel");
