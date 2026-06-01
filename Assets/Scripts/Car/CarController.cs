@@ -3,6 +3,9 @@ using UnityEngine;
 [RequireComponent(typeof(Rigidbody))]
 public class CarController : MonoBehaviour
 {
+    public float MaxSpeed => maxSpeed;
+    public float Acceleration => acceleration;
+
     [Header("References")]
     [SerializeField] private Rigidbody rb;
     [SerializeField] private WheelPhysics[] wheels;
@@ -377,4 +380,9 @@ public class CarController : MonoBehaviour
         return Mathf.Sign(value) * Mathf.InverseLerp(deadZone, 1f, magnitude);
     }
 
+    public void SetOverdriveSpeeds(float targetMaxSpeed, float targetAcceleration)
+    {
+        maxSpeed = targetMaxSpeed;
+        acceleration = targetAcceleration;
+    }
 }
