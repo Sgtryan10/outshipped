@@ -96,7 +96,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c8aa2e87de6ed025fbedb3d0342d27a0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::pickupItem
-  type: 0
+  type: 4
   speed: 2
   height: 0.25
   rotationSpeed: 50
