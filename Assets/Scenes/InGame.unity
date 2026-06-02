@@ -1248,14 +1248,17 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 1460920163443697057, guid: e9156b349b9b44cfb841f6e32dae3276, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 2118522084}
   m_SourcePrefab: {fileID: 100100000, guid: e9156b349b9b44cfb841f6e32dae3276, type: 3}
 --- !u!114 &1244940494 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 1474544913221177702, guid: e9156b349b9b44cfb841f6e32dae3276, type: 3}
   m_PrefabInstance: {fileID: 1244940493}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
+  m_GameObject: {fileID: 2118522083}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fddc2a8b013a44799a61c3b7a8daac64, type: 3}
@@ -1266,7 +1269,7 @@ MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 4272824818664953030, guid: e9156b349b9b44cfb841f6e32dae3276, type: 3}
   m_PrefabInstance: {fileID: 1244940493}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
+  m_GameObject: {fileID: 2118522083}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 75334208458ff458e88964eb143d0628, type: 3}
@@ -2102,6 +2105,29 @@ MonoBehaviour:
   testPopupDescription: POPUP DESCRIPTION
   testPopupColor: {r: 1, g: 0.37254903, b: 0, a: 0.29803923}
   testPopupDuration: 3
+--- !u!1 &2118522083 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1460920163443697057, guid: e9156b349b9b44cfb841f6e32dae3276, type: 3}
+  m_PrefabInstance: {fileID: 1244940493}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &2118522084
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2118522083}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0eca596d7af52b243a6d41794fe6b5de, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::playerDeliveryManager
+  hasPackage: 0
+  baseTag: Base
+  depotTag: Depot
+  audioSource: {fileID: 802119722}
+  packagePickupSFX: {fileID: 8300000, guid: 4fb3c0e12fb0a3356807e34019c87b38, type: 3}
+  packageDeliverSFX: {fileID: 8300000, guid: 683af5baf803ff4b1baa60262e2e9184, type: 3}
 --- !u!1001 &5008283293111670121
 PrefabInstance:
   m_ObjectHideFlags: 0
