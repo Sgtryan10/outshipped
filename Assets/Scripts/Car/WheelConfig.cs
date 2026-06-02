@@ -31,6 +31,7 @@ public class WheelConfig : MonoBehaviour
     public float longitudinalGripResponse = 12f;
     [Range(0f, 1f)] public float combinedGripBlend = 0.55f;
     [Range(0f, 1f)] public float minimumLongitudinalGripScale = 0.55f;
+    public float steeringAngleSpeed = 500f;
 
     [Header("Rolling Resistance")]
     public float coastDragStiffness = 300f;
@@ -66,6 +67,7 @@ public class WheelConfig : MonoBehaviour
         longitudinalGripResponse = Mathf.Max(0f, longitudinalGripResponse);
         combinedGripBlend = Mathf.Clamp01(combinedGripBlend);
         minimumLongitudinalGripScale = Mathf.Clamp01(minimumLongitudinalGripScale);
+        steeringAngleSpeed = Mathf.Max(0f, steeringAngleSpeed);
         coastDragStiffness = Mathf.Max(0f, coastDragStiffness);
         wheelVisualFollowSpeed = Mathf.Max(0f, wheelVisualFollowSpeed);
         airborneVisualDroop = Mathf.Max(0f, airborneVisualDroop);

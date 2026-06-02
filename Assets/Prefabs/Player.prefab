@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3245843898374812315}
   - component: {fileID: 1243793850541168634}
+  - component: {fileID: 9054533623929866625}
   - component: {fileID: 4235079551041683584}
   - component: {fileID: 5523141053950087279}
   - component: {fileID: 2300769771137594071}
@@ -66,6 +67,18 @@ Rigidbody:
   m_Interpolate: 1
   m_Constraints: 0
   m_CollisionDetection: 2
+--- !u!114 &9054533623929866625
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 113652293207443568}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0eca596d7af52b243a6d41794fe6b5de, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::playerDeliveryManager
 --- !u!114 &4235079551041683584
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -100,12 +113,17 @@ MonoBehaviour:
   driveGroundingResponse: 8
   maxSteeringAngle: 36
   steerAtMaxSpeed: 14
-  steerResponse: 4.5
+  steerResponse: 8
   steerReturnSpeed: 6
   steerInputDeadZone: 0.05
   highSpeedSteerCurve: 0.65
   turnAssist: 1850
-  turnAssistResponse: 7
+  turnAssistResponse: 9
+  lowSpeedTurnAssistScale: 0.45
+  collisionRecoverySpeed: 2.5
+  collisionRecoveryTurnMultiplier: 1.45
+  collisionReleaseForce: 1600
+  collisionRecoveryDuration: 0.2
   downforce: 80
   corneringDownforce: 85
   rollStabilize: 9500
@@ -156,6 +174,7 @@ MonoBehaviour:
   longitudinalGripResponse: 12
   combinedGripBlend: 0.55
   minimumLongitudinalGripScale: 0.55
+  steeringAngleSpeed: 500
   coastDragStiffness: 300
   animateWheelMesh: 1
   wheelVisualFollowSpeed: 12
@@ -232,8 +251,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 7.39, y: 4.29, z: 4}
-  m_Center: {x: 0.69, y: 0.27, z: 0}
+  m_Size: {x: 7, y: 3.75, z: 3.65}
+  m_Center: {x: 0.69, y: 0.48, z: 0}
 --- !u!1 &677742815474923576
 GameObject:
   m_ObjectHideFlags: 0
