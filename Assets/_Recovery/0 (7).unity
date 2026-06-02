@@ -785,17 +785,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6f788ed155f818aac8a205396dbbae89, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::propSpawner
-  baseProp:
-    prefab: {fileID: 3686434849179897783, guid: 624deced009669710b629724354affe2, type: 3}
-    heightOffset: 10
-  depotProp:
-    prefab: {fileID: 1521890274011304472, guid: 21c2104a3636454a7988406dcf530b08, type: 3}
-    heightOffset: 0
-  treeProps: []
-  rockProps: []
+  basePrefab: {fileID: 3686434849179897783, guid: 624deced009669710b629724354affe2, type: 3}
+  depotPrefab: {fileID: 1521890274011304472, guid: 21c2104a3636454a7988406dcf530b08, type: 3}
+  treePrefabs: []
+  rockPrefabs: []
   spawnCountDepots: 4
   spawnCountTrees: 40
   spawnCountRocks: 40
+  heightOffset: 0
   baseSpawnZone: {fileID: 600736268}
   depotSpawnZone: {fileID: 1502877203}
   treeSpawnZone: {fileID: 567099109}
@@ -1177,7 +1174,7 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 400, y: 37.755302, z: 400}
+  m_Size: {x: 495, y: 37.755302, z: 495}
   m_Center: {x: 0, y: 6, z: 0}
 --- !u!198 &1507662439 stripped
 ParticleSystem:

@@ -1177,7 +1177,7 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 400, y: 37.755302, z: 400}
+  m_Size: {x: 495, y: 37.755302, z: 495}
   m_Center: {x: 0, y: 6, z: 0}
 --- !u!198 &1507662439 stripped
 ParticleSystem:

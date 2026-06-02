@@ -1,36 +1,64 @@
 using UnityEngine;
 
-public class propSpawner : MonoBehaviour
+public class PropSpawner : MonoBehaviour
 {
-    [Header("Spawn Settings")]
-    [SerializeField] private GameObject[] treePrefabs;
-    [SerializeField] private GameObject[] rockPrefabs;
+    [System.Serializable]
+    public struct PropData
+    {
+        public GameObject prefab;
+        public float heightOffset;
+    }
 
+    [Header("Spawn Settings")]
+    [SerializeField] private PropData baseProp;
+    [SerializeField] private PropData depotProp;
+    [SerializeField] private PropData[] treeProps;
+    [SerializeField] private PropData[] rockProps;
+
+    [SerializeField] private int spawnCountDepots = 4;
     [SerializeField] private int spawnCountTrees = 40;
     [SerializeField] private int spawnCountRocks = 40;
-    [SerializeField] private float heightOffset = 0f;
 
     [Header("Area Settings")]
+    [SerializeField] private BoxCollider baseSpawnZone;
+    [SerializeField] private BoxCollider depotSpawnZone;
     [SerializeField] private BoxCollider treeSpawnZone;
     [SerializeField] private BoxCollider rockSpawnZone;
     [SerializeField] private LayerMask groundLayer;
 
     void Start()
     {
+        // Spawn exactly 1 Base
+        if (baseSpawnZone != null && baseProp.prefab != null)
+        {
+            SpawnProps(baseSpawnZone, baseProp, 1);
+        }
+
+        if (depotSpawnZone != null && depotProp.prefab != null)
+        {
+            SpawnProps(depotSpawnZone, depotProp, spawnCountDepots);
+        }
+
         if (treeSpawnZone != null)
         {
-            SpawnProps(treeSpawnZone, treePrefabs, spawnCountTrees);
+            SpawnProps(treeSpawnZone, treeProps, spawnCountTrees);
         }
 
         if (rockSpawnZone != null)
         {
-            SpawnProps(rockSpawnZone, rockPrefabs, spawnCountRocks);
+            SpawnProps(rockSpawnZone, rockProps, spawnCountRocks);
         }
     }
 
-    void SpawnProps(BoxCollider spawnZone, GameObject[] propPrefabs, int spawnCount)
+    void SpawnProps(BoxCollider spawnZone, PropData propData, int spawnCount)
     {
-        if (propPrefabs == null || propPrefabs.Length == 0)
+        if (propData.prefab == null) return;
+        SpawnProps(spawnZone, new PropData[] { propData }, spawnCount);
+    }
+
+    void SpawnProps(BoxCollider spawnZone, PropData[] propDatas, int spawnCount)
+    {
+        if (propDatas == null || propDatas.Length == 0 || spawnZone == null)
         {
             return;
         }
@@ -44,20 +72,23 @@ public class propSpawner : MonoBehaviour
 
             Vector3 rayStart = new Vector3(randomX, bounds.max.y, randomZ);
             Vector3 spawnPosition;
+            float rayDistance = bounds.size.y + 10f;
 
-            if (Physics.Raycast(rayStart, Vector3.down, out RaycastHit hit, bounds.size.y + 5f, groundLayer))
+            int randomIndex = Random.Range(0, propDatas.Length);
+            PropData chosenProp = propDatas[randomIndex];
+
+            if (chosenProp.prefab == null) continue;
+
+            if (Physics.Raycast(rayStart, Vector3.down, out RaycastHit hit, rayDistance, groundLayer))
             {
-                spawnPosition = hit.point + new Vector3(0, heightOffset, 0);
+                spawnPosition = hit.point + new Vector3(0, chosenProp.heightOffset, 0);
             }
             else
             {
-                spawnPosition = new Vector3(randomX, bounds.center.y, randomZ);
+                spawnPosition = new Vector3(randomX, bounds.center.y + chosenProp.heightOffset, randomZ);
             }
 
-            int randomIndex = Random.Range(0, propPrefabs.Length);
-            GameObject chosenPrefab = propPrefabs[randomIndex];
-
-            Instantiate(chosenPrefab, spawnPosition, Quaternion.identity, transform);
+            Instantiate(chosenProp.prefab, spawnPosition, chosenProp.prefab.transform.rotation, transform);
         }
     }
 }
