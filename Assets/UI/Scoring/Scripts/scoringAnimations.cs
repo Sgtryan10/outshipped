@@ -20,9 +20,11 @@ public class scoringAnimations : MonoBehaviour
 
     [SerializeField] private float scoreRollUpDuration = 1.5f;
 
+    [Header("Audio Settings")]
     public AudioSource audioSource;
     public AudioClip clickSound;
     public AudioClip hoverSound;
+    [SerializeField] private AudioClip labelShowSound;
 
     private VisualElement screenFader;
     private Button mainMenuButton;
@@ -120,6 +122,9 @@ public class scoringAnimations : MonoBehaviour
             if (element == null) continue;
             element.RemoveFromClassList("fade-scale-hidden");
             element.AddToClassList("fade-scale-visible");
+
+            PlaySound(labelShowSound);
+
             await Task.Delay(80);
         }
 
