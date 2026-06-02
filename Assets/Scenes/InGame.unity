@@ -905,8 +905,22 @@ MonoBehaviour:
   depotProp:
     prefab: {fileID: 1521890274011304472, guid: 21c2104a3636454a7988406dcf530b08, type: 3}
     heightOffset: 0
-  treeProps: []
-  rockProps: []
+  treeProps:
+  - prefab: {fileID: 7107965402123500406, guid: 28272d60dc81940c0b8418734f73ece1, type: 3}
+    heightOffset: 0
+  - prefab: {fileID: 5467795213830825533, guid: 762629a462fa5461ca67538a99ea1e86, type: 3}
+    heightOffset: 0
+  - prefab: {fileID: 5497438262373460454, guid: 828300989bbcc494db77b1152f13abd6, type: 3}
+    heightOffset: 0
+  - prefab: {fileID: 6466589418591897993, guid: a07256a3358e942d08f06e934b9c2681, type: 3}
+    heightOffset: 0
+  rockProps:
+  - prefab: {fileID: 4587036509022841175, guid: 2040dfe76772840639392b590a08a954, type: 3}
+    heightOffset: 0
+  - prefab: {fileID: 8465928695243506275, guid: 8e571f2b7cde543ab86f960de777a2e2, type: 3}
+    heightOffset: 0
+  - prefab: {fileID: 990245261491764671, guid: ee67821003f8a4cf981ee1c1ba6d8170, type: 3}
+    heightOffset: 0
   spawnCountDepots: 4
   spawnCountTrees: 40
   spawnCountRocks: 40
@@ -1385,7 +1399,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1668576978}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.12614587, y: -0.00000005912851, z: 0.000000007518881, w: 0.9920117}
+  m_LocalRotation: {x: 0.1985753, y: -0.000000058417665, z: 0.000000011836012, w: 0.9800857}
   m_LocalPosition: {x: 0.0000014901161, y: 10.8, z: -12.499999}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -1762,7 +1776,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1730786170}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.12614587, y: -0.00000005912851, z: 0.00000000751888, w: 0.9920117}
+  m_LocalRotation: {x: 0.19857529, y: -0.000000058417662, z: 0.00000001183601, w: 0.9800857}
   m_LocalPosition: {x: 0.0000014901161, y: 10.8, z: -12.499999}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -1955,6 +1969,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3280437049211281185, guid: 3d547cc21944c64af921367ded561ade, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: a78db3aa485b243d098faeeb5daf4b1d, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
