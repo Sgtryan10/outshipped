@@ -443,12 +443,12 @@ MonoBehaviour:
   groundMask:
     serializedVersion: 2
     m_Bits: 8
-  springStrength: 34000
-  dampenStrength: 6800
-  maxSuspensionForce: 15000
-  restLen: 0.14
-  springTravel: 0.2
-  wheelRadius: 0.69
+  springStrength: 35000
+  dampenStrength: 4500
+  maxSuspensionForce: 50000
+  restLen: 0.3
+  springTravel: 0.15
+  wheelRadius: 0.33
   raycastRecoveryMargin: 0.2
   raycastReacquireExtension: 0.18
   suspensionDeadZone: 0.005
@@ -570,6 +570,8 @@ MonoBehaviour:
   projectileSpeed: 55
   projectileLifetime: 4
   baseDamage: 25
+  projColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
+  projGlowStrength: 4
 --- !u!1 &1846803589686105249
 GameObject:
   m_ObjectHideFlags: 0
@@ -1778,7 +1780,7 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 0.017, y: 0.02, z: 0.02}
+  m_Size: {x: 0.018, y: 0.02, z: 0.025}
   m_Center: {x: 0.0017058043, y: 1.4646465e-16, z: 0.004080633}
 --- !u!1 &8588743446569971749
 GameObject:
