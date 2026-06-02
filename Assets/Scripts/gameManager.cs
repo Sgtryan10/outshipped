@@ -2,10 +2,25 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using Unity.Cinemachine;
+using System.Collections.Generic;
 
 public class gameManager : MonoBehaviour
 {
     public static gameManager Instance { get; private set; }
+
+    [System.Serializable]
+    public struct TurretFireSFX
+    {
+        public string turretType;
+        public AudioClip fireSound;
+    }
+
+    [System.Serializable]
+    public struct TurretReloadSFX
+    {
+        public string turretType;
+        public AudioClip reloadSound;
+    }
 
     [Header("References")]
     [SerializeField] private HudController hudController;
@@ -21,6 +36,13 @@ public class gameManager : MonoBehaviour
     [SerializeField] private AudioClip slowPickupSFX;
     [SerializeField] private AudioClip armorPickupSFX;
 
+    [Tooltip("Map turret type names to specific firing audio clips.")]
+    [SerializeField] private List<TurretFireSFX> turretFireSounds;
+    [SerializeField] private AudioClip defaultFireSFX;
+
+    [Tooltip("Map turret type names to specific reloading audio clips.")]
+    [SerializeField] private List<TurretReloadSFX> turretReloadSounds;
+    [SerializeField] private AudioClip defaultReloadSFX;
     [Header("Player Health & Armor Settings")]
     [SerializeField] private int maxPlayerHealth = 100;
     private int currentPlayerHealth;
@@ -58,6 +80,9 @@ public class gameManager : MonoBehaviour
 
     private bool isGameOver = false;
 
+    private Dictionary<string, AudioClip> fireSoundLookup = new Dictionary<string, AudioClip>();
+    private Dictionary<string, AudioClip> reloadSoundLookup = new Dictionary<string, AudioClip>(); // --- NEW: Fast runtime lookup for reloads ---
+
     private void Awake()
     {
         if (Instance == null)
@@ -67,6 +92,38 @@ public class gameManager : MonoBehaviour
         else
         {
             Destroy(gameObject);
+        }
+
+        InitializeFireSounds();
+        InitializeReloadSounds(); // --- NEW: Initialize the lookup dictionary ---
+    }
+
+    private void InitializeFireSounds()
+    {
+        fireSoundLookup.Clear();
+        if (turretFireSounds == null) return;
+
+        foreach (var entry in turretFireSounds)
+        {
+            if (!string.IsNullOrEmpty(entry.turretType) && !fireSoundLookup.ContainsKey(entry.turretType))
+            {
+                fireSoundLookup.Add(entry.turretType, entry.fireSound);
+            }
+        }
+    }
+
+    // --- NEW: Helper to convert reload list data into a fast dictionary lookup ---
+    private void InitializeReloadSounds()
+    {
+        reloadSoundLookup.Clear();
+        if (turretReloadSounds == null) return;
+
+        foreach (var entry in turretReloadSounds)
+        {
+            if (!string.IsNullOrEmpty(entry.turretType) && !reloadSoundLookup.ContainsKey(entry.turretType))
+            {
+                reloadSoundLookup.Add(entry.turretType, entry.reloadSound);
+            }
         }
     }
 
@@ -158,6 +215,7 @@ public class gameManager : MonoBehaviour
             if (hasAmmo)
             {
                 turretController?.Fire(damageMultiplier);
+                PlayFiringSound();
             }
             else
             {
@@ -168,6 +226,47 @@ public class gameManager : MonoBehaviour
         if (Keyboard.current != null && Keyboard.current.rKey.wasPressedThisFrame)
         {
             ReloadWeapon();
+        }
+    }
+
+    private void PlayFiringSound()
+    {
+        if (audioSource == null) return;
+
+        AudioClip clipToPlay = defaultFireSFX;
+
+        if (!string.IsNullOrEmpty(currentTurretType) && fireSoundLookup.TryGetValue(currentTurretType, out AudioClip typeSpecificClip))
+        {
+            if (typeSpecificClip != null)
+            {
+                clipToPlay = typeSpecificClip;
+            }
+        }
+
+        if (clipToPlay != null)
+        {
+            audioSource.PlayOneShot(clipToPlay);
+        }
+    }
+
+    // --- NEW: Dynamically checks currentTurretType and plays the reload audio ---
+    private void PlayReloadSound()
+    {
+        if (audioSource == null) return;
+
+        AudioClip clipToPlay = defaultReloadSFX;
+
+        if (!string.IsNullOrEmpty(currentTurretType) && reloadSoundLookup.TryGetValue(currentTurretType, out AudioClip typeSpecificClip))
+        {
+            if (typeSpecificClip != null)
+            {
+                clipToPlay = typeSpecificClip;
+            }
+        }
+
+        if (clipToPlay != null)
+        {
+            audioSource.PlayOneShot(clipToPlay);
         }
     }
 
@@ -326,7 +425,6 @@ public class gameManager : MonoBehaviour
         slowActive = false;
     }
 
-    // Health and Armor Management
     public void TakeDamage(int damageAmount)
     {
         if (isGameOver) return;
@@ -358,7 +456,6 @@ public class gameManager : MonoBehaviour
         currentArmorStacks += stacks;
         hudController?.updateArmor(currentArmorStacks);
 
-        // --- NEW: Play armor pickup audio effect ---
         if (audioSource != null && armorPickupSFX != null)
         {
             audioSource.PlayOneShot(armorPickupSFX);
@@ -374,7 +471,6 @@ public class gameManager : MonoBehaviour
         hudController?.updateAmmo(currentMagazine, currentReserve);
     }
 
-    // Turret Management
     public void SetTurretType(string newType)
     {
         if (isGameOver) return;
@@ -399,13 +495,13 @@ public class gameManager : MonoBehaviour
     private IEnumerator ReloadRoutine()
     {
         isReloading = true;
+        PlayReloadSound();
         yield return new WaitForSeconds(reloadTime);
         currentMagazine = maxMagazineSize;
         hudController?.updateAmmo(currentMagazine, currentReserve);
         isReloading = false;
     }
 
-    // Loop Control
     public void OnPackageDelivered()
     {
         if (isGameOver) return;
