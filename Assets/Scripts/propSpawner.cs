@@ -28,40 +28,36 @@ public class PropSpawner : MonoBehaviour
 
     void Start()
     {
-        // Spawn exactly 1 Base
         if (baseSpawnZone != null && baseProp.prefab != null)
         {
-            SpawnProps(baseSpawnZone, baseProp, 1);
+            SpawnProps(baseSpawnZone, baseProp, 1, false);
         }
 
         if (depotSpawnZone != null && depotProp.prefab != null)
         {
-            SpawnProps(depotSpawnZone, depotProp, spawnCountDepots);
+            SpawnProps(depotSpawnZone, depotProp, spawnCountDepots, false);
         }
 
         if (treeSpawnZone != null)
         {
-            SpawnProps(treeSpawnZone, treeProps, spawnCountTrees);
+            SpawnProps(treeSpawnZone, treeProps, spawnCountTrees, true);
         }
 
         if (rockSpawnZone != null)
         {
-            SpawnProps(rockSpawnZone, rockProps, spawnCountRocks);
+            SpawnProps(rockSpawnZone, rockProps, spawnCountRocks, true);
         }
     }
 
-    void SpawnProps(BoxCollider spawnZone, PropData propData, int spawnCount)
+    void SpawnProps(BoxCollider spawnZone, PropData propData, int spawnCount, bool randomizeRotation)
     {
         if (propData.prefab == null) return;
-        SpawnProps(spawnZone, new PropData[] { propData }, spawnCount);
+        SpawnProps(spawnZone, new PropData[] { propData }, spawnCount, randomizeRotation);
     }
 
-    void SpawnProps(BoxCollider spawnZone, PropData[] propDatas, int spawnCount)
+    void SpawnProps(BoxCollider spawnZone, PropData[] propDatas, int spawnCount, bool randomizeRotation)
     {
-        if (propDatas == null || propDatas.Length == 0 || spawnZone == null)
-        {
-            return;
-        }
+        if (propDatas == null || propDatas.Length == 0 || spawnZone == null) return;
 
         Bounds bounds = spawnZone.bounds;
 
@@ -71,13 +67,14 @@ public class PropSpawner : MonoBehaviour
             float randomZ = Random.Range(bounds.min.z, bounds.max.z);
 
             Vector3 rayStart = new Vector3(randomX, bounds.max.y, randomZ);
-            Vector3 spawnPosition;
             float rayDistance = bounds.size.y + 10f;
 
             int randomIndex = Random.Range(0, propDatas.Length);
             PropData chosenProp = propDatas[randomIndex];
 
             if (chosenProp.prefab == null) continue;
+
+            Vector3 spawnPosition;
 
             if (Physics.Raycast(rayStart, Vector3.down, out RaycastHit hit, rayDistance, groundLayer))
             {
@@ -88,7 +85,22 @@ public class PropSpawner : MonoBehaviour
                 spawnPosition = new Vector3(randomX, bounds.center.y + chosenProp.heightOffset, randomZ);
             }
 
-            Instantiate(chosenProp.prefab, spawnPosition, chosenProp.prefab.transform.rotation, transform);
+            Quaternion spawnRotation;
+
+            if (randomizeRotation)
+            {
+                spawnRotation = Quaternion.Euler(
+                    chosenProp.prefab.transform.rotation.eulerAngles.x,
+                    Random.Range(0f, 360f),
+                    chosenProp.prefab.transform.rotation.eulerAngles.z
+                );
+            }
+            else
+            {
+                spawnRotation = chosenProp.prefab.transform.rotation;
+            }
+
+            Instantiate(chosenProp.prefab, spawnPosition, spawnRotation, transform);
         }
     }
 }
