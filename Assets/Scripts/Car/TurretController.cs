@@ -40,6 +40,8 @@ public class TurretController : MonoBehaviour
     [SerializeField] private float projectileSpeed = 55f;
     [SerializeField] private float projectileLifetime = 4f;
     [SerializeField] private int baseDamage = 25;
+    [SerializeField] private Color projColor = Color.yellow; 
+    [SerializeField] private float projGlowStrength = 4f;
 
     private readonly RaycastHit[] aimHits = new RaycastHit[16];
     private Transform cameraAimTarget;
@@ -99,6 +101,17 @@ public class TurretController : MonoBehaviour
             projectileObject.name = "Turret Projectile";
             projectileObject.transform.SetPositionAndRotation(position, rotation);
             projectileObject.transform.localScale = Vector3.one * 0.22f;
+            Renderer renderer = projectileObject.GetComponent<Renderer>();
+
+            if (renderer)
+            {
+                Material glowMaterial = new Material(renderer.material);
+                Color emissionColor = projColor * projGlowStrength;
+                glowMaterial.color = projColor;
+                glowMaterial.EnableKeyword("_EMISSION");
+                glowMaterial.SetColor("_EmissionColor", emissionColor);
+                renderer.material = glowMaterial;
+            }
         }
 
         Projectile projectile = projectileObject.GetComponent<Projectile>();
