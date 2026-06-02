@@ -651,15 +651,15 @@ MonoBehaviour:
   Composition:
     ScreenPosition: {x: 0, y: 0}
     DeadZone:
-      Enabled: 0
-      Size: {x: 0.2, y: 0.2}
+      Enabled: 1
+      Size: {x: 0.08, y: 0.06}
     HardLimits:
-      Enabled: 0
-      Size: {x: 0.8, y: 0.8}
+      Enabled: 1
+      Size: {x: 0.72, y: 0.62}
       Offset: {x: 0, y: 0}
   CenterOnActivate: 0
-  TargetOffset: {x: 2.2, y: 1, z: 0}
-  Damping: {x: 0.45, y: 0.5}
+  TargetOffset: {x: 0, y: 0, z: 0}
+  Damping: {x: 0.65, y: 0.85}
   Lookahead:
     Enabled: 0
     Time: 0
@@ -737,11 +737,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: Unity.Cinemachine::Unity.Cinemachine.CinemachineFollow
   TrackerSettings:
     BindingMode: 1
-    PositionDamping: {x: 0.5, y: 0.8, z: 0.75}
+    PositionDamping: {x: 0.45, y: 0.75, z: 0.6}
     AngularDampingMode: 0
-    RotationDamping: {x: 1.2, y: 0.75, z: 0}
+    RotationDamping: {x: 1.8, y: 0.85, z: 0.25}
     QuaternionDamping: 0.65
-  FollowOffset: {x: -12.5, y: 3.5, z: 0}
+  FollowOffset: {x: -12.5, y: 4.8, z: 0}
 --- !u!1 &1820910908
 GameObject:
   m_ObjectHideFlags: 0

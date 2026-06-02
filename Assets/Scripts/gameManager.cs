@@ -10,6 +10,7 @@ public class gameManager : MonoBehaviour
     [Header("References")]
     [SerializeField] private HudController hudController;
     [SerializeField] private CarController playerCar;
+    [SerializeField] private TurretController turretController;
     [SerializeField] private CinemachineCamera vCam;
 
     [Header("Player Health & Armor Settings")]
@@ -69,11 +70,17 @@ public class gameManager : MonoBehaviour
         isGameOver = false;
         Time.timeScale = 1f;
 
+        if (playerCar == null)
+            playerCar = FindAnyObjectByType<CarController>();
+
         if (playerCar != null)
         {
             originalMaxSpeed = playerCar.MaxSpeed;
             originalAcceleration = playerCar.Acceleration;
         }
+
+        if (turretController == null)
+            turretController = FindAnyObjectByType<TurretController>();
 
         if (vCam != null)
         {
@@ -141,7 +148,7 @@ public class gameManager : MonoBehaviour
 
             if (hasAmmo)
             {
-                // TODO: Trigger projectile/shooting logic here (Multiply base damage by damageMultiplier)
+                turretController?.Fire(damageMultiplier);
             }
             else
             {

@@ -535,6 +535,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::gameManager
   hudController: {fileID: 2093985128}
   playerCar: {fileID: 965189155}
+  turretController: {fileID: 0}
   vCam: {fileID: 1730786171}
   maxPlayerHealth: 100
   maxMagazineSize: 30
@@ -682,6 +683,10 @@ PrefabInstance:
     - target: {fileID: 113652293207443568, guid: e7f0b561d1ea5819aa201e9a05245ce0, type: 3}
       propertyPath: m_Name
       value: Player
+      objectReference: {fileID: 0}
+    - target: {fileID: 1243793850541168634, guid: e7f0b561d1ea5819aa201e9a05245ce0, type: 3}
+      propertyPath: m_Mass
+      value: 1500
       objectReference: {fileID: 0}
     - target: {fileID: 3245843898374812315, guid: e7f0b561d1ea5819aa201e9a05245ce0, type: 3}
       propertyPath: m_LocalPosition.x
@@ -1670,15 +1675,15 @@ MonoBehaviour:
   Composition:
     ScreenPosition: {x: 0, y: 0}
     DeadZone:
-      Enabled: 0
-      Size: {x: 0.2, y: 0.2}
+      Enabled: 1
+      Size: {x: 0.08, y: 0.06}
     HardLimits:
-      Enabled: 0
-      Size: {x: 0.8, y: 0.8}
+      Enabled: 1
+      Size: {x: 0.72, y: 0.62}
       Offset: {x: 0, y: 0}
   CenterOnActivate: 0
-  TargetOffset: {x: 2.2, y: 2, z: 0}
-  Damping: {x: 0.35, y: 0.4}
+  TargetOffset: {x: 0, y: 0, z: 0}
+  Damping: {x: 0.65, y: 0.85}
   Lookahead:
     Enabled: 0
     Time: 0
@@ -1698,9 +1703,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: Unity.Cinemachine::Unity.Cinemachine.CinemachineFollow
   TrackerSettings:
     BindingMode: 1
-    PositionDamping: {x: 0.25, y: 0.5, z: 0.35}
+    PositionDamping: {x: 0.45, y: 0.75, z: 0.6}
     AngularDampingMode: 0
-    RotationDamping: {x: 1.4, y: 0.45, z: 0}
+    RotationDamping: {x: 1.8, y: 0.85, z: 0.25}
     QuaternionDamping: 0.45
   FollowOffset: {x: -12.5, y: 5.8, z: 0}
 --- !u!1 &2093985125

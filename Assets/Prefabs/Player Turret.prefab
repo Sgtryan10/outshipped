@@ -315,7 +315,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4aae0ba333add438e8e8235cd7a73ab6, type: 3}
-  m_Name: 
+  m_Name:
   m_EditorClassIdentifier: Assembly-CSharp::WheelPhysics
   isFrontWheel: 1
   isLeftWheel: 0
@@ -1107,6 +1107,7 @@ GameObject:
   - component: {fileID: 3459599225445501340}
   - component: {fileID: 2370180758751477971}
   - component: {fileID: 415747359750162568}
+  - component: {fileID: 7291423884611229001}
   m_Layer: 0
   m_Name: Player Turret
   m_TagString: Player
@@ -1193,12 +1194,17 @@ MonoBehaviour:
   driveGroundingResponse: 8
   maxSteeringAngle: 36
   steerAtMaxSpeed: 14
-  steerResponse: 4.5
+  steerResponse: 8
   steerReturnSpeed: 6
   steerInputDeadZone: 0.05
   highSpeedSteerCurve: 0.65
   turnAssist: 1850
-  turnAssistResponse: 7
+  turnAssistResponse: 9
+  lowSpeedTurnAssistScale: 0.45
+  collisionRecoverySpeed: 2.5
+  collisionRecoveryTurnMultiplier: 1.45
+  collisionReleaseForce: 1600
+  collisionRecoveryDuration: 0.2
   downforce: 80
   corneringDownforce: 85
   rollStabilize: 9500
@@ -1249,6 +1255,7 @@ MonoBehaviour:
   longitudinalGripResponse: 12
   combinedGripBlend: 0.55
   minimumLongitudinalGripScale: 0.55
+  steeringAngleSpeed: 500
   coastDragStiffness: 300
   animateWheelMesh: 1
   wheelVisualFollowSpeed: 12
@@ -1323,8 +1330,51 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 7.39, y: 4.29, z: 4}
-  m_Center: {x: 0.69, y: 0.27, z: 0}
+  m_Size: {x: 7, y: 3.75, z: 3.65}
+  m_Center: {x: 0.69, y: 0.48, z: 0}
+--- !u!114 &7291423884611229001
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6179272031855374094}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fddc2a8b013a44799a61c3b7a8daac64, type: 3}
+  m_Name:
+  m_EditorClassIdentifier: Assembly-CSharp::TurretController
+  yawPivot: {fileID: 3567296604216384919}
+  pitchPivot: {fileID: 471004470640940011}
+  barrel: {fileID: 7490028067926434027}
+  muzzle: {fileID: 7490028067926434027}
+  virtualCamera: {fileID: 0}
+  localFiringAxis: {x: 0, y: -1, z: 0}
+  aimMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  maxAimDistance: 300
+  yawSpeed: 260
+  pitchSpeed: 180
+  maxTurretYaw: 48
+  maxTurretPitchUp: 16
+  maxTurretPitchDown: 7
+  cameraAimDistance: 14
+  cameraAimHeight: 1.5
+  cameraAimSmoothTime: 0.28
+  cameraComposerDamping: {x: 0.65, y: 0.85}
+  cameraDeadZone: {x: 0.08, y: 0.06}
+  cameraHardLimits: {x: 0.72, y: 0.62}
+  cameraPositionDamping: {x: 0.45, y: 0.75, z: 0.6}
+  cameraRotationDamping: {x: 1.8, y: 0.85, z: 0.25}
+  maxCameraYaw: 38
+  maxCameraPitchUp: 13
+  maxCameraPitchDown: 6
+  projectilePrefab: {fileID: 0}
+  muzzleForwardOffset: 1.2
+  projectileSpeed: 55
+  projectileLifetime: 4
+  baseDamage: 25
 --- !u!1 &6211152059581603283
 GameObject:
   m_ObjectHideFlags: 0
