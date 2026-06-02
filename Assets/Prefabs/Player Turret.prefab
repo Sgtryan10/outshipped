@@ -315,7 +315,6 @@ GameObject:
   - component: {fileID: 5372501872205966627}
   - component: {fileID: 3755684377359741995}
   - component: {fileID: 5521095255619042919}
-  - component: {fileID: 5251222087844302897}
   - component: {fileID: 1474544913221177702}
   m_Layer: 0
   m_Name: Player Turret
@@ -528,27 +527,6 @@ MonoBehaviour:
   skidVolume: 0.8
   trailAlphaAtFullSlip: 0.8
   particleMinSpeed: 5
---- !u!65 &5251222087844302897
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1460920163443697057}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 7, y: 3.75, z: 3.65}
-  m_Center: {x: 0.69, y: 0.48, z: 0}
 --- !u!114 &1474544913221177702
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1695,6 +1673,7 @@ GameObject:
   - component: {fileID: 5951053261003451196}
   - component: {fileID: 8253214961684924609}
   - component: {fileID: 6865730236561664537}
+  - component: {fileID: 3730853690311579723}
   m_Layer: 0
   m_Name: Car Mesh
   m_TagString: Untagged
@@ -1780,6 +1759,27 @@ MeshRenderer:
   m_SortingOrder: 0
   m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!65 &3730853690311579723
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8499775978339825440}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.017, y: 0.02, z: 0.02}
+  m_Center: {x: 0.0017058043, y: 1.4646465e-16, z: 0.004080633}
 --- !u!1 &8588743446569971749
 GameObject:
   m_ObjectHideFlags: 0
