@@ -1256,6 +1256,13 @@ MonoBehaviour:
   combinedGripBlend: 0.55
   minimumLongitudinalGripScale: 0.55
   steeringAngleSpeed: 500
+  enableStepAssist: 1
+  stepAssistProbeDistance: 0.7
+  stepAssistMaxHeight: 0.42
+  stepAssistLowerProbeHeight: 0.08
+  stepAssistLiftForce: 6500
+  stepAssistForwardForce: 1800
+  stepAssistMaxSpeed: 12
   coastDragStiffness: 300
   animateWheelMesh: 1
   wheelVisualFollowSpeed: 12

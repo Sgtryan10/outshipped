@@ -281,6 +281,7 @@ public class WheelPhysics : MonoBehaviour
         Vector3 driveForce = forward * smoothedLongitudinalForce;
         Vector3 forcePoint = TractionForcePoint(lastHit.point);
         rb.AddForceAtPosition(driveForce, forcePoint);
+        ApplyStepAssist(accelInput, forward);
         DrawForce(forcePoint, driveForce, Color.blue);
     }
 
@@ -328,6 +329,66 @@ public class WheelPhysics : MonoBehaviour
     {
         float t = 1f - Mathf.Exp(-Mathf.Max(0f, response) * Time.fixedDeltaTime);
         return Mathf.Lerp(current, target, t);
+    }
+
+    void ApplyStepAssist(float accelInput, Vector3 wheelForward)
+    {
+        if (!config.enableStepAssist || Mathf.Abs(accelInput) <= 0.001f)
+            return;
+
+        float directionSign = Mathf.Sign(accelInput);
+        bool isLeadingWheel = directionSign > 0f ? isFrontWheel : !isFrontWheel;
+        if (!isLeadingWheel || rb.linearVelocity.magnitude > config.stepAssistMaxSpeed)
+            return;
+
+        Vector3 up = rb.transform.up;
+        Vector3 direction = wheelForward * directionSign;
+        Vector3 lowOrigin = contactPoint + up * config.stepAssistLowerProbeHeight;
+        Vector3 highOrigin = contactPoint + up * config.stepAssistMaxHeight;
+        bool lowBlocked = TryGetObstacleHit(lowOrigin, direction, config.stepAssistProbeDistance);
+        bool highBlocked = TryGetObstacleHit(highOrigin, direction, config.stepAssistProbeDistance);
+
+        if (config.drawDebugForces)
+        {
+            Debug.DrawRay(lowOrigin, direction * config.stepAssistProbeDistance, lowBlocked ? Color.yellow : Color.gray);
+            Debug.DrawRay(highOrigin, direction * config.stepAssistProbeDistance, highBlocked ? Color.red : Color.green);
+        }
+
+        if (!lowBlocked || highBlocked)
+            return;
+
+        float throttle = Mathf.Abs(accelInput);
+        Vector3 assistForce =
+            up * config.stepAssistLiftForce +
+            direction * config.stepAssistForwardForce;
+        rb.AddForce(assistForce * throttle, ForceMode.Force);
+        DrawForce(rb.worldCenterOfMass, assistForce * throttle, Color.white);
+    }
+
+    bool TryGetObstacleHit(Vector3 origin, Vector3 direction, float distance)
+    {
+        int hitCount = Physics.RaycastNonAlloc(
+            origin,
+            direction,
+            groundHits,
+            distance,
+            Physics.DefaultRaycastLayers,
+            QueryTriggerInteraction.Ignore);
+
+        for (int i = 0; i < hitCount; i++)
+        {
+            RaycastHit candidate = groundHits[i];
+            if (!candidate.collider)
+                continue;
+
+            Transform hitTransform = candidate.collider.transform;
+            if (candidate.rigidbody == rb || hitTransform.IsChildOf(rb.transform))
+                continue;
+
+            return true;
+        }
+
+        return false;
     }
 
     Vector3 TractionForcePoint(Vector3 contact)
