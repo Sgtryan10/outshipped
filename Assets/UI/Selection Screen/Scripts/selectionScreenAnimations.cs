@@ -26,10 +26,21 @@ public class selectionScreenAnimations : MonoBehaviour
     private VisualElement freighter;
     private VisualElement monarch;
 
+    public AudioSource audioSource;
+    public AudioClip clickSound;
+    public AudioClip hoverSound;
+
     async void OnEnable()
     {
         var uiDoc = GetComponent<UIDocument>();
         var root = uiDoc.rootVisualElement;
+
+        var allButtons = root.Query<Button>().ToList();
+        foreach (var btn in allButtons)
+        {
+            btn.RegisterCallback<ClickEvent>(OnButtonClick);
+            btn.RegisterCallback<MouseEnterEvent>(OnButtonHover);
+        }
 
         fadeOverlay = root.Q<VisualElement>("FadeOverlay");
         if (fadeOverlay != null)
@@ -37,7 +48,6 @@ public class selectionScreenAnimations : MonoBehaviour
             fadeOverlay.pickingMode = PickingMode.Ignore;
         }
 
-        // Initial Delay
         await Task.Delay(2000);
 
         topBar = root.Q<VisualElement>("TopBar");
@@ -81,6 +91,7 @@ public class selectionScreenAnimations : MonoBehaviour
         foreach (var col in columns)
         {
             col.RegisterCallback<ClickEvent>(OnColumnClicked);
+            col.RegisterCallback<MouseEnterEvent>(OnColumnHover);
         }
     }
 
@@ -89,6 +100,8 @@ public class selectionScreenAnimations : MonoBehaviour
         VisualElement clickedColumn = evt.currentTarget as VisualElement;
 
         if (clickedColumn == null) return;
+
+        PlaySound(clickSound);
 
         if (clickedColumn == workhorse)
         {
@@ -161,5 +174,34 @@ public class selectionScreenAnimations : MonoBehaviour
         await Task.Delay(1000);
 
         SceneManager.LoadScene("InGame");
+    }
+
+    private void OnColumnHover(MouseEnterEvent evt)
+    {
+        if (columns != null && evt.currentTarget is VisualElement col)
+        {
+            if (col.parent != null && col.parent.ClassListContains("allow-hover"))
+            {
+                PlaySound(hoverSound);
+            }
+        }
+    }
+
+    private void OnButtonClick(ClickEvent evt)
+    {
+        PlaySound(clickSound);
+    }
+
+    private void OnButtonHover(MouseEnterEvent evt)
+    {
+        PlaySound(hoverSound);
+    }
+
+    private void PlaySound(AudioClip clip)
+    {
+        if (audioSource != null && clip != null)
+        {
+            audioSource.PlayOneShot(clip);
+        }
     }
 }

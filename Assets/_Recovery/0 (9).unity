@@ -311,108 +311,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &305804781 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 1117515184959784583, guid: e7f0b561d1ea5819aa201e9a05245ce0, type: 3}
-  m_PrefabInstance: {fileID: 911269347}
-  m_PrefabAsset: {fileID: 0}
---- !u!82 &305804783
-AudioSource:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 305804781}
-  m_Enabled: 1
-  serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 0}
-  m_Resource: {fileID: 8300000, guid: ce9db53461bfbe4178f8829426b9ec11, type: 3}
-  m_PlayOnAwake: 1
-  m_Volume: 0.3
-  m_Pitch: 1
-  Loop: 0
-  Mute: 0
-  Spatialize: 0
-  SpatializePostEffects: 0
-  Priority: 128
-  DopplerLevel: 1
-  MinDistance: 1
-  MaxDistance: 500
-  Pan2D: 0
-  rolloffMode: 0
-  BypassEffects: 0
-  BypassListenerEffects: 0
-  BypassReverbZones: 0
-  rolloffCustomCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 1
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    - serializedVersion: 3
-      time: 1
-      value: 0
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  panLevelCustomCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 0
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  spreadCustomCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 0
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  reverbZoneMixCustomCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 1
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
 --- !u!1 &438158804
 GameObject:
   m_ObjectHideFlags: 0
@@ -637,7 +535,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::gameManager
   hudController: {fileID: 2093985128}
   playerCar: {fileID: 965189155}
-  turretController: {fileID: 0}
   vCam: {fileID: 1730786171}
   maxPlayerHealth: 100
   maxMagazineSize: 30
@@ -786,9 +683,9 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
-    - target: {fileID: 1243793850541168634, guid: e7f0b561d1ea5819aa201e9a05245ce0, type: 3}
-      propertyPath: m_Mass
-      value: 1500
+    - target: {fileID: 2613985950480543803, guid: e7f0b561d1ea5819aa201e9a05245ce0, type: 3}
+      propertyPath: panLevelCustomCurve.m_Curve.Array.data[0].value
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3245843898374812315, guid: e7f0b561d1ea5819aa201e9a05245ce0, type: 3}
       propertyPath: m_LocalPosition.x
@@ -831,10 +728,6 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5466047859190005165, guid: e7f0b561d1ea5819aa201e9a05245ce0, type: 3}
-      propertyPath: skidSource
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 5466047859190005165, guid: e7f0b561d1ea5819aa201e9a05245ce0, type: 3}
       propertyPath: skidParticles.Array.size
       value: 2
       objectReference: {fileID: 0}
@@ -849,10 +742,7 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 1117515184959784583, guid: e7f0b561d1ea5819aa201e9a05245ce0, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 305804783}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e7f0b561d1ea5819aa201e9a05245ce0, type: 3}
 --- !u!4 &911269348 stripped
 Transform:
@@ -1784,15 +1674,15 @@ MonoBehaviour:
   Composition:
     ScreenPosition: {x: 0, y: 0}
     DeadZone:
-      Enabled: 1
-      Size: {x: 0.08, y: 0.06}
+      Enabled: 0
+      Size: {x: 0.2, y: 0.2}
     HardLimits:
-      Enabled: 1
-      Size: {x: 0.72, y: 0.62}
+      Enabled: 0
+      Size: {x: 0.8, y: 0.8}
       Offset: {x: 0, y: 0}
   CenterOnActivate: 0
-  TargetOffset: {x: 0, y: 0, z: 0}
-  Damping: {x: 0.65, y: 0.85}
+  TargetOffset: {x: 2.2, y: 2, z: 0}
+  Damping: {x: 0.35, y: 0.4}
   Lookahead:
     Enabled: 0
     Time: 0
@@ -1812,9 +1702,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: Unity.Cinemachine::Unity.Cinemachine.CinemachineFollow
   TrackerSettings:
     BindingMode: 1
-    PositionDamping: {x: 0.45, y: 0.75, z: 0.6}
+    PositionDamping: {x: 0.25, y: 0.5, z: 0.35}
     AngularDampingMode: 0
-    RotationDamping: {x: 1.8, y: 0.85, z: 0.25}
+    RotationDamping: {x: 1.4, y: 0.45, z: 0}
     QuaternionDamping: 0.45
   FollowOffset: {x: -12.5, y: 5.8, z: 0}
 --- !u!1 &2093985125

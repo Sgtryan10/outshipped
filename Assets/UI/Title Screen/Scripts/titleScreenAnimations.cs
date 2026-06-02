@@ -1,9 +1,13 @@
 using UnityEngine;
 using UnityEngine.UIElements;
 using System.Threading.Tasks;
+using UnityEngine.InputSystem;
 
 public class titleScreenAnimations : MonoBehaviour
 {
+    [Header("Audio Settings")]
+    [SerializeField] private AudioSource audioSource;
+    [SerializeField] private AudioClip interactionSound;
 
     async void OnEnable()
     {
@@ -92,6 +96,26 @@ public class titleScreenAnimations : MonoBehaviour
             startText.AddToClassList("start-visible");
 
             _ = PulseRoutine(startText);
+        }
+    }
+
+    private void Update()
+    {
+        bool spacePressed = Keyboard.current != null && Keyboard.current.spaceKey.wasPressedThisFrame;
+        bool leftClickPressed = Mouse.current != null && Mouse.current.leftButton.wasPressedThisFrame;
+
+        if (spacePressed || leftClickPressed)
+        {
+            PlayInteractionSound();
+        }
+    }
+
+    private void PlayInteractionSound()
+    {
+
+        if (audioSource != null && interactionSound != null)
+        {
+            audioSource.PlayOneShot(interactionSound);
         }
     }
 

@@ -9,10 +9,21 @@ public class manualAnimations : MonoBehaviour
     private VisualElement screenFader;
     private Button mainMenuButton;
 
+    public AudioSource audioSource;
+    public AudioClip clickSound;
+    public AudioClip hoverSound;
+
     void OnEnable() {
         _uiManager = Object.FindAnyObjectByType<PreGameUIManager>();
 
         var root = GetComponent<UIDocument>().rootVisualElement;
+
+        var allButtons = root.Query<Button>().ToList();
+        foreach (var btn in allButtons)
+        {
+            btn.RegisterCallback<ClickEvent>(OnButtonClick);
+            btn.RegisterCallback<MouseEnterEvent>(OnButtonHover);
+        }
 
         mainMenuButton = root.Q<Button>("MainMenu");
 
@@ -41,6 +52,24 @@ public class manualAnimations : MonoBehaviour
         if (_uiManager != null)
         {
             _uiManager.ReturnToMainMenu(this.gameObject);
+        }
+    }
+
+    private void OnButtonClick(ClickEvent evt)
+    {
+        PlaySound(clickSound);
+    }
+
+    private void OnButtonHover(MouseEnterEvent evt)
+    {
+        PlaySound(hoverSound);
+    }
+
+    private void PlaySound(AudioClip clip)
+    {
+        if (audioSource != null && clip != null)
+        {
+            audioSource.PlayOneShot(clip);
         }
     }
 }

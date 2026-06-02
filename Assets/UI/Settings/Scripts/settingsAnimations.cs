@@ -12,12 +12,23 @@ public class settingsAnimations : MonoBehaviour
     private int _selectedHeight = 1080;
     private int _selectedQualityIndex = 3;
 
+    public AudioSource audioSource;
+    public AudioClip clickSound;
+    public AudioClip hoverSound;
+
     void OnEnable()
     {
         _uiManager = Object.FindAnyObjectByType<PreGameUIManager>();
 
         var uiDoc = GetComponent<UIDocument>();
         var root = uiDoc.rootVisualElement;
+
+        var allButtons = root.Query<Button>().ToList();
+        foreach (var btn in allButtons)
+        {
+            btn.RegisterCallback<ClickEvent>(OnButtonClick);
+            btn.RegisterCallback<MouseEnterEvent>(OnButtonHover);
+        }
 
         _resolutionContainer = root.Q<VisualElement>("ResolutionContainer");
         _qualityContainer = root.Q<VisualElement>("QualityContainer");
@@ -164,6 +175,24 @@ public class settingsAnimations : MonoBehaviour
         if (_uiManager != null)
         {
             _uiManager.ReturnToMainMenu(this.gameObject);
+        }
+    }
+
+    private void OnButtonClick(ClickEvent evt)
+    {
+        PlaySound(clickSound);
+    }
+
+    private void OnButtonHover(MouseEnterEvent evt)
+    {
+        PlaySound(hoverSound);
+    }
+
+    private void PlaySound(AudioClip clip)
+    {
+        if (audioSource != null && clip != null)
+        {
+            audioSource.PlayOneShot(clip);
         }
     }
 }

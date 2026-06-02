@@ -20,6 +20,10 @@ public class scoringAnimations : MonoBehaviour
 
     [SerializeField] private float scoreRollUpDuration = 1.5f;
 
+    public AudioSource audioSource;
+    public AudioClip clickSound;
+    public AudioClip hoverSound;
+
     private VisualElement screenFader;
     private Button mainMenuButton;
 
@@ -28,6 +32,13 @@ public class scoringAnimations : MonoBehaviour
         scoreManager.calculateFinalScore();
 
         var root = GetComponent<UIDocument>().rootVisualElement;
+
+        var allButtons = root.Query<Button>().ToList();
+        foreach (var btn in allButtons)
+        {
+            btn.RegisterCallback<ClickEvent>(OnButtonClick);
+            btn.RegisterCallback<MouseEnterEvent>(OnButtonHover);
+        }
 
         var scoreLetter = root.Q<VisualElement>("ScoreLetter");
         var scoreNumerical = root.Q<Label>("ScoreNumerical");
@@ -91,7 +102,6 @@ public class scoringAnimations : MonoBehaviour
             mainMenuButton.AddToClassList("fade-scale-hidden");
         }
 
-        // Initial Delay
         await Task.Delay(2000);
 
         if (topBar != null) topBar.AddToClassList("top-bar-expanded");
@@ -244,5 +254,23 @@ public class scoringAnimations : MonoBehaviour
         await Task.Delay(600);
 
         SceneManager.LoadScene("preGame");
+    }
+
+    private void OnButtonClick(ClickEvent evt)
+    {
+        PlaySound(clickSound);
+    }
+
+    private void OnButtonHover(MouseEnterEvent evt)
+    {
+        PlaySound(hoverSound);
+    }
+
+    private void PlaySound(AudioClip clip)
+    {
+        if (audioSource != null && clip != null)
+        {
+            audioSource.PlayOneShot(clip);
+        }
     }
 }
