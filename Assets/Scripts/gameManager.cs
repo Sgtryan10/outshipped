@@ -13,15 +13,21 @@ public class gameManager : MonoBehaviour
     [SerializeField] private TurretController turretController;
     [SerializeField] private CinemachineCamera vCam;
 
+    [Header("Audio Settings")]
+    [SerializeField] private AudioSource audioSource;
+    [SerializeField] private AudioClip ampedPickupSFX;
+    [SerializeField] private AudioClip overdrivePickupSFX;
+    [SerializeField] private AudioClip empPickupSFX;
+    [SerializeField] private AudioClip slowPickupSFX;
+    [SerializeField] private AudioClip armorPickupSFX;
+
     [Header("Player Health & Armor Settings")]
     [SerializeField] private int maxPlayerHealth = 100;
     private int currentPlayerHealth;
     private int currentArmorStacks = 0;
 
     [Header("Weapon & Ammo Settings")]
-    // [SerializeField] private string initialTurretType = "STANDARD";
     [SerializeField] private int maxMagazineSize = 30;
-    // [SerializeField] private int startingReserveAmmo = 90;
 
     [Header("Camera & FOV Settings")]
     [SerializeField] private float overdriveFOV = 80f;
@@ -81,6 +87,9 @@ public class gameManager : MonoBehaviour
 
         if (turretController == null)
             turretController = FindAnyObjectByType<TurretController>();
+
+        if (audioSource == null)
+            audioSource = GetComponent<AudioSource>();
 
         if (vCam != null)
         {
@@ -174,6 +183,8 @@ public class gameManager : MonoBehaviour
             abilityName == "SLOW"
         );
 
+        PlayPickupSound(abilityName);
+
         if (hudController != null)
         {
             switch (abilityName)
@@ -191,6 +202,34 @@ public class gameManager : MonoBehaviour
                     hudController.TriggerPopup("SLOW FIELD READY", "Press 'E' to create a slowing field (20s)", new Color(1f, 0.37254902f, 0f), 3.0f);
                     break;
             }
+        }
+    }
+
+    private void PlayPickupSound(string abilityName)
+    {
+        if (audioSource == null) return;
+
+        AudioClip clipToPlay = null;
+
+        switch (abilityName)
+        {
+            case "AMPED":
+                clipToPlay = ampedPickupSFX;
+                break;
+            case "OVERDRIVE":
+                clipToPlay = overdrivePickupSFX;
+                break;
+            case "EMP":
+                clipToPlay = empPickupSFX;
+                break;
+            case "SLOW":
+                clipToPlay = slowPickupSFX;
+                break;
+        }
+
+        if (clipToPlay != null)
+        {
+            audioSource.PlayOneShot(clipToPlay);
         }
     }
 
@@ -229,7 +268,6 @@ public class gameManager : MonoBehaviour
 
         damageMultiplier = 1f;
         ampedActive = false;
-
     }
 
     private IEnumerator OverdriveRoutine()
@@ -275,24 +313,16 @@ public class gameManager : MonoBehaviour
     private IEnumerator EmpRoutine()
     {
         empActive = true;
-
-        // TODO: EMP logic here
-
         hudController?.updateActiveAbility(false, false, false, false);
         yield return new WaitForSeconds(20f);
-
         empActive = false;
     }
 
     private IEnumerator SlowRoutine()
     {
         slowActive = true;
-
-        // TODO: Slow logic here
-
         hudController?.updateActiveAbility(false, false, false, false);
         yield return new WaitForSeconds(20f);
-
         slowActive = false;
     }
 
@@ -328,6 +358,12 @@ public class gameManager : MonoBehaviour
         currentArmorStacks += stacks;
         hudController?.updateArmor(currentArmorStacks);
 
+        // --- NEW: Play armor pickup audio effect ---
+        if (audioSource != null && armorPickupSFX != null)
+        {
+            audioSource.PlayOneShot(armorPickupSFX);
+        }
+
         hudController?.TriggerPopup("ARMOR REINFORCED", "Armor plating nullifies one damage instance", new Color(0.2f, 0.2f, 0.2f), 3.0f);
     }
 
@@ -357,19 +393,15 @@ public class gameManager : MonoBehaviour
     public void ReloadWeapon()
     {
         if (isGameOver || isReloading || currentMagazine == maxMagazineSize) return;
-
         StartCoroutine(ReloadRoutine());
     }
 
     private IEnumerator ReloadRoutine()
     {
         isReloading = true;
-
         yield return new WaitForSeconds(reloadTime);
-
         currentMagazine = maxMagazineSize;
         hudController?.updateAmmo(currentMagazine, currentReserve);
-
         isReloading = false;
     }
 
@@ -378,25 +410,25 @@ public class gameManager : MonoBehaviour
     {
         if (isGameOver) return;
 
-            int packagesToAdd = 1;
+        int packagesToAdd = 1;
 
-            if (GameSelection.SelectedPassive == "DELIVERY DUPLICATION")
+        if (GameSelection.SelectedPassive == "DELIVERY DUPLICATION")
+        {
+            if (Random.value <= 0.5f)
             {
-                if (Random.value <= 0.5f)
-                {
-                    packagesToAdd = 2;
-                    hudController?.TriggerPopup("DELIVERY DUPLICATED", "Bonus delivery processed", new Color(0.2f, 0.2f, 0.2f), 3.0f);
-                }
+                packagesToAdd = 2;
+                hudController?.TriggerPopup("DELIVERY DUPLICATED", "Bonus delivery processed", new Color(0.2f, 0.2f, 0.2f), 3.0f);
             }
+        }
 
-            scoreManager.packagesDelivered += packagesToAdd;
-            hudController?.updatePackagesDelivered(scoreManager.packagesDelivered);
+        scoreManager.packagesDelivered += packagesToAdd;
+        hudController?.updatePackagesDelivered(scoreManager.packagesDelivered);
 
-            if (GameSelection.SelectedPassive == "HEAL ON DELIVERY")
-            {
-                int totalHeal = Mathf.RoundToInt(maxPlayerHealth * 0.25f) * packagesToAdd;
-                Heal(totalHeal);
-            }
+        if (GameSelection.SelectedPassive == "HEAL ON DELIVERY")
+        {
+            int totalHeal = Mathf.RoundToInt(maxPlayerHealth * 0.25f) * packagesToAdd;
+            Heal(totalHeal);
+        }
     }
 
     public void OnEnemyDestroyed()
