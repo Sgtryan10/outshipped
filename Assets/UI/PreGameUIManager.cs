@@ -23,8 +23,6 @@ public class PreGameUIManager : MonoBehaviour
     private bool _hasTransitionedFromTitle = false;
     private bool _isTransitioning = false;
 
-    private bool _mainMenuEventsSetup = false;
-
     async void Start()
     {
         if (titleScreen != null) titleScreen.SetActive(true);
@@ -59,8 +57,6 @@ public class PreGameUIManager : MonoBehaviour
 
     private void SetupMainMenuEvents()
     {
-        if (_mainMenuEventsSetup) return;
-
         var uiDoc = mainMenu.GetComponent<UIDocument>();
         if (uiDoc == null) return;
 
@@ -73,11 +69,10 @@ public class PreGameUIManager : MonoBehaviour
             if (btn != null)
             {
                 var targetMenu = mapping.menuGO;
+
                 btn.clicked += () => _ = TransitionEffect(mainMenu, targetMenu);
             }
         }
-
-        _mainMenuEventsSetup = true;
     }
 
     private async Task TransitionEffect(GameObject from, GameObject to)
