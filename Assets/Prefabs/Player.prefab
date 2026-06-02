@@ -100,12 +100,17 @@ MonoBehaviour:
   driveGroundingResponse: 8
   maxSteeringAngle: 36
   steerAtMaxSpeed: 14
-  steerResponse: 4.5
+  steerResponse: 8
   steerReturnSpeed: 6
   steerInputDeadZone: 0.05
   highSpeedSteerCurve: 0.65
   turnAssist: 1850
-  turnAssistResponse: 7
+  turnAssistResponse: 9
+  lowSpeedTurnAssistScale: 0.45
+  collisionRecoverySpeed: 2.5
+  collisionRecoveryTurnMultiplier: 1.45
+  collisionReleaseForce: 1600
+  collisionRecoveryDuration: 0.2
   downforce: 80
   corneringDownforce: 85
   rollStabilize: 9500
@@ -156,6 +161,7 @@ MonoBehaviour:
   longitudinalGripResponse: 12
   combinedGripBlend: 0.55
   minimumLongitudinalGripScale: 0.55
+  steeringAngleSpeed: 500
   coastDragStiffness: 300
   animateWheelMesh: 1
   wheelVisualFollowSpeed: 12
@@ -232,8 +238,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 7.39, y: 4.29, z: 4}
-  m_Center: {x: 0.69, y: 0.27, z: 0}
+  m_Size: {x: 7, y: 3.75, z: 3.65}
+  m_Center: {x: 0.69, y: 0.48, z: 0}
 --- !u!1 &677742815474923576
 GameObject:
   m_ObjectHideFlags: 0

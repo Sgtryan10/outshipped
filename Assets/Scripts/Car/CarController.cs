@@ -35,6 +35,11 @@ public class CarController : MonoBehaviour
     [SerializeField, Range(0.1f, 2f)] private float highSpeedSteerCurve = 0.65f;
     [SerializeField] private float turnAssist = 1500f;
     [SerializeField] private float turnAssistResponse = 6f;
+    [SerializeField, Range(0f, 1f)] private float lowSpeedTurnAssistScale = 0.45f;
+    [SerializeField] private float collisionRecoverySpeed = 2.5f;
+    [SerializeField] private float collisionRecoveryTurnMultiplier = 1.45f;
+    [SerializeField] private float collisionReleaseForce = 1600f;
+    [SerializeField] private float collisionRecoveryDuration = 0.2f;
     private float trackWidth;
     private float wheelBase;
     private Vector3 localForwardAxis = Vector3.forward;
@@ -43,6 +48,8 @@ public class CarController : MonoBehaviour
     private float smoothedSteerInput;
     private float smoothedTurnAssist;
     private float smoothedDriveGroundingScale = 1f;
+    private float collisionRecoveryTimer;
+    private Vector3 collisionReleaseNormal;
 
     [Header("Stability")]
     [SerializeField] private float downforce = 80f;
@@ -149,6 +156,7 @@ public class CarController : MonoBehaviour
     {
         if (!rb) return;
 
+        collisionRecoveryTimer = Mathf.Max(0f, collisionRecoveryTimer - Time.fixedDeltaTime);
         float speed = rb.linearVelocity.magnitude;
 
         if (speed > maxSpeed)
@@ -268,17 +276,52 @@ public class CarController : MonoBehaviour
         {
             float turnSpeed = Mathf.Abs(forwardSpeed);
             float assistAtSpeed = Mathf.InverseLerp(2f, 18f, turnSpeed);
+            float lowSpeedAssist = Mathf.Lerp(lowSpeedTurnAssistScale, 1f, assistAtSpeed);
             float highSpeedFade = Mathf.Lerp(1f, 0.65f, speed01);
             float groundedRatio = groundedWheels / 4f;
             float travelDirection = Mathf.Abs(forwardSpeed) > 0.5f
                 ? Mathf.Sign(forwardSpeed)
                 : Mathf.Sign(smoothedThrottleInput);
+            bool recoveringFromCollision =
+                collisionRecoveryTimer > 0f &&
+                turnSpeed < collisionRecoverySpeed &&
+                Mathf.Abs(smoothedThrottleInput) > 0.1f;
+            float collisionMultiplier = recoveringFromCollision
+                ? collisionRecoveryTurnMultiplier
+                : 1f;
             targetTurnAssist =
-                smoothedSteerInput * travelDirection * turnAssist * assistAtSpeed * highSpeedFade * groundedRatio;
+                smoothedSteerInput * travelDirection * turnAssist * lowSpeedAssist * highSpeedFade *
+                groundedRatio * collisionMultiplier;
+
+            if (recoveringFromCollision && collisionReleaseNormal.sqrMagnitude > 0.0001f)
+            {
+                float releaseScale = Mathf.Abs(smoothedSteerInput) * Mathf.Abs(smoothedThrottleInput);
+                rb.AddForce(collisionReleaseNormal * collisionReleaseForce * releaseScale, ForceMode.Force);
+            }
         }
 
         smoothedTurnAssist = Mathf.Lerp(smoothedTurnAssist, targetTurnAssist, SmoothFactor(turnAssistResponse));
         rb.AddTorque(carUp * smoothedTurnAssist, ForceMode.Force);
+    }
+
+    void OnCollisionStay(Collision collision)
+    {
+        if (!rb) return;
+
+        Vector3 carUp = rb.transform.up;
+        Vector3 releaseNormal = Vector3.zero;
+
+        for (int i = 0; i < collision.contactCount; i++)
+        {
+            Vector3 normal = collision.GetContact(i).normal;
+            if (Mathf.Abs(Vector3.Dot(normal, carUp)) < 0.55f)
+                releaseNormal += Vector3.ProjectOnPlane(normal, carUp);
+        }
+
+        if (releaseNormal.sqrMagnitude <= 0.0001f) return;
+
+        collisionReleaseNormal = releaseNormal.normalized;
+        collisionRecoveryTimer = collisionRecoveryDuration;
     }
 
     void AntiRoll()

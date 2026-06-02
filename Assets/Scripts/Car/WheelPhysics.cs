@@ -253,7 +253,7 @@ public class WheelPhysics : MonoBehaviour
     {
         if (!isFrontWheel) return;
 
-        steerAngle = Mathf.MoveTowards(steerAngle, angleDeg, 250f * Time.fixedDeltaTime);
+        steerAngle = Mathf.MoveTowards(steerAngle, angleDeg, config.steeringAngleSpeed * Time.fixedDeltaTime);
     }
 
     public void SetBody(Rigidbody body, Vector3 forwardAxis, Vector3 rightAxis)
