@@ -36,7 +36,7 @@ public class TurretController : MonoBehaviour
 
     [Header("Projectile")]
     [SerializeField] private GameObject projectilePrefab;
-    [SerializeField] private float muzzleForwardOffset = 1.2f;
+    [SerializeField] private float muzzleForwardOffset = 0.12f;
     [SerializeField] private float projectileSpeed = 55f;
     [SerializeField] private float projectileLifetime = 4f;
     [SerializeField] private int baseDamage = 25;
@@ -51,6 +51,7 @@ public class TurretController : MonoBehaviour
     void Awake()
     {
         AutoFindReferences();
+        EnsureMuzzleReference();
         RememberNeutralBarrelDirection();
         EnsureCameraAimTarget();
         SnapCameraAimTarget();
@@ -75,9 +76,9 @@ public class TurretController : MonoBehaviour
     {
         if (!barrel) return;
 
-        Transform spawnTransform = muzzle ? muzzle : barrel;
         Vector3 direction = FiringDirection();
-        Vector3 spawnPosition = spawnTransform.position + direction * muzzleForwardOffset;
+        Vector3 spawnOrigin = muzzle ? muzzle.position : FindBarrelTip(direction);
+        Vector3 spawnPosition = spawnOrigin + direction * muzzleForwardOffset + transform.up * 1.2f;
         int damage = Mathf.Max(1, Mathf.RoundToInt(baseDamage * Mathf.Max(0f, damageMultiplier)));
 
         Projectile projectile = CreateProjectile(spawnPosition, Quaternion.LookRotation(direction));
@@ -286,7 +287,58 @@ public class TurretController : MonoBehaviour
         if (!yawPivot) yawPivot = FindChild("Yaw");
         if (!pitchPivot) pitchPivot = FindChild("Pitch");
         if (!barrel) barrel = FindChild("Barrel");
-        if (!muzzle) muzzle = barrel;
+        if (!muzzle) muzzle = FindChild("Muzzle");
+    }
+
+    void EnsureMuzzleReference()
+    {
+        if (!barrel || (muzzle && muzzle != barrel))
+            return;
+
+        Transform existingMuzzle = FindChild("Muzzle");
+        if (existingMuzzle && existingMuzzle != barrel)
+        {
+            muzzle = existingMuzzle;
+            return;
+        }
+
+        Vector3 direction = FiringDirection();
+        GameObject muzzleObject = new GameObject("Muzzle");
+        muzzle = muzzleObject.transform;
+        muzzle.SetParent(barrel, true);
+        muzzle.position = FindBarrelTip(direction);
+        muzzle.rotation = Quaternion.LookRotation(direction, transform.up);
+    }
+
+    Vector3 FindBarrelTip(Vector3 direction)
+    {
+        if (!barrel)
+            return transform.position;
+
+        Renderer barrelRenderer = barrel.GetComponentInChildren<Renderer>();
+        if (!barrelRenderer)
+            return barrel.position;
+
+        Bounds bounds = barrelRenderer.bounds;
+        Vector3 center = bounds.center;
+        Vector3 extents = bounds.extents;
+        float furthestProjection = float.NegativeInfinity;
+
+        for (int x = -1; x <= 1; x += 2)
+        {
+            for (int y = -1; y <= 1; y += 2)
+            {
+                for (int z = -1; z <= 1; z += 2)
+                {
+                    Vector3 corner = center + Vector3.Scale(extents, new Vector3(x, y, z));
+                    furthestProjection = Mathf.Max(
+                        furthestProjection,
+                        Vector3.Dot(corner - barrel.position, direction));
+                }
+            }
+        }
+
+        return barrel.position + direction * Mathf.Max(0f, furthestProjection);
     }
 
     Transform FindChild(string childName)

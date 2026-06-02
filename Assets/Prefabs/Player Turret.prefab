@@ -588,7 +588,7 @@ MonoBehaviour:
   maxCameraPitchUp: 13
   maxCameraPitchDown: 6
   projectilePrefab: {fileID: 0}
-  muzzleForwardOffset: 1.2
+  muzzleForwardOffset: 0.12
   projectileSpeed: 55
   projectileLifetime: 4
   baseDamage: 25
