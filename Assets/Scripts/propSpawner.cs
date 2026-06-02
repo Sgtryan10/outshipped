@@ -32,10 +32,10 @@ public class PropSpawner : MonoBehaviour
     [SerializeField] private float treeScaleMin = 0.85f;
     [SerializeField] private float treeScaleMax = 1.2f;
     [SerializeField] private bool treeAlignToSlope = true;
-    [SerializeField] private float treeSlopeBlend = 0.4f;        // 0 = fully upright, 1 = fully slope-aligned
-    [SerializeField] private int treeClusterCount = 5;           // number of cluster centres
-    [SerializeField] private float treeClusterRadius = 12f;      // radius each cluster pulls toward
-    [SerializeField] private float treeClusterStrength = 0.6f;   // 0 = pure random, 1 = full cluster
+    [SerializeField] private float treeSlopeBlend = 0.4f;       
+    [SerializeField] private int treeClusterCount = 5;           
+    [SerializeField] private float treeClusterRadius = 12f;     
+    [SerializeField] private float treeClusterStrength = 0.6f;   
 
     [Header("Rock Natural Settings")]
     [SerializeField] private float rockMinSpacing = 1.5f;
@@ -70,9 +70,6 @@ public class PropSpawner : MonoBehaviour
                 rockClusterCount, rockClusterRadius, rockClusterStrength);
     }
 
-    // -------------------------------------------------------------------------
-    // Natural spawner — clustering + min-spacing + scale variation + slope align
-    // -------------------------------------------------------------------------
     void SpawnNatural(
         BoxCollider zone, PropData[] propDatas, int count,
         float minSpacing, float scaleMin, float scaleMax,
@@ -83,7 +80,6 @@ public class PropSpawner : MonoBehaviour
 
         Bounds bounds = zone.bounds;
 
-        // Build cluster centres inside the zone
         Vector2[] clusters = new Vector2[clusterCount];
         for (int c = 0; c < clusterCount; c++)
         {
@@ -102,7 +98,7 @@ public class PropSpawner : MonoBehaviour
         {
             attempts++;
 
-            // Candidate position — blend between random and nearest cluster
+
             float rawX = Random.Range(bounds.min.x, bounds.max.x);
             float rawZ = Random.Range(bounds.min.z, bounds.max.z);
             Vector2 raw = new Vector2(rawX, rawZ);
@@ -110,7 +106,6 @@ public class PropSpawner : MonoBehaviour
             Vector2 candidate;
             if (clusterStrength > 0f)
             {
-                // Find nearest cluster centre
                 Vector2 nearest = clusters[0];
                 float bestDist = Vector2.Distance(raw, clusters[0]);
                 for (int c = 1; c < clusters.Length; c++)
@@ -119,11 +114,8 @@ public class PropSpawner : MonoBehaviour
                     if (d < bestDist) { bestDist = d; nearest = clusters[c]; }
                 }
 
-                // Pull toward it within clusterRadius
                 float t = Mathf.Clamp01(1f - bestDist / clusterRadius) * clusterStrength;
                 candidate = Vector2.Lerp(raw, nearest + Random.insideUnitCircle * clusterRadius * 0.5f, t);
-
-                // Clamp back inside bounds
                 candidate.x = Mathf.Clamp(candidate.x, bounds.min.x, bounds.max.x);
                 candidate.y = Mathf.Clamp(candidate.y, bounds.min.z, bounds.max.z);
             }
@@ -132,7 +124,6 @@ public class PropSpawner : MonoBehaviour
                 candidate = raw;
             }
 
-            // Minimum-spacing rejection
             bool tooClose = false;
             foreach (Vector2 p in placed)
             {
@@ -199,9 +190,6 @@ public class PropSpawner : MonoBehaviour
             Debug.LogWarning($"[PropSpawner] Only placed {spawned}/{count} props in '{zone.name}' — try reducing minSpacing or increasing the zone.");
     }
 
-    // -------------------------------------------------------------------------
-    // Simple spawner used for base / depots (unchanged behaviour)
-    // -------------------------------------------------------------------------
     void SpawnProps(BoxCollider spawnZone, PropData propData, int spawnCount, bool randomizeRotation, System.ValueTuple<float,float> _ )
     {
         if (propData.prefab == null) return;
