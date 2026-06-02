@@ -25,6 +25,7 @@ public class scoringAnimations : MonoBehaviour
     public AudioClip clickSound;
     public AudioClip hoverSound;
     [SerializeField] private AudioClip labelShowSound;
+    [SerializeField] private AudioClip finalGradeSound;
 
     private VisualElement screenFader;
     private Button mainMenuButton;
@@ -170,6 +171,8 @@ public class scoringAnimations : MonoBehaviour
 
         scoreLabel.text = targetScore.ToString();
         updateGradeImage(scoreLetter, targetScore);
+
+        PlaySound(finalGradeSound);
     }
 
     private async Task rollUpGenericText(Label label, int targetValue, float duration)
