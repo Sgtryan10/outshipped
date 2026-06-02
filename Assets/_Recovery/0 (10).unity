@@ -950,18 +950,6 @@ PrefabInstance:
       propertyPath: 'skidParticles.Array.data[1]'
       value: 
       objectReference: {fileID: 1507662439}
-    - target: {fileID: 9054533623929866625, guid: e7f0b561d1ea5819aa201e9a05245ce0, type: 3}
-      propertyPath: audioSource
-      value: 
-      objectReference: {fileID: 802119722}
-    - target: {fileID: 9054533623929866625, guid: e7f0b561d1ea5819aa201e9a05245ce0, type: 3}
-      propertyPath: packagePickupSFX
-      value: 
-      objectReference: {fileID: 8300000, guid: 4fb3c0e12fb0a3356807e34019c87b38, type: 3}
-    - target: {fileID: 9054533623929866625, guid: e7f0b561d1ea5819aa201e9a05245ce0, type: 3}
-      propertyPath: packageDeliverSFX
-      value: 
-      objectReference: {fileID: 8300000, guid: 683af5baf803ff4b1baa60262e2e9184, type: 3}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
