@@ -42,6 +42,7 @@ public class TurretController : MonoBehaviour
     [SerializeField] private int baseDamage = 25;
     [SerializeField] private Color projColor = Color.yellow; 
     [SerializeField] private float projGlowStrength = 4f;
+    [SerializeField] private ParticleSystem muzzleFlash;
 
     private readonly RaycastHit[] aimHits = new RaycastHit[16];
     private Transform cameraAimTarget;
@@ -85,6 +86,10 @@ public class TurretController : MonoBehaviour
 
         Projectile projectile = CreateProjectile(spawnPosition, Quaternion.LookRotation(direction));
         projectile.Initialize(direction, projectileSpeed, projectileLifetime, damage, transform.root);
+        if (muzzleFlash != null)
+        {
+            muzzleFlash.Play();
+        }
     }
 
     Projectile CreateProjectile(Vector3 position, Quaternion rotation)

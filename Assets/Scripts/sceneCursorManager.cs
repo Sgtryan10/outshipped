@@ -49,7 +49,6 @@ public class sceneCursorManager : MonoBehaviour
 
     private void UpdateCursorForScene(string sceneName)
     {
-        // Search if the current scene has a custom cursor assigned
         foreach (var sceneCursor in customSceneCursors)
         {
             if (sceneCursor.sceneName == sceneName)
@@ -59,7 +58,6 @@ public class sceneCursorManager : MonoBehaviour
             }
         }
 
-        // Fallback to default cursor if no match is found
         Cursor.SetCursor(defaultCursor, defaultHotspot, CursorMode.Auto);
     }
 }

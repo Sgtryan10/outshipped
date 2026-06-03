@@ -721,7 +721,7 @@ ConfigurableJoint:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 895181418490851505}
   serializedVersion: 4
-  m_ConnectedBody: {fileID: 0}
+  m_ConnectedBody: {fileID: 1237233478556554530}
   m_ConnectedArticulationBody: {fileID: 0}
   m_Anchor: {x: 0, y: 8.326913, z: 0}
   m_Axis: {x: 1, y: 0, z: 0}
@@ -1097,7 +1097,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 64b60d17ab244aa98f94e7a375e72d10, type: 3}
-  m_Name:
+  m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SpiderHealth
   maxHealth: 100
   destroyOnDeath: 1
@@ -1199,7 +1199,7 @@ ConfigurableJoint:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3165405177580503820}
   serializedVersion: 4
-  m_ConnectedBody: {fileID: 0}
+  m_ConnectedBody: {fileID: 15816898543976907}
   m_ConnectedArticulationBody: {fileID: 0}
   m_Anchor: {x: 0, y: -15.120418, z: 0}
   m_Axis: {x: 1, y: 0, z: 0}
@@ -1818,7 +1818,7 @@ ConfigurableJoint:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4743216320587008463}
   serializedVersion: 4
-  m_ConnectedBody: {fileID: 0}
+  m_ConnectedBody: {fileID: 6607372206770546313}
   m_ConnectedArticulationBody: {fileID: 0}
   m_Anchor: {x: 0, y: 8.326913, z: 0}
   m_Axis: {x: 1, y: 0, z: 0}
@@ -2096,7 +2096,7 @@ ConfigurableJoint:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4875196847280927437}
   serializedVersion: 4
-  m_ConnectedBody: {fileID: 0}
+  m_ConnectedBody: {fileID: 6628795162221783382}
   m_ConnectedArticulationBody: {fileID: 0}
   m_Anchor: {x: 0, y: 11.333669, z: 0}
   m_Axis: {x: 1, y: 0, z: 0}
@@ -2897,7 +2897,7 @@ ConfigurableJoint:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6131359359045565270}
   serializedVersion: 4
-  m_ConnectedBody: {fileID: 0}
+  m_ConnectedBody: {fileID: 4653804724790504968}
   m_ConnectedArticulationBody: {fileID: 0}
   m_Anchor: {x: 0, y: 11.333664, z: 0}
   m_Axis: {x: 1, y: 0, z: 0}
@@ -3871,7 +3871,7 @@ ConfigurableJoint:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8297707949854757868}
   serializedVersion: 4
-  m_ConnectedBody: {fileID: 0}
+  m_ConnectedBody: {fileID: 3606100203718365935}
   m_ConnectedArticulationBody: {fileID: 0}
   m_Anchor: {x: 0, y: -7.704007, z: 0}
   m_Axis: {x: 1, y: 0, z: 0}

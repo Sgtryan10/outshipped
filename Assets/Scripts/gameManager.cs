@@ -289,16 +289,16 @@ public class gameManager : MonoBehaviour
             switch (abilityName)
             {
                 case "AMPED":
-                    hudController.TriggerPopup("AMPED TURRET", "Press 'E' for 150% Damage (20s)", new Color(1f, 0.37254902f, 0f), 3.0f);
+                    hudController.TriggerPopup("AMPED TURRET", "Press 'E' for 150% Damage (20s).", new Color(1f, 0.37254902f, 0f), 3.0f);
                     break;
                 case "OVERDRIVE":
-                    hudController.TriggerPopup("OVERDRIVE ACQUIRED", "Press 'E' for 150% Speed (20s)", new Color(1f, 0.37254902f, 0f), 3.0f);
+                    hudController.TriggerPopup("OVERDRIVE ACQUIRED", "Press 'E' for 150% Speed (20s).", new Color(1f, 0.37254902f, 0f), 3.0f);
                     break;
                 case "EMP":
-                    hudController.TriggerPopup("EMP ONLINE", "Press 'E' to discharge EMP pulse", new Color(1f, 0.37254902f, 0f), 3.0f);
+                    hudController.TriggerPopup("EMP ONLINE", "Press 'E' to discharge EMP pulse.", new Color(1f, 0.37254902f, 0f), 3.0f);
                     break;
                 case "SLOW":
-                    hudController.TriggerPopup("SLOW FIELD READY", "Press 'E' to create a slowing field (20s)", new Color(1f, 0.37254902f, 0f), 3.0f);
+                    hudController.TriggerPopup("SLOW FIELD READY", "Press 'E' to create a slowing field (20s).", new Color(1f, 0.37254902f, 0f), 3.0f);
                     break;
             }
         }
@@ -461,7 +461,7 @@ public class gameManager : MonoBehaviour
             audioSource.PlayOneShot(armorPickupSFX);
         }
 
-        hudController?.TriggerPopup("ARMOR REINFORCED", "Armor plating nullifies one damage instance", new Color(0.2f, 0.2f, 0.2f), 3.0f);
+        hudController?.TriggerPopup("ARMOR REINFORCED", "Armor plating nullifies one damage instance.", new Color(0.2f, 0.2f, 0.2f), 3.0f);
     }
 
     public void AddAmmo(int amount)
@@ -502,6 +502,13 @@ public class gameManager : MonoBehaviour
         isReloading = false;
     }
 
+    public void TriggerPackagePickupPopup()
+    {
+        if (isGameOver) return;
+
+        hudController?.TriggerPopup("PACKAGE SECURED", "Proceed to the nearest Depot.", new Color(0f, 0.8f, 0.6f), 3.0f);
+    }
+
     public void OnPackageDelivered()
     {
         if (isGameOver) return;
@@ -513,9 +520,19 @@ public class gameManager : MonoBehaviour
             if (Random.value <= 0.5f)
             {
                 packagesToAdd = 2;
-                hudController?.TriggerPopup("DELIVERY DUPLICATED", "Bonus delivery processed", new Color(0.2f, 0.2f, 0.2f), 3.0f);
+                hudController?.TriggerPopup("DELIVERY DUPLICATED", "Bonus delivery processed.", new Color(0.2f, 0.2f, 0.2f), 3.0f);
+
+                scoreManager.packagesDelivered += packagesToAdd;
+                hudController?.updatePackagesDelivered(scoreManager.packagesDelivered);
+                if (GameSelection.SelectedPassive == "HEAL ON DELIVERY")
+                {
+                    Heal(Mathf.RoundToInt(maxPlayerHealth * 0.25f) * packagesToAdd);
+                }
+                return;
             }
         }
+
+        hudController?.TriggerPopup("DELIVERY COMPLETE", "Package delivered successfully.", new Color(0.2f, 0.8f, 0.2f), 3.0f);
 
         scoreManager.packagesDelivered += packagesToAdd;
         hudController?.updatePackagesDelivered(scoreManager.packagesDelivered);

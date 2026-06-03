@@ -1,7 +1,7 @@
 using UnityEngine;
 using System.Collections.Generic;
 
-public class PropSpawner : MonoBehaviour
+public class propSpawner : MonoBehaviour
 {
     [System.Serializable]
     public struct PropData
@@ -27,15 +27,19 @@ public class PropSpawner : MonoBehaviour
     [SerializeField] private BoxCollider rockSpawnZone;
     [SerializeField] private LayerMask groundLayer;
 
+    [Header("Global Spacing Settings")]
+    [Tooltip("Minimum distance required between structures (Base/Depots) and any other object.")]
+    [SerializeField] private float structureMinSpacing = 6.0f;
+
     [Header("Tree Natural Settings")]
     [SerializeField] private float treeMinSpacing = 2.5f;
     [SerializeField] private float treeScaleMin = 0.85f;
     [SerializeField] private float treeScaleMax = 1.2f;
     [SerializeField] private bool treeAlignToSlope = true;
-    [SerializeField] private float treeSlopeBlend = 0.4f;       
-    [SerializeField] private int treeClusterCount = 5;           
-    [SerializeField] private float treeClusterRadius = 12f;     
-    [SerializeField] private float treeClusterStrength = 0.6f;   
+    [SerializeField] private float treeSlopeBlend = 0.4f;
+    [SerializeField] private int treeClusterCount = 5;
+    [SerializeField] private float treeClusterRadius = 12f;
+    [SerializeField] private float treeClusterStrength = 0.6f;
 
     [Header("Rock Natural Settings")]
     [SerializeField] private float rockMinSpacing = 1.5f;
@@ -47,15 +51,30 @@ public class PropSpawner : MonoBehaviour
     [SerializeField] private float rockClusterRadius = 7f;
     [SerializeField] private float rockClusterStrength = 0.75f;
 
-    // -------------------------------------------------------------------------
+    private struct PlacedObject
+    {
+        public Vector2 position;
+        public float radius;
+
+        public PlacedObject(Vector2 pos, float rad)
+        {
+            position = pos;
+            radius = rad;
+        }
+    }
+
+    private List<PlacedObject> allPlacedObjects = new List<PlacedObject>();
+
 
     void Start()
     {
+        allPlacedObjects.Clear();
+
         if (baseSpawnZone != null && baseProp.prefab != null)
-            SpawnProps(baseSpawnZone, baseProp, 1, false, default);
+            SpawnProps(baseSpawnZone, baseProp, 1, false, structureMinSpacing);
 
         if (depotSpawnZone != null && depotProp.prefab != null)
-            SpawnProps(depotSpawnZone, depotProp, spawnCountDepots, false, default);
+            SpawnProps(depotSpawnZone, depotProp, spawnCountDepots, false, structureMinSpacing);
 
         if (treeSpawnZone != null)
             SpawnNatural(treeSpawnZone, treeProps, spawnCountTrees,
@@ -89,15 +108,13 @@ public class PropSpawner : MonoBehaviour
             );
         }
 
-        List<Vector2> placed = new List<Vector2>();
-        int maxAttempts = count * 30;
+        int maxAttempts = count * 50;
         int spawned = 0;
         int attempts = 0;
 
         while (spawned < count && attempts < maxAttempts)
         {
             attempts++;
-
 
             float rawX = Random.Range(bounds.min.x, bounds.max.x);
             float rawZ = Random.Range(bounds.min.z, bounds.max.z);
@@ -124,18 +141,9 @@ public class PropSpawner : MonoBehaviour
                 candidate = raw;
             }
 
-            bool tooClose = false;
-            foreach (Vector2 p in placed)
-            {
-                if (Vector2.Distance(candidate, p) < minSpacing)
-                {
-                    tooClose = true;
-                    break;
-                }
-            }
-            if (tooClose) continue;
+            if (IsOverlapping(candidate, minSpacing))
+                continue;
 
-            // Raycast for ground
             Vector3 rayStart = new Vector3(candidate.x, bounds.max.y + 5f, candidate.y);
             float rayDist = bounds.size.y + 15f;
 
@@ -149,7 +157,6 @@ public class PropSpawner : MonoBehaviour
             {
                 spawnPos = hit.point + Vector3.up * chosen.heightOffset;
 
-                // Rotation: random Y + optional slope alignment
                 float yaw = Random.Range(0f, 360f);
                 Quaternion yawRot = Quaternion.Euler(
                     chosen.prefab.transform.rotation.eulerAngles.x,
@@ -177,35 +184,45 @@ public class PropSpawner : MonoBehaviour
                 );
             }
 
-            // Randomise scale
             float scale = Random.Range(scaleMin, scaleMax);
             GameObject go = Instantiate(chosen.prefab, spawnPos, spawnRot, transform);
             go.transform.localScale = chosen.prefab.transform.localScale * scale;
 
-            placed.Add(candidate);
+            // Register this object globally
+            allPlacedObjects.Add(new PlacedObject(candidate, minSpacing));
             spawned++;
         }
 
         if (spawned < count)
-            Debug.LogWarning($"[PropSpawner] Only placed {spawned}/{count} props in '{zone.name}' — try reducing minSpacing or increasing the zone.");
+            Debug.LogWarning($"[PropSpawner] Only placed {spawned}/{count} props in '{zone.name}' — try reducing spacing values or increasing the zone size.");
     }
 
-    void SpawnProps(BoxCollider spawnZone, PropData propData, int spawnCount, bool randomizeRotation, System.ValueTuple<float,float> _ )
+    void SpawnProps(BoxCollider spawnZone, PropData propData, int spawnCount, bool randomizeRotation, float clearanceRadius)
     {
         if (propData.prefab == null) return;
-        SpawnProps(spawnZone, new PropData[] { propData }, spawnCount, randomizeRotation);
+        SpawnProps(spawnZone, new PropData[] { propData }, spawnCount, randomizeRotation, clearanceRadius);
     }
 
-    void SpawnProps(BoxCollider spawnZone, PropData[] propDatas, int spawnCount, bool randomizeRotation)
+    void SpawnProps(BoxCollider spawnZone, PropData[] propDatas, int spawnCount, bool randomizeRotation, float clearanceRadius)
     {
         if (propDatas == null || propDatas.Length == 0 || spawnZone == null) return;
 
         Bounds bounds = spawnZone.bounds;
+        int maxAttempts = spawnCount * 50;
+        int spawned = 0;
+        int attempts = 0;
 
-        for (int i = 0; i < spawnCount; i++)
+        while (spawned < spawnCount && attempts < maxAttempts)
         {
+            attempts++;
+
             float randomX = Random.Range(bounds.min.x, bounds.max.x);
             float randomZ = Random.Range(bounds.min.z, bounds.max.z);
+            Vector2 candidate = new Vector2(randomX, randomZ);
+
+            // Structure overlap check
+            if (IsOverlapping(candidate, clearanceRadius))
+                continue;
 
             Vector3 rayStart = new Vector3(randomX, bounds.max.y, randomZ);
             float rayDistance = bounds.size.y + 10f;
@@ -224,6 +241,24 @@ public class PropSpawner : MonoBehaviour
                 : chosenProp.prefab.transform.rotation;
 
             Instantiate(chosenProp.prefab, spawnPosition, spawnRotation, transform);
+
+            allPlacedObjects.Add(new PlacedObject(candidate, clearanceRadius));
+            spawned++;
         }
+    }
+
+    private bool IsOverlapping(Vector2 candidate, float currentPropSpacing)
+    {
+        foreach (PlacedObject existing in allPlacedObjects)
+        {
+            float distance = Vector2.Distance(candidate, existing.position);
+            float requiredGap = (currentPropSpacing + existing.radius) * 0.5f;
+
+            if (distance < requiredGap)
+            {
+                return true;
+            }
+        }
+        return false;
     }
 }
