@@ -131,6 +131,7 @@ GameObject:
   - component: {fileID: 368060694}
   - component: {fileID: 368060693}
   - component: {fileID: 368060692}
+  - component: {fileID: 368060696}
   m_Layer: 0
   m_Name: CinemachineCamera
   m_TagString: Untagged
@@ -237,13 +238,52 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 368060691}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.121105954, y: 0.6966588, z: -0.12110598, w: 0.6966587}
+  m_LocalRotation: {x: 0.41257057, y: 0.5623781, z: -0.38314262, w: 0.6055726}
   m_LocalPosition: {x: -12.5, y: 11.32122, z: 0.5974696}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &368060696
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 368060691}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dbe43d662878a7c43bcd44d43c9e2094, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.Cinemachine::Unity.Cinemachine.CinemachineDeoccluder
+  CollideAgainst:
+    serializedVersion: 2
+    m_Bits: 1
+  IgnoreTag: 
+  TransparentLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  MinimumDistanceFromTarget: 0.3
+  AvoidObstacles:
+    Enabled: 1
+    DistanceLimit: 0
+    MinimumOcclusionTime: 0
+    CameraRadius: 0.4
+    UseFollowTarget:
+      Enabled: 0
+      YOffset: 0
+    Strategy: 0
+    MaximumEffort: 4
+    SmoothingTime: 0
+    Damping: 0.4
+    DampingWhenOccluded: 0.2
+  ShotQualityEvaluation:
+    Enabled: 0
+    OptimalDistance: 10
+    NearLimit: 5
+    FarLimit: 30
+    MaxQualityBoost: 0.2
 --- !u!1 &438158804
 GameObject:
   m_ObjectHideFlags: 0
@@ -1461,8 +1501,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1668576978}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.121105954, y: 0.6966588, z: -0.12110598, w: 0.6966587}
-  m_LocalPosition: {x: -12.5, y: 11.32122, z: 0.5974696}
+  m_LocalRotation: {x: 0.41257057, y: 0.5623781, z: -0.38314262, w: 0.6055726}
+  m_LocalPosition: {x: -0.65441036, y: 8.053903, z: 0.59747}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

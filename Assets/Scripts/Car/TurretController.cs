@@ -37,7 +37,7 @@ public class TurretController : MonoBehaviour
     [Header("Projectile")]
     [SerializeField] private GameObject projectilePrefab;
     [SerializeField] private float muzzleForwardOffset = 0.12f;
-    [SerializeField] private float projectileSpeed = 55f;
+    [SerializeField] private float projectileSpeed = 1000f;
     [SerializeField] private float projectileLifetime = 4f;
     [SerializeField] private int baseDamage = 25;
     [SerializeField] private Color projColor = Color.yellow; 
