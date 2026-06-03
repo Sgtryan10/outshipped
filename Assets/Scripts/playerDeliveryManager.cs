@@ -50,6 +50,11 @@ public class playerDeliveryManager : MonoBehaviour
         {
             audioSource.PlayOneShot(packagePickupSFX);
         }
+
+        if (gameManager.Instance != null)
+        {
+            gameManager.Instance.TriggerPackagePickupPopup();
+        }
     }
 
     private void DeliverPackage()
