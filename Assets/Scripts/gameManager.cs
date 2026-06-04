@@ -59,6 +59,9 @@ public class gameManager : MonoBehaviour
     private string currentTurretType;
     private int currentMagazine;
     private int currentReserve;
+    private int currentBaseDamage;
+    private float currentRange;
+    public float CurrentRange => currentRange;
 
     private float fireRate;
     private float reloadTime;
@@ -73,6 +76,8 @@ public class gameManager : MonoBehaviour
     public float damageMultiplier { get; private set; } = 1f;
     public float speedMultiplier { get; private set; } = 1f;
 
+    private bool wantsToShoot;
+
     private float originalMaxSpeed;
     private float originalAcceleration;
 
@@ -81,7 +86,7 @@ public class gameManager : MonoBehaviour
     private bool isGameOver = false;
 
     private Dictionary<string, AudioClip> fireSoundLookup = new Dictionary<string, AudioClip>();
-    private Dictionary<string, AudioClip> reloadSoundLookup = new Dictionary<string, AudioClip>(); // --- NEW: Fast runtime lookup for reloads ---
+    private Dictionary<string, AudioClip> reloadSoundLookup = new Dictionary<string, AudioClip>();
 
     private void Awake()
     {
@@ -95,7 +100,7 @@ public class gameManager : MonoBehaviour
         }
 
         InitializeFireSounds();
-        InitializeReloadSounds(); // --- NEW: Initialize the lookup dictionary ---
+        InitializeReloadSounds();
     }
 
     private void InitializeFireSounds()
@@ -112,7 +117,6 @@ public class gameManager : MonoBehaviour
         }
     }
 
-    // --- NEW: Helper to convert reload list data into a fast dictionary lookup ---
     private void InitializeReloadSounds()
     {
         reloadSoundLookup.Clear();
@@ -164,6 +168,8 @@ public class gameManager : MonoBehaviour
 
         fireRate = GameSelection.SelectedFireRate;
         reloadTime = GameSelection.SelectedReloadTime;
+        currentBaseDamage = GameSelection.SelectedDamage;
+        currentRange = GameSelection.SelectedRange;
 
         if (hudController != null)
         {
@@ -181,6 +187,9 @@ public class gameManager : MonoBehaviour
             hudController.updateActiveAbility(empActive, overdriveActive, ampedActive, slowActive);
 
             hudController.DismissPopup();
+
+            turretController.SetBaseDamage(currentBaseDamage);
+            turretController.SetMaxRange(currentRange);
         }
     }
 
@@ -194,7 +203,6 @@ public class gameManager : MonoBehaviour
             UseStoredAbility();
         }
 
-        bool wantsToShoot = false;
         if (Mouse.current != null)
         {
             if (currentTurretType == "AUTOMATIC" || currentTurretType == "RAPID-FIRE")
@@ -249,7 +257,6 @@ public class gameManager : MonoBehaviour
         }
     }
 
-    // --- NEW: Dynamically checks currentTurretType and plays the reload audio ---
     private void PlayReloadSound()
     {
         if (audioSource == null) return;

@@ -12,6 +12,8 @@ public static class GameSelection
     public static string SelectedTurretType { get; set; } = "AUTOMATIC";
     public static float SelectedFireRate { get; set; } = 0.2f;
     public static float SelectedReloadTime { get; set; } = 1.5f;
+    public static int SelectedDamage { get; set; } = 25;
+    public static float SelectedRange { get; set; } = 1000f;
 }
 
 public class selectionScreenAnimations : MonoBehaviour
@@ -112,6 +114,8 @@ public class selectionScreenAnimations : MonoBehaviour
             GameSelection.SelectedTurretType = "AUTOMATIC";
             GameSelection.SelectedFireRate = 0.2f;
             GameSelection.SelectedReloadTime = 1.5f;
+            GameSelection.SelectedDamage = 25;
+            GameSelection.SelectedRange = 1500f;
         }
         else if (clickedColumn == cruiser)
         {
@@ -122,6 +126,8 @@ public class selectionScreenAnimations : MonoBehaviour
             GameSelection.SelectedTurretType = "BUCKSHOT";
             GameSelection.SelectedFireRate = 0.6f;
             GameSelection.SelectedReloadTime = 2.0f;
+            GameSelection.SelectedDamage = 10;
+            GameSelection.SelectedRange = 800f;
         }
         else if (clickedColumn == freighter)
         {
@@ -132,6 +138,8 @@ public class selectionScreenAnimations : MonoBehaviour
             GameSelection.SelectedTurretType = "PIERCING";
             GameSelection.SelectedFireRate = 1.0f;
             GameSelection.SelectedReloadTime = 3.0f;
+            GameSelection.SelectedDamage = 80;
+            GameSelection.SelectedRange = 2000f;
         }
         else if (clickedColumn == monarch)
         {
@@ -142,6 +150,8 @@ public class selectionScreenAnimations : MonoBehaviour
             GameSelection.SelectedTurretType = "RAPID-FIRE";
             GameSelection.SelectedFireRate = 0.08f;
             GameSelection.SelectedReloadTime = 1.2f;
+            GameSelection.SelectedDamage = 15;
+            GameSelection.SelectedRange = 1000f;
         }
 
         clickedColumn.parent?.RemoveFromClassList("allow-hover");

@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7731353805837965239}
   - component: {fileID: 5893999707699600832}
-  m_Layer: 3
+  m_Layer: 2
   m_Name: Depot Trigger
   m_TagString: Depot
   m_Icon: {fileID: 0}
@@ -65,7 +65,7 @@ GameObject:
   - component: {fileID: 402538347635422182}
   - component: {fileID: 5592825440146911768}
   - component: {fileID: 2867068773612654535}
-  m_Layer: 3
+  m_Layer: 2
   m_Name: Cube
   m_TagString: Depot
   m_Icon: {fileID: 0}
@@ -219,7 +219,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: c69f4e9eee48544e7adbe064a35e3364, type: 3}
       propertyPath: m_Layer
-      value: 3
+      value: 2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

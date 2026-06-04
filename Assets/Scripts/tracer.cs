@@ -4,10 +4,6 @@ using UnityEngine;
 [RequireComponent(typeof(LineRenderer))]
 public class tracer : MonoBehaviour
 {
-    [Header("Raycast Settings")]
-    [SerializeField] private float maxDistance = 100f;
-    [SerializeField] private LayerMask hitLayers = ~0;
-
     [Header("Line Generation")]
     [SerializeField] private float segmentLength = 0.5f;
     [SerializeField] private float noiseScale = 2f;
@@ -21,7 +17,6 @@ public class tracer : MonoBehaviour
     private Material materialInstance;
     private Vector3[] basePoints;
     private Vector3 seedOffset;
-    private bool isInitialized = false;
 
     private void Awake()
     {
@@ -31,13 +26,6 @@ public class tracer : MonoBehaviour
         {
             materialInstance = lineRenderer.material;
         }
-    }
-
-    public void InitializeTracer(LayerMask turretAimMask)
-    {
-        hitLayers = turretAimMask;
-        isInitialized = true;
-        TriggerRaycastSequence();
     }
 
     public void InitializeHitscanLine(Vector3 startPos, Vector3 endPos)
@@ -51,57 +39,6 @@ public class tracer : MonoBehaviour
         }
 
         float totalDistance = Vector3.Distance(startPos, endPos);
-        int pointCount = Mathf.Max(2, Mathf.CeilToInt(totalDistance / segmentLength) + 1);
-        basePoints = new Vector3[pointCount];
-
-        for (int i = 0; i < pointCount; i++)
-        {
-            float t = (float)i / (pointCount - 1);
-            basePoints[i] = Vector3.Lerp(startPos, endPos, t);
-        }
-
-        lineRenderer.positionCount = pointCount;
-        lineRenderer.SetPositions(basePoints);
-
-        StartCoroutine(AnimateLineSequence());
-    }
-
-    private void Start()
-    {
-        if (!isInitialized)
-        {
-            TriggerRaycastSequence();
-        }
-    }
-
-    private void TriggerRaycastSequence()
-    {
-        StopAllCoroutines();
-
-        seedOffset = new Vector3(Random.Range(-1000f, 1000f), Random.Range(-1000f, 1000f), Random.Range(-1000f, 1000f));
-
-        if (materialInstance != null)
-        {
-            materialInstance.SetFloat("_Path_dissolve", 0f);
-            materialInstance.SetFloat("_Dissolve", 0f);
-        }
-
-        PerformRaycastAndBuildLine();
-    }
-
-    private void PerformRaycastAndBuildLine()
-    {
-        Vector3 startPos = transform.position;
-        Vector3 direction = transform.forward;
-        Vector3 endPos = startPos + (direction * maxDistance);
-
-        if (Physics.Raycast(startPos, direction, out RaycastHit hit, maxDistance, hitLayers))
-        {
-            endPos = hit.point;
-        }
-
-        float totalDistance = Vector3.Distance(startPos, endPos);
-
         int pointCount = Mathf.Max(2, Mathf.CeilToInt(totalDistance / segmentLength) + 1);
         basePoints = new Vector3[pointCount];
 

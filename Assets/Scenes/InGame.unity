@@ -238,8 +238,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 368060691}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.41257057, y: 0.5623781, z: -0.38314262, w: 0.6055726}
-  m_LocalPosition: {x: -12.5, y: 11.32122, z: 0.5974696}
+  m_LocalRotation: {x: 0.41160563, y: 0.5638994, z: -0.38417906, w: 0.6041563}
+  m_LocalPosition: {x: -11.902531, y: 11.32122, z: -0.00000011920929}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -325,7 +325,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 517775239}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Prop Spawn Zones
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -341,7 +341,7 @@ Transform:
   m_GameObject: {fileID: 517775238}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -2, y: 4.23593, z: 0.77191}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -361,7 +361,7 @@ GameObject:
   m_Component:
   - component: {fileID: 567099108}
   - component: {fileID: 567099109}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Tree Spawn Zone
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -414,7 +414,7 @@ GameObject:
   m_Component:
   - component: {fileID: 600736267}
   - component: {fileID: 600736268}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Base Spawn Zone
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -726,7 +726,7 @@ GameObject:
   m_Component:
   - component: {fileID: 858603837}
   - component: {fileID: 858603838}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Rock Spawn Zone
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1030,6 +1030,14 @@ PrefabInstance:
       propertyPath: tracerPrefab
       value: 
       objectReference: {fileID: 2704341632117077500, guid: 0e9dfeeb8e94e76c79dc7e90b993e0d0, type: 3}
+    - target: {fileID: 1474544913221177702, guid: e9156b349b9b44cfb841f6e32dae3276, type: 3}
+      propertyPath: virtualCamera
+      value: 
+      objectReference: {fileID: 368060694}
+    - target: {fileID: 1474544913221177702, guid: e9156b349b9b44cfb841f6e32dae3276, type: 3}
+      propertyPath: aimMask.m_Bits
+      value: 91
+      objectReference: {fileID: 0}
     - target: {fileID: 1474544913221177702, guid: e9156b349b9b44cfb841f6e32dae3276, type: 3}
       propertyPath: hitscanMaxRange
       value: 2000
@@ -1445,7 +1453,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1502877202}
   - component: {fileID: 1502877203}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Depot Spawn Zone
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1575,8 +1583,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1668576978}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.41257057, y: 0.5623781, z: -0.38314262, w: 0.6055726}
-  m_LocalPosition: {x: -0.65441036, y: 8.053903, z: 0.59747}
+  m_LocalRotation: {x: 0.41160563, y: 0.5638994, z: -0.38417906, w: 0.6041563}
+  m_LocalPosition: {x: -0.05694008, y: 8.053902, z: 0.000000033544012}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 8194527375242427943}
   - component: {fileID: 3855553113874467118}
   - component: {fileID: 1321062838157309709}
-  m_Layer: 3
+  m_Layer: 2
   m_Name: Cube
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -122,7 +122,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7453483226650634350}
   - component: {fileID: 696319296929185886}
-  m_Layer: 3
+  m_Layer: 2
   m_Name: Base Trigger
   m_TagString: Base
   m_Icon: {fileID: 0}
@@ -219,7 +219,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 7d6e81e98dcca4182861bfb9666ebb25, type: 3}
       propertyPath: m_Layer
-      value: 3
+      value: 2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

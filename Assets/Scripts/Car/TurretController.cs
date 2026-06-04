@@ -13,7 +13,7 @@ public class TurretController : MonoBehaviour
     [SerializeField] private Vector3 localFiringAxis = Vector3.down;
 
     [Header("Aiming")]
-    [SerializeField] private LayerMask aimMask = Physics.DefaultRaycastLayers;
+    [SerializeField] private LayerMask aimMask;
     [SerializeField] private float maxAimDistance = 300f;
     [SerializeField] private float yawSpeed = 260f;
     [SerializeField] private float pitchSpeed = 180f;
@@ -40,6 +40,10 @@ public class TurretController : MonoBehaviour
     [SerializeField] private float muzzleForwardOffset = 0.12f;
     [SerializeField] private int baseDamage = 25;
     [SerializeField] private ParticleSystem muzzleFlash;
+
+    [Header("Buckshot Settings")]
+    [SerializeField] private int buckshotPellets = 8;
+    [SerializeField] private float buckshotSpread = 5f;
 
     private readonly RaycastHit[] aimHits = new RaycastHit[16];
     private Transform cameraAimTarget;
@@ -72,12 +76,22 @@ public class TurretController : MonoBehaviour
         UpdateCameraAimTarget();
     }
 
+    public void SetBaseDamage(int damageAmount)
+    {
+        baseDamage = damageAmount;
+    }
+
+    public void SetMaxRange(float maxRangeValue)
+    {
+        hitscanMaxRange = maxRangeValue;
+    }
+
     public void Fire(float damageMultiplier = 1f)
     {
         if (!barrel) return;
 
-        Vector3 direction = FiringDirection();
-        Vector3 spawnOrigin = muzzle ? muzzle.position : FindBarrelTip(direction);
+        Vector3 baseDirection = FiringDirection();
+        Vector3 spawnOrigin = muzzle ? muzzle.position : FindBarrelTip(baseDirection);
         Vector3 spawnPosition = spawnOrigin + barrel.forward * muzzleForwardOffset;
 
         if (muzzleFlash != null)
@@ -85,28 +99,42 @@ public class TurretController : MonoBehaviour
             muzzleFlash.Play();
         }
 
-        Vector3 targetPoint = spawnPosition + (direction * hitscanMaxRange);
-        bool didHit = Physics.Raycast(spawnPosition, direction, out RaycastHit hit, hitscanMaxRange, aimMask);
+        bool isBuckshot = GameSelection.SelectedTurretType == "BUCKSHOT";
+        int pelletsToFire = isBuckshot ? buckshotPellets : 1;
 
-        if (didHit)
+        for (int i = 0; i < pelletsToFire; i++)
         {
-            targetPoint = hit.point;
+            Vector3 finalDirection = baseDirection;
 
-            float finalDamage = baseDamage * damageMultiplier;
-
-            Debug.Log($"Hitscan registered on: {hit.collider.name} at {hit.point}. Damage dealt: {finalDamage}");
-
-            // NOTE: Apply the damage to spider here
-        }
-
-        if (tracerPrefab)
-        {
-            GameObject tracerObj = Instantiate(tracerPrefab, spawnPosition, Quaternion.LookRotation(direction));
-            tracer tracerComponent = tracerObj.GetComponent<tracer>();
-
-            if (tracerComponent != null)
+            if (isBuckshot)
             {
-                tracerComponent.InitializeHitscanLine(spawnPosition, targetPoint);
+                float spreadX = Random.Range(-buckshotSpread, buckshotSpread);
+                float spreadY = Random.Range(-buckshotSpread, buckshotSpread);
+
+                Quaternion spreadRotation = Quaternion.Euler(spreadX, spreadY, 0);
+                finalDirection = Quaternion.LookRotation(baseDirection) * spreadRotation * Vector3.forward;
+            }
+
+            Vector3 targetPoint = spawnPosition + (finalDirection * hitscanMaxRange);
+            bool didHit = Physics.Raycast(spawnPosition, finalDirection, out RaycastHit hit, hitscanMaxRange, aimMask);
+
+            if (didHit)
+            {
+                targetPoint = hit.point;
+                float finalDamage = baseDamage * damageMultiplier;
+
+                Debug.Log($"Pellet {i} registered hit on: {hit.collider.name} at {hit.point}. Damage: {finalDamage}");
+            }
+
+            if (tracerPrefab)
+            {
+                GameObject tracerObj = Instantiate(tracerPrefab, spawnPosition, Quaternion.LookRotation(finalDirection));
+                tracer tracerComponent = tracerObj.GetComponent<tracer>();
+
+                if (tracerComponent != null)
+                {
+                    tracerComponent.InitializeHitscanLine(spawnPosition, targetPoint);
+                }
             }
         }
     }

@@ -48,7 +48,7 @@ MonoBehaviour:
   maxDistance: 2000
   hitLayers:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 0
   segmentLength: 1
   noiseScale: 1
   noisePower: 0.1
