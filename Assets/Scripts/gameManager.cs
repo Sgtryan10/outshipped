@@ -35,6 +35,7 @@ public class gameManager : MonoBehaviour
     [SerializeField] private AudioClip empPickupSFX;
     [SerializeField] private AudioClip slowPickupSFX;
     [SerializeField] private AudioClip armorPickupSFX;
+    [SerializeField] private AudioClip abilityUseSFX;
 
     [Tooltip("Map turret type names to specific firing audio clips.")]
     [SerializeField] private List<TurretFireSFX> turretFireSounds;
@@ -345,6 +346,11 @@ public class gameManager : MonoBehaviour
     private void UseStoredAbility()
     {
         if (string.IsNullOrEmpty(storedAbility)) return;
+
+        if (audioSource != null && abilityUseSFX != null)
+        {
+            audioSource.PlayOneShot(abilityUseSFX);
+        }
 
         OnActiveAbilityUsed();
 
