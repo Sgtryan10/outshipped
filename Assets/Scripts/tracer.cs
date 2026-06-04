@@ -28,7 +28,7 @@ public class tracer : MonoBehaviour
         }
     }
 
-    public void InitializeHitscanLine(Vector3 startPos, Vector3 endPos)
+    public void InitializeHitscanLine(Vector3 startPos, Vector3 endPos, Color glowColor)
     {
         seedOffset = new Vector3(Random.Range(-1000f, 1000f), Random.Range(-1000f, 1000f), Random.Range(-1000f, 1000f));
 
@@ -36,6 +36,7 @@ public class tracer : MonoBehaviour
         {
             materialInstance.SetFloat("_Path_dissolve", 0f);
             materialInstance.SetFloat("_Dissolve", 0f);
+            materialInstance.SetColor("_Glow_Color", glowColor);
         }
 
         float totalDistance = Vector3.Distance(startPos, endPos);

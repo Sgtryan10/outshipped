@@ -14,6 +14,7 @@ public static class GameSelection
     public static float SelectedReloadTime { get; set; } = 1.5f;
     public static int SelectedDamage { get; set; } = 25;
     public static float SelectedRange { get; set; } = 1000f;
+    public static Color SelectedTracerColor { get; set; } = new Color(0f, 1f, 1f, 1f);
 }
 
 public class selectionScreenAnimations : MonoBehaviour
@@ -116,6 +117,7 @@ public class selectionScreenAnimations : MonoBehaviour
             GameSelection.SelectedReloadTime = 1.5f;
             GameSelection.SelectedDamage = 25;
             GameSelection.SelectedRange = 1500f;
+            GameSelection.SelectedTracerColor = new Color(0.380392157f, 0.91372549f, 0.984313725f) * 3.0f;
         }
         else if (clickedColumn == cruiser)
         {
@@ -128,6 +130,7 @@ public class selectionScreenAnimations : MonoBehaviour
             GameSelection.SelectedReloadTime = 2.0f;
             GameSelection.SelectedDamage = 10;
             GameSelection.SelectedRange = 800f;
+            GameSelection.SelectedTracerColor = new Color(0.619607843f, 0.250980392f, 0.211764706f) * 2.5f;
         }
         else if (clickedColumn == freighter)
         {
@@ -140,6 +143,7 @@ public class selectionScreenAnimations : MonoBehaviour
             GameSelection.SelectedReloadTime = 3.0f;
             GameSelection.SelectedDamage = 80;
             GameSelection.SelectedRange = 2000f;
+            GameSelection.SelectedTracerColor = new Color(0.980392157f, 0.48627451f, 0.298039216f) * 4.0f;
         }
         else if (clickedColumn == monarch)
         {
@@ -152,6 +156,7 @@ public class selectionScreenAnimations : MonoBehaviour
             GameSelection.SelectedReloadTime = 1.2f;
             GameSelection.SelectedDamage = 15;
             GameSelection.SelectedRange = 1000f;
+            GameSelection.SelectedTracerColor = new Color(0.650980392f, 0.215686275f, 0.749019608f) * 2.0f;
         }
 
         clickedColumn.parent?.RemoveFromClassList("allow-hover");

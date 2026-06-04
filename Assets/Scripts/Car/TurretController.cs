@@ -133,7 +133,10 @@ public class TurretController : MonoBehaviour
 
                 if (tracerComponent != null)
                 {
-                    tracerComponent.InitializeHitscanLine(spawnPosition, targetPoint);
+                    Color activeLaserColor = gameManager.Instance != null
+                        ? gameManager.Instance.CurrentTracerColor
+                        : Color.white;
+                    tracerComponent.InitializeHitscanLine(spawnPosition, targetPoint, activeLaserColor);
                 }
             }
         }

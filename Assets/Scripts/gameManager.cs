@@ -62,6 +62,8 @@ public class gameManager : MonoBehaviour
     private int currentBaseDamage;
     private float currentRange;
     public float CurrentRange => currentRange;
+    private Color currentTracerColor;
+    public Color CurrentTracerColor => currentTracerColor;
 
     private float fireRate;
     private float reloadTime;
@@ -170,6 +172,7 @@ public class gameManager : MonoBehaviour
         reloadTime = GameSelection.SelectedReloadTime;
         currentBaseDamage = GameSelection.SelectedDamage;
         currentRange = GameSelection.SelectedRange;
+        currentTracerColor = GameSelection.SelectedTracerColor;
 
         if (hudController != null)
         {
