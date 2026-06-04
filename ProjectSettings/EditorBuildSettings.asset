@@ -15,4 +15,5 @@ EditorBuildSettings:
     path: Assets/Scenes/PostGame.unity
     guid: f7e8ede19e943bbf7b317f25a61b7083
   m_configObjects:
+    com.unity.dt.app-ui: {fileID: 11400000, guid: 1b1c20d82303e4b5781c3ef50ac1449f, type: 2}
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 80d441dbe4f213e309da14b7db0df9b3, type: 3}
