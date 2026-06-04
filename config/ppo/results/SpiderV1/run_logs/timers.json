@@ -1,0 +1,42 @@
+{
+    "name": "root",
+    "metadata": {
+        "timer_format_version": "0.1.0",
+        "start_time_seconds": "1780526747",
+        "python_version": "3.9.25 (main, Nov  3 2025, 22:44:01) [MSC v.1929 64 bit (AMD64)]",
+        "command_line_arguments": "C:\\Users\\ajawa\\anaconda3\\envs\\mlagents39\\Scripts\\mlagents-learn spider.yaml --run-id SpiderV1",
+        "mlagents_version": "0.30.0",
+        "mlagents_envs_version": "0.30.0",
+        "communication_protocol_version": "1.5.0",
+        "pytorch_version": "2.8.0+cpu",
+        "numpy_version": "1.21.2",
+        "end_time_seconds": "1780526782"
+    },
+    "total": 34.693277099999996,
+    "count": 1,
+    "self": 0.011906199999998535,
+    "children": {
+        "run_training.setup": {
+            "total": 0.19845110000000066,
+            "count": 1,
+            "self": 0.19845110000000066
+        },
+        "TrainerController.start_learning": {
+            "total": 34.4829198,
+            "count": 1,
+            "self": 0.0001967999999976655,
+            "children": {
+                "TrainerController._reset_env": {
+                    "total": 34.4826876,
+                    "count": 1,
+                    "self": 34.4826876
+                },
+                "TrainerController._save_models": {
+                    "total": 3.540000000157306e-05,
+                    "count": 1,
+                    "self": 3.540000000157306e-05
+                }
+            }
+        }
+    }
+}
