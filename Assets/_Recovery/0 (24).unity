@@ -537,14 +537,11 @@ MonoBehaviour:
   maxMagazineSize: 30
   overdriveFOV: 80
   fovTransitionSpeed: 100
-  globalVolume: {fileID: 1953825353}
+  globalVolume: {fileID: 0}
+  activeVignetteColor: {r: 1, g: 0, b: 0, a: 1}
   activeVignetteIntensity: 0.45
   activeVignetteSmoothness: 0.5
   vignetteTransitionDuration: 0.5
-  ampedVignetteColor: {r: 0.99607843, g: 0.37254903, b: 0, a: 1}
-  overdriveVignetteColor: {r: 0.9607843, g: 0.7647059, b: 0.2784314, a: 1}
-  empVignetteColor: {r: 0.45490196, g: 0.72156864, b: 0.9372549, a: 1}
-  slowVignetteColor: {r: 0.43529412, g: 0.48235294, b: 0.96862745, a: 1}
 --- !u!82 &802119722
 AudioSource:
   m_ObjectHideFlags: 0
