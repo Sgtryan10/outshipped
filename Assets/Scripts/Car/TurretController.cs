@@ -34,14 +34,11 @@ public class TurretController : MonoBehaviour
     [SerializeField, Range(0f, 60f)] private float maxCameraPitchUp = 13f;
     [SerializeField, Range(0f, 60f)] private float maxCameraPitchDown = 6f;
 
-    [Header("Projectile")]
-    [SerializeField] private GameObject projectilePrefab;
+    [Header("Hitscan & Visual Settings")]
+    [SerializeField] private GameObject tracerPrefab;
+    [SerializeField] private float hitscanMaxRange = 200f;
     [SerializeField] private float muzzleForwardOffset = 0.12f;
-    [SerializeField] private float projectileSpeed = 1000f;
-    [SerializeField] private float projectileLifetime = 4f;
     [SerializeField] private int baseDamage = 25;
-    [SerializeField] private Color projColor = Color.yellow; 
-    [SerializeField] private float projGlowStrength = 4f;
     [SerializeField] private ParticleSystem muzzleFlash;
 
     private readonly RaycastHit[] aimHits = new RaycastHit[16];
@@ -81,49 +78,37 @@ public class TurretController : MonoBehaviour
 
         Vector3 direction = FiringDirection();
         Vector3 spawnOrigin = muzzle ? muzzle.position : FindBarrelTip(direction);
-        Vector3 spawnPosition = spawnOrigin + direction * muzzleForwardOffset + transform.up * 1.2f;
-        int damage = Mathf.Max(1, Mathf.RoundToInt(baseDamage * Mathf.Max(0f, damageMultiplier)));
+        Vector3 spawnPosition = spawnOrigin + barrel.forward * muzzleForwardOffset;
 
-        Projectile projectile = CreateProjectile(spawnPosition, Quaternion.LookRotation(direction));
-        projectile.Initialize(direction, projectileSpeed, projectileLifetime, damage, transform.root);
         if (muzzleFlash != null)
         {
             muzzleFlash.Play();
         }
-    }
 
-    Projectile CreateProjectile(Vector3 position, Quaternion rotation)
-    {
-        GameObject projectileObject;
+        Vector3 targetPoint = spawnPosition + (direction * hitscanMaxRange);
+        bool didHit = Physics.Raycast(spawnPosition, direction, out RaycastHit hit, hitscanMaxRange, aimMask);
 
-        if (projectilePrefab)
+        if (didHit)
         {
-            projectileObject = Instantiate(projectilePrefab, position, rotation);
+            targetPoint = hit.point;
+
+            float finalDamage = baseDamage * damageMultiplier;
+
+            Debug.Log($"Hitscan registered on: {hit.collider.name} at {hit.point}. Damage dealt: {finalDamage}");
+
+            // NOTE: Apply the damage to spider here
         }
-        else
-        {
-            projectileObject = GameObject.CreatePrimitive(PrimitiveType.Sphere);
-            projectileObject.name = "Turret Projectile";
-            projectileObject.transform.SetPositionAndRotation(position, rotation);
-            projectileObject.transform.localScale = Vector3.one * 0.22f;
-            Renderer renderer = projectileObject.GetComponent<Renderer>();
 
-            if (renderer)
+        if (tracerPrefab)
+        {
+            GameObject tracerObj = Instantiate(tracerPrefab, spawnPosition, Quaternion.LookRotation(direction));
+            tracer tracerComponent = tracerObj.GetComponent<tracer>();
+
+            if (tracerComponent != null)
             {
-                Material glowMaterial = new Material(renderer.material);
-                Color emissionColor = projColor * projGlowStrength;
-                glowMaterial.color = projColor;
-                glowMaterial.EnableKeyword("_EMISSION");
-                glowMaterial.SetColor("_EmissionColor", emissionColor);
-                renderer.material = glowMaterial;
+                tracerComponent.InitializeHitscanLine(spawnPosition, targetPoint);
             }
         }
-
-        Projectile projectile = projectileObject.GetComponent<Projectile>();
-        if (!projectile)
-            projectile = projectileObject.AddComponent<Projectile>();
-
-        return projectile;
     }
 
     void AimAtCursor()

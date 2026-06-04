@@ -89,7 +89,7 @@ MonoBehaviour:
     m_Value: {x: 0.5, y: 0.5}
   intensity:
     m_OverrideState: 1
-    m_Value: 0.2
+    m_Value: 0.159
   smoothness:
     m_OverrideState: 1
     m_Value: 0.2
@@ -130,10 +130,10 @@ MonoBehaviour:
   active: 1
   temperature:
     m_OverrideState: 1
-    m_Value: 10
+    m_Value: -2
   tint:
     m_OverrideState: 1
-    m_Value: 0
+    m_Value: 4
 --- !u!114 &1901965614487787982
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -155,7 +155,7 @@ MonoBehaviour:
     m_Value: {x: 0.94430757, y: 0.95068574, z: 1, w: 0}
   highlights:
     m_OverrideState: 1
-    m_Value: {x: 1, y: 0.912847, z: 0.69652605, w: 0}
+    m_Value: {x: 1, y: 0.9657327, z: 0.923533, w: 0}
   shadowsStart:
     m_OverrideState: 1
     m_Value: 0
