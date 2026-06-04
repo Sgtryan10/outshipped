@@ -1,0 +1,56 @@
+{
+    "Spider": {
+        "checkpoints": [
+            {
+                "steps": 49800,
+                "file_path": "results/SpiderV12/Spider/Spider-49800.onnx",
+                "reward": -0.9388025999069214,
+                "creation_time": 1780552944.0911622,
+                "auxillary_file_paths": [
+                    "results/SpiderV12/Spider/Spider-49800.pt"
+                ]
+            },
+            {
+                "steps": 99600,
+                "file_path": "results/SpiderV12/Spider/Spider-99600.onnx",
+                "reward": -0.9388025999069214,
+                "creation_time": 1780553061.5152562,
+                "auxillary_file_paths": [
+                    "results/SpiderV12/Spider/Spider-99600.pt"
+                ]
+            },
+            {
+                "steps": 149400,
+                "file_path": "results/SpiderV12/Spider/Spider-149400.onnx",
+                "reward": -0.9388025999069214,
+                "creation_time": 1780553186.299186,
+                "auxillary_file_paths": [
+                    "results/SpiderV12/Spider/Spider-149400.pt"
+                ]
+            },
+            {
+                "steps": 160800,
+                "file_path": "results/SpiderV12/Spider/Spider-160800.onnx",
+                "reward": -0.9388025999069214,
+                "creation_time": 1780553387.3267388,
+                "auxillary_file_paths": [
+                    "results/SpiderV12/Spider/Spider-160800.pt"
+                ]
+            }
+        ],
+        "final_checkpoint": {
+            "steps": 160800,
+            "file_path": "results/SpiderV12/Spider.onnx",
+            "reward": -0.9388025999069214,
+            "creation_time": 1780553387.3267388,
+            "auxillary_file_paths": [
+                "results/SpiderV12/Spider/Spider-160800.pt"
+            ]
+        }
+    },
+    "metadata": {
+        "stats_format_version": "0.3.0",
+        "mlagents_version": "1.1.0",
+        "torch_version": "2.2.2"
+    }
+}

@@ -1,0 +1,56 @@
+{
+    "Spider": {
+        "checkpoints": [
+            {
+                "steps": 49000,
+                "file_path": "results/SpiderV19/Spider/Spider-49000.onnx",
+                "reward": 183.35316721598306,
+                "creation_time": 1780592286.395925,
+                "auxillary_file_paths": [
+                    "results/SpiderV19/Spider/Spider-49000.pt"
+                ]
+            },
+            {
+                "steps": 99400,
+                "file_path": "results/SpiderV19/Spider/Spider-99400.onnx",
+                "reward": 156.07993994440352,
+                "creation_time": 1780592410.3097951,
+                "auxillary_file_paths": [
+                    "results/SpiderV19/Spider/Spider-99400.pt"
+                ]
+            },
+            {
+                "steps": 149800,
+                "file_path": "results/SpiderV19/Spider/Spider-149800.onnx",
+                "reward": 159.16089487075806,
+                "creation_time": 1780592541.755599,
+                "auxillary_file_paths": [
+                    "results/SpiderV19/Spider/Spider-149800.pt"
+                ]
+            },
+            {
+                "steps": 169000,
+                "file_path": "results/SpiderV19/Spider/Spider-169000.onnx",
+                "reward": 183.4469223022461,
+                "creation_time": 1780592591.385961,
+                "auxillary_file_paths": [
+                    "results/SpiderV19/Spider/Spider-169000.pt"
+                ]
+            }
+        ],
+        "final_checkpoint": {
+            "steps": 169000,
+            "file_path": "results/SpiderV19/Spider.onnx",
+            "reward": 183.4469223022461,
+            "creation_time": 1780592591.385961,
+            "auxillary_file_paths": [
+                "results/SpiderV19/Spider/Spider-169000.pt"
+            ]
+        }
+    },
+    "metadata": {
+        "stats_format_version": "0.3.0",
+        "mlagents_version": "1.1.0",
+        "torch_version": "2.2.2"
+    }
+}
