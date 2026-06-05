@@ -70,6 +70,9 @@ public class gameManager : MonoBehaviour
     [SerializeField] private Color empVignetteColor = new Color(0.454901961f, 0.721568627f, 0.937254902f);
     [SerializeField] private Color slowVignetteColor = new Color(0.435294118f, 0.482352941f, 0.968627451f);
 
+    [Header("Ability Visual Effects")]
+    [SerializeField] private ParticleSystem slowFieldParticles;
+
     private Vignette vignette;
     private Color baseVignetteColor;
     private float baseVignetteIntensity;
@@ -518,8 +521,18 @@ public class gameManager : MonoBehaviour
 
         StartVignetteTransition(slowVignetteColor, activeVignetteIntensity, activeVignetteSmoothness);
 
+        if (slowFieldParticles != null)
+        {
+            slowFieldParticles.Play();
+        }
+
         yield return new WaitForSeconds(20f);
         slowActive = false;
+
+        if (slowFieldParticles != null)
+        {
+            slowFieldParticles.Stop();
+        }
 
         StartVignetteTransition(baseVignetteColor, baseVignetteIntensity, baseVignetteSmoothness);
     }
