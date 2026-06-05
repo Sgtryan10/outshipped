@@ -4921,7 +4921,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -0.7071068, y: 0, z: 0, w: 0.7071068}
   m_LocalPosition: {x: 2.75, y: -1.2, z: -1.5}
-  m_LocalScale: {x: 75, y: 75, z: 75}
+  m_LocalScale: {x: 70, y: 70, z: 70}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 4899384517780396450}
@@ -5286,10 +5286,10 @@ MonoBehaviour:
   - {fileID: 2671724569638276820}
   - {fileID: 6583483429768916062}
   isAIControlled: 0
-  acceleration: 7500
+  acceleration: 6000
   brakeForce: 8000
   maxSpeed: 55
-  throttleResponse: 3.5
+  throttleResponse: 2.5
   throttleReleaseSpeed: 6
   speedLimiterResponse: 4
   throttleInputDeadZone: 0.04
@@ -5312,16 +5312,16 @@ MonoBehaviour:
   collisionRecoveryTurnMultiplier: 1.45
   collisionReleaseForce: 1600
   collisionRecoveryDuration: 0.2
-  downforce: 80
-  corneringDownforce: 85
+  downforce: 130
+  corneringDownforce: 160
   rollStabilize: 9500
   rollPitchDamping: 2200
   yawDamping: 1.05
   centerOfMassOverride: {fileID: 0}
-  fallbackCenterOfMass: {x: 0, y: -0.48, z: 0}
+  fallbackCenterOfMass: {x: 0, y: -0.75, z: 0}
   maxAngularSpeed: 2.5
-  frontAntiRoll: 9500
-  rearAntiRoll: 8000
+  frontAntiRoll: 6500
+  rearAntiRoll: 5500
   antiRollResponse: 14
   throttleInput: 0
   steerInput: 0
@@ -5341,11 +5341,11 @@ MonoBehaviour:
   groundMask:
     serializedVersion: 2
     m_Bits: 8
-  springStrength: 35000
-  dampenStrength: 4500
+  springStrength: 65000
+  dampenStrength: 9000
   maxSuspensionForce: 50000
-  restLen: 0.3
-  springTravel: 0.15
+  restLen: 0.12
+  springTravel: 0.08
   wheelRadius: 0.33
   raycastRecoveryMargin: 0.2
   raycastReacquireExtension: 0.18
@@ -5480,6 +5480,8 @@ MonoBehaviour:
   muzzleForwardOffset: 1.25
   baseDamage: 25
   muzzleFlash: {fileID: 3759385446472508337}
+  impactEffectPrefab: {fileID: 7163689981201702563, guid: e6984dec8dc8619439cc061424fb7a3c, type: 3}
+  impactEffectLifetime: 1
   buckshotPellets: 8
   buckshotSpread: 5
 --- !u!114 &3602680701415704583
@@ -21160,7 +21162,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -0.7071068, y: 0, z: 0, w: 0.7071068}
   m_LocalPosition: {x: 2.75, y: -1.2, z: 1.55}
-  m_LocalScale: {x: 75, y: 75, z: 75}
+  m_LocalScale: {x: 70, y: 70, z: 70}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 7946986840073732397}

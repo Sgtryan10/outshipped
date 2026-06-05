@@ -117,6 +117,14 @@ public class SpiderAgent : Agent
     public int groundedFeetRewardThreshold = 2;
     public float groundedFeetReward = 0.005f;
 
+    [Header("Self Righting")]
+    public bool enableSelfRighting = true;
+    [Range(-1f, 1f)] public float selfRightingDotThreshold = 0.2f;
+    public float selfRightingTorque = 220f;
+    public float selfRightingUpImpulse = 1.8f;
+    public int selfRightingImpulseCooldownSteps = 20;
+    public float onBackPenaltyScale = 0.08f;
+
     [Header("Reset Randomization")]
     public float startPositionRadius = 0.5f;
     public float startYawRange = 20f;
@@ -172,6 +180,7 @@ public class SpiderAgent : Agent
     private float trainingTargetSpeed;
     private float trainingTargetTurnTimer;
     private int jumpCooldown;
+    private int selfRightingImpulseCooldown;
     private int upsideDownSteps;
     private bool rerollTargetNextEpisode = true;
     private bool targetReachedThisEpisode;
@@ -242,6 +251,8 @@ public class SpiderAgent : Agent
         if (!body)
             return;
 
+        selfRightingImpulseCooldown = Mathf.Max(0, selfRightingImpulseCooldown - 1);
+
         if (trainingMode)
         {
             MoveTrainingTarget();
@@ -252,6 +263,7 @@ public class SpiderAgent : Agent
         }
 
         UpdateTargetVelocity();
+        ApplySelfRighting();
     }
 
     public override void OnEpisodeBegin()
@@ -270,6 +282,7 @@ public class SpiderAgent : Agent
 
         stepsSinceEpisodeStart = 0;
         jumpCooldown = 0;
+        selfRightingImpulseCooldown = 0;
         upsideDownSteps = 0;
         lastJumpInput = 0f;
         lastMeanJointActionMagnitude = 0f;
@@ -721,6 +734,12 @@ public class SpiderAgent : Agent
         else
             AddReward(upDot * upsideDownPenalty);
 
+        if (upDot < selfRightingDotThreshold)
+        {
+            float backAmount = Mathf.InverseLerp(selfRightingDotThreshold, -1f, upDot);
+            AddReward(-backAmount * onBackPenaltyScale);
+        }
+
         if (upDot < upsideDownDotThreshold)
             upsideDownSteps++;
         else
@@ -867,6 +886,30 @@ public class SpiderAgent : Agent
     private float GetUprightDot()
     {
         return Vector3.Dot(body.transform.up, Vector3.up);
+    }
+
+    private void ApplySelfRighting()
+    {
+        if (!enableSelfRighting || body == null)
+            return;
+
+        float upDot = GetUprightDot();
+        if (upDot >= selfRightingDotThreshold)
+            return;
+
+        Vector3 rightingAxis = Vector3.Cross(body.transform.up, Vector3.up);
+        if (rightingAxis.sqrMagnitude < 0.0001f)
+            rightingAxis = body.transform.forward;
+
+        float backAmount = Mathf.InverseLerp(selfRightingDotThreshold, -1f, upDot);
+        body.WakeUp();
+        body.AddTorque(rightingAxis.normalized * selfRightingTorque * backAmount, ForceMode.Acceleration);
+
+        if (bodyTouchingGround && selfRightingImpulseCooldown <= 0)
+        {
+            body.AddForce(Vector3.up * selfRightingUpImpulse, ForceMode.Impulse);
+            selfRightingImpulseCooldown = selfRightingImpulseCooldownSteps;
+        }
     }
 
     private void RecordEpisodeStats()
@@ -1060,6 +1103,13 @@ public class SpiderAgent : Agent
             }
 
             actions[i] = GaitAction(controlledJointIndices[i]);
+        }
+
+        if (useJumpAction && controlledJointIndices != null)
+        {
+            int jumpActionIndex = controlledJointIndices.Length;
+            if (jumpActionIndex < actions.Length)
+                actions[jumpActionIndex] = Input.GetKey(KeyCode.Space) ? 1f : -1f;
         }
     }
 

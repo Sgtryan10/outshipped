@@ -40,6 +40,8 @@ public class TurretController : MonoBehaviour
     [SerializeField] private float muzzleForwardOffset = 0.12f;
     [SerializeField] private int baseDamage = 25;
     [SerializeField] private ParticleSystem muzzleFlash;
+    [SerializeField] private GameObject impactEffectPrefab;
+    [SerializeField] private float impactEffectLifetime = 1f;
 
     [Header("Buckshot Settings")]
     [SerializeField] private int buckshotPellets = 8;
@@ -122,6 +124,13 @@ public class TurretController : MonoBehaviour
             {
                 targetPoint = hit.point;
                 float finalDamage = baseDamage * damageMultiplier;
+                SpawnImpactEffect(hit.point, hit.normal);
+                SpiderHealth spider = hit.collider.GetComponentInParent<SpiderHealth>();
+                if (spider)
+                {
+                    spider.ApplyKnockback(finalDirection, hit.point, damageMultiplier);
+                    spider.TakeDamage(Mathf.RoundToInt(finalDamage));
+                }
 
                 Debug.Log($"Pellet {i} registered hit on: {hit.collider.name} at {hit.point}. Damage: {finalDamage}");
             }
@@ -140,6 +149,22 @@ public class TurretController : MonoBehaviour
                 }
             }
         }
+    }
+
+    private void SpawnImpactEffect(Vector3 position, Vector3 normal)
+    {
+        if (!impactEffectPrefab)
+            return;
+
+        Quaternion rotation = normal.sqrMagnitude > 0.0001f
+            ? Quaternion.LookRotation(normal)
+            : Quaternion.identity;
+        GameObject effect = Instantiate(impactEffectPrefab, position, rotation);
+
+        foreach (ParticleSystem particles in effect.GetComponentsInChildren<ParticleSystem>())
+            particles.Play();
+
+        Destroy(effect, Mathf.Max(0.05f, impactEffectLifetime));
     }
 
     void AimAtCursor()

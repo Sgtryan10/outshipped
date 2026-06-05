@@ -2,22 +2,58 @@
     "Spider": {
         "checkpoints": [
             {
-                "steps": 4800,
-                "file_path": "results/SpiderJumpV2/Spider/Spider-4800.onnx",
-                "reward": 1350.1959991455078,
-                "creation_time": 1780638789.662121,
+                "steps": 249783,
+                "file_path": "results/SpiderJumpV2/Spider/Spider-249783.onnx",
+                "reward": null,
+                "creation_time": 1780673455.325284,
                 "auxillary_file_paths": [
-                    "results/SpiderJumpV2/Spider/Spider-4800.pt"
+                    "results/SpiderJumpV2/Spider/Spider-249783.pt"
+                ]
+            },
+            {
+                "steps": 299592,
+                "file_path": "results/SpiderJumpV2/Spider/Spider-299592.onnx",
+                "reward": 4205.534342447917,
+                "creation_time": 1780673577.9015439,
+                "auxillary_file_paths": [
+                    "results/SpiderJumpV2/Spider/Spider-299592.pt"
+                ]
+            },
+            {
+                "steps": 349263,
+                "file_path": "results/SpiderJumpV2/Spider/Spider-349263.onnx",
+                "reward": 3407.613842010498,
+                "creation_time": 1780673701.542957,
+                "auxillary_file_paths": [
+                    "results/SpiderJumpV2/Spider/Spider-349263.pt"
+                ]
+            },
+            {
+                "steps": 399137,
+                "file_path": "results/SpiderJumpV2/Spider/Spider-399137.onnx",
+                "reward": 4425.132141113281,
+                "creation_time": 1780673829.820639,
+                "auxillary_file_paths": [
+                    "results/SpiderJumpV2/Spider/Spider-399137.pt"
+                ]
+            },
+            {
+                "steps": 427937,
+                "file_path": "results/SpiderJumpV2/Spider/Spider-427937.onnx",
+                "reward": 4021.0390380859376,
+                "creation_time": 1780673976.797111,
+                "auxillary_file_paths": [
+                    "results/SpiderJumpV2/Spider/Spider-427937.pt"
                 ]
             }
         ],
         "final_checkpoint": {
-            "steps": 4800,
+            "steps": 427937,
             "file_path": "results/SpiderJumpV2/Spider.onnx",
-            "reward": 1350.1959991455078,
-            "creation_time": 1780638789.662121,
+            "reward": 4021.0390380859376,
+            "creation_time": 1780673976.797111,
             "auxillary_file_paths": [
-                "results/SpiderJumpV2/Spider/Spider-4800.pt"
+                "results/SpiderJumpV2/Spider/Spider-427937.pt"
             ]
         }
     },

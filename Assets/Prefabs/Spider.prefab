@@ -1063,7 +1063,7 @@ GameObject:
   m_Layer: 6
   m_Name: Spider
   m_TagString: Untagged
-  m_Icon: {fileID: 0}
+  m_Icon: {fileID: 5132851093641282708, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
@@ -1100,7 +1100,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SpiderHealth
   maxHealth: 100
+  invincible: 1
   destroyOnDeath: 1
+  knockbackBody: {fileID: 3594123140949085217}
+  knockbackForce: 30
+  knockbackUpwardBias: 0.2
 --- !u!1 &3165405177580503820
 GameObject:
   m_ObjectHideFlags: 0
@@ -2223,6 +2227,9 @@ GameObject:
   m_Component:
   - component: {fileID: 5773364912195807698}
   - component: {fileID: 3594123140949085217}
+  - component: {fileID: 4840842428788358088}
+  - component: {fileID: 429832936812898172}
+  - component: {fileID: 7306729108885540854}
   m_Layer: 6
   m_Name: Body
   m_TagString: Untagged
@@ -2259,7 +2266,7 @@ Rigidbody:
   serializedVersion: 5
   m_Mass: 5
   m_LinearDamping: 0
-  m_AngularDamping: 0.05
+  m_AngularDamping: 0.8
   m_CenterOfMass: {x: 0, y: 0, z: 0}
   m_InertiaTensor: {x: 1, y: 1, z: 1}
   m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
@@ -2276,6 +2283,183 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 1
+--- !u!114 &4840842428788358088
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4886271750840833870}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5d1c4e0b1822b495aa52bc52839ecb30, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.ML-Agents::Unity.MLAgents.Policies.BehaviorParameters
+  m_BrainParameters:
+    VectorObservationSize: 90
+    NumStackedVectorObservations: 1
+    m_ActionSpec:
+      m_NumContinuousActions: 7
+      BranchSizes: 
+    VectorActionSize: 07000000
+    VectorActionDescriptions: []
+    VectorActionSpaceType: 1
+    hasUpgradedBrainParametersWithActionSpec: 1
+  m_Model: {fileID: 11400000, guid: 1216bc7d43d64463e933685f4363869c, type: 3}
+  m_InferenceDevice: 0
+  m_BehaviorType: 0
+  m_BehaviorName: Spider
+  TeamId: 0
+  m_UseChildSensors: 1
+  m_UseChildActuators: 1
+  m_DeterministicInference: 0
+  m_ObservableAttributeHandling: 0
+--- !u!114 &429832936812898172
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4886271750840833870}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3a5c9d521e5ef4759a8246a07d52221e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.ML-Agents::Unity.MLAgents.DecisionRequester
+  DecisionPeriod: 5
+  DecisionStep: 0
+  TakeActionsBetweenDecisions: 1
+--- !u!114 &7306729108885540854
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4886271750840833870}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2d52ca4948e5cb24197bac035cf1ea96, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SpiderAgent
+  agentParameters:
+    maxStep: 0
+  hasUpgradedFromAgentParameters: 1
+  MaxStep: 12000
+  trainingMode: 0
+  autoFindCourierTarget: 1
+  courierTag: Player
+  useTargetPrediction: 1
+  targetPredictionTime: 0.35
+  targetVelocityObservationScale: 30
+  body: {fileID: 3594123140949085217}
+  joints:
+  - {fileID: 5082213097731616986}
+  - {fileID: 145142330445574733}
+  - {fileID: 6898600233029640776}
+  - {fileID: 8182330779999083619}
+  - {fileID: 4671734222556784967}
+  - {fileID: 4527878887303121552}
+  - {fileID: 3426738755514852992}
+  - {fileID: 2535367931323150618}
+  - {fileID: 4518636743561886923}
+  jointTargetAngle: 35
+  jointSpring: 3000
+  jointDamper: 250
+  jointMaxForce: 40000
+  hipAngularXLimit: 35
+  hipAngularYZLimit: 20
+  kneeAngularXLimit: 60
+  kneeAngularYZLimit: 10
+  footAngularXLimit: 45
+  footAngularYZLimit: 10
+  passiveFootSpring: 1000
+  passiveFootDamper: 150
+  passiveFootMaxForce: 10000
+  jointProjectionDistance: 0.025
+  jointProjectionAngle: 2
+  limbSolverIterations: 20
+  limbSolverVelocityIterations: 10
+  anchorJointsAtPivot: 1
+  applyRuntimeGrip: 1
+  limbStaticFriction: 1.4
+  limbDynamicFriction: 1.2
+  useJumpAction: 1
+  jumpImpulse: 30
+  jumpThreshold: 0.25
+  jumpCooldownSteps: 35
+  jumpPenalty: 0.01
+  jumpIntentPenalty: 0
+  airborneJumpPenalty: 0
+  jumpReward: 0.03
+  targetAlignedJumpReward: 0.15
+  goodLandingProgressRewardScale: 5
+  target: {fileID: 0}
+  maxEpisodeSteps: 12000
+  targetReachDistance: 2.5
+  targetMinDistance: 10
+  targetMaxDistance: 16
+  targetHeight: 0.5
+  keepTargetUntilReached: 1
+  targetReachReward: 2
+  targetFastReachBonus: 3
+  moveTrainingTarget: 1
+  trainingTargetMinSpeed: 1.5
+  trainingTargetMaxSpeed: 4
+  trainingTargetAcceleration: 4
+  trainingTargetTurnInterval: 2.5
+  trainingTargetEvasionBias: 0.15
+  trainingTargetBoundsRadius: 25
+  movingTargetCurriculumStart: 0
+  useTrainingCurriculum: 1
+  curriculumRampSteps: 500000
+  curriculumStartDistanceScale: 0.25
+  curriculumStartSpeedScale: 0.2
+  policyActionStartScale: 0.2
+  velocityPenalty: 0
+  groundContactPenalty: 0
+  upsideDownPenalty: 0.08
+  upsideDownEndPenalty: 1
+  upsideDownDotThreshold: -0.25
+  upsideDownEndSteps: 120
+  lowBodyHeightPenalty: 0
+  allowedBodyDrop: 0.25
+  allowedGroundedLimbColliders: 4
+  legDragPenalty: 0
+  verticalVelocityPenalty: 0
+  airbornePenalty: 0
+  timePenalty: 0.001
+  jointActionPenalty: 0.0005
+  jointActionChangePenalty: 0
+  erraticVelocityChangePenalty: 0.0002
+  erraticAngularVelocityPenalty: 0.0005
+  erraticAngularChangePenalty: 0.0002
+  forwardRewardScale: 0
+  targetDirectionRewardScale: 0.05
+  targetProgressRewardScale: 1.5
+  movementRewardScale: 0
+  targetFacingRewardScale: 0.08
+  targetFacingPenaltyScale: 0.06
+  targetFacingRewardDot: 0.75
+  targetProximityRewardScale: 0
+  targetProximityRewardDistance: 20
+  uprightRewardScale: 0.01
+  groundedFeetRewardThreshold: 2
+  groundedFeetReward: 0.005
+  enableSelfRighting: 1
+  selfRightingDotThreshold: 0.2
+  selfRightingTorque: 220
+  selfRightingUpImpulse: 1.8
+  selfRightingImpulseCooldownSteps: 20
+  onBackPenaltyScale: 0.08
+  startPositionRadius: 0.5
+  startYawRange: 20
+  useOscillatingHeuristic: 0
+  heuristicFrequency: 2
+  useTrainingGaitBias: 1
+  trainingGaitBias: 0.75
+  useTargetAwareGaitBias: 1
+  gaitTurnScale: 0.45
+  gaitTurnPoseScale: 0.3
 --- !u!1 &4987615833377753524
 GameObject:
   m_ObjectHideFlags: 0
