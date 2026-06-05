@@ -94,7 +94,7 @@ LightmapSettings:
     m_TrainingDataDestination: TrainingData
     m_LightProbeSampleCountMultiplier: 4
   m_LightingDataAsset: {fileID: 112000000, guid: d3467865d7822f1e5b6e5a6a5249fee1, type: 2}
-  m_LightingSettings: {fileID: 4890085278179872738, guid: 74a8f868c8ac5a253aa22d1f79adc019, type: 2}
+  m_LightingSettings: {fileID: 0}
 --- !u!196 &4
 NavMeshSettings:
   serializedVersion: 2
@@ -545,7 +545,6 @@ MonoBehaviour:
   overdriveVignetteColor: {r: 0.9607843, g: 0.7647059, b: 0.2784314, a: 1}
   empVignetteColor: {r: 0.45490196, g: 0.72156864, b: 0.9372549, a: 1}
   slowVignetteColor: {r: 0.43529412, g: 0.48235294, b: 0.96862745, a: 1}
-  slowFieldParticles: {fileID: 1547781291}
 --- !u!82 &802119722
 AudioSource:
   m_ObjectHideFlags: 0
@@ -835,19 +834,17 @@ MonoBehaviour:
     heightOffset: 0
   - prefab: {fileID: 990245261491764671, guid: ee67821003f8a4cf981ee1c1ba6d8170, type: 3}
     heightOffset: 0
-  grassProps: []
   spawnCountDepots: 4
   spawnCountTrees: 80
   spawnCountRocks: 120
-  spawnCountGrassClusters: 30
   baseSpawnZone: {fileID: 600736268}
   depotSpawnZone: {fileID: 1502877203}
   treeSpawnZone: {fileID: 567099109}
   rockSpawnZone: {fileID: 858603838}
-  grassSpawnZone: {fileID: 0}
   groundLayer:
     serializedVersion: 2
     m_Bits: 8
+  structureMinSpacing: 6
   treeMinSpacing: 2.5
   treeScaleMin: 0.85
   treeScaleMax: 1.2
@@ -864,17 +861,6 @@ MonoBehaviour:
   rockClusterCount: 6
   rockClusterRadius: 7
   rockClusterStrength: 0.75
-  grassBladesMin: 2
-  grassBladesMax: 5
-  grassClumpRadius: 0.6
-  grassMinSpacing: 1.2
-  grassScaleMin: 0.75
-  grassScaleMax: 1.25
-  grassAlignToSlope: 0
-  grassSlopeBlend: 0.2
-  grassClusterCount: 8
-  grassClusterRadius: 10
-  grassClusterStrength: 0.7
 --- !u!4 &1072600962
 Transform:
   m_ObjectHideFlags: 0
@@ -1066,6 +1052,10 @@ PrefabInstance:
       value: 2000
       objectReference: {fileID: 0}
     - target: {fileID: 1474544913221177702, guid: e9156b349b9b44cfb841f6e32dae3276, type: 3}
+      propertyPath: projectileSpeed
+      value: 250
+      objectReference: {fileID: 0}
+    - target: {fileID: 1474544913221177702, guid: e9156b349b9b44cfb841f6e32dae3276, type: 3}
       propertyPath: muzzleForwardOffset
       value: 1.25
       objectReference: {fileID: 0}
@@ -1110,13 +1100,13 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2782512449634937725, guid: e9156b349b9b44cfb841f6e32dae3276, type: 3}
+      propertyPath: Loop
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2782512449634937725, guid: e9156b349b9b44cfb841f6e32dae3276, type: 3}
       propertyPath: m_PlayOnAwake
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 3602680701415704583, guid: e9156b349b9b44cfb841f6e32dae3276, type: 3}
-      propertyPath: audioSource
-      value: 
-      objectReference: {fileID: 802119722}
     - target: {fileID: 5372501872205966627, guid: e9156b349b9b44cfb841f6e32dae3276, type: 3}
       propertyPath: stepAssistMaxSpeed
       value: 45
@@ -1188,14 +1178,17 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 1460920163443697057, guid: e9156b349b9b44cfb841f6e32dae3276, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 2118522084}
   m_SourcePrefab: {fileID: 100100000, guid: e9156b349b9b44cfb841f6e32dae3276, type: 3}
 --- !u!114 &1244940494 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 1474544913221177702, guid: e9156b349b9b44cfb841f6e32dae3276, type: 3}
   m_PrefabInstance: {fileID: 1244940493}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
+  m_GameObject: {fileID: 2118522083}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fddc2a8b013a44799a61c3b7a8daac64, type: 3}
@@ -1206,7 +1199,7 @@ MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 4272824818664953030, guid: e9156b349b9b44cfb841f6e32dae3276, type: 3}
   m_PrefabInstance: {fileID: 1244940493}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
+  m_GameObject: {fileID: 2118522083}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 75334208458ff458e88964eb143d0628, type: 3}
@@ -1560,11 +1553,6 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 400, y: 37.755302, z: 400}
   m_Center: {x: 0, y: 6, z: 0}
---- !u!198 &1547781291 stripped
-ParticleSystem:
-  m_CorrespondingSourceObject: {fileID: 7695441552362656767, guid: e9156b349b9b44cfb841f6e32dae3276, type: 3}
-  m_PrefabInstance: {fileID: 1244940493}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1668576978
 GameObject:
   m_ObjectHideFlags: 0
@@ -2231,6 +2219,29 @@ MonoBehaviour:
   testPopupDescription: POPUP DESCRIPTION
   testPopupColor: {r: 1, g: 0.37254903, b: 0, a: 0.29803923}
   testPopupDuration: 3
+--- !u!1 &2118522083 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1460920163443697057, guid: e9156b349b9b44cfb841f6e32dae3276, type: 3}
+  m_PrefabInstance: {fileID: 1244940493}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &2118522084
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2118522083}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0eca596d7af52b243a6d41794fe6b5de, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::playerDeliveryManager
+  hasPackage: 0
+  baseTag: Base
+  depotTag: Depot
+  audioSource: {fileID: 802119722}
+  packagePickupSFX: {fileID: 8300000, guid: 4fb3c0e12fb0a3356807e34019c87b38, type: 3}
+  packageDeliverSFX: {fileID: 8300000, guid: 683af5baf803ff4b1baa60262e2e9184, type: 3}
 --- !u!1001 &5008283293111670121
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2286,7 +2297,7 @@ PrefabInstance:
     - target: {fileID: 3280437049211281185, guid: 3d547cc21944c64af921367ded561ade, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
-      objectReference: {fileID: 2100000, guid: 5d8af8f434f69794eabd684fb44b4fbf, type: 2}
+      objectReference: {fileID: 2100000, guid: a78db3aa485b243d098faeeb5daf4b1d, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
