@@ -9,7 +9,20 @@ public class playerDeliveryManager : MonoBehaviour
     [SerializeField] private string baseTag = "Base";
     [SerializeField] private string depotTag = "Depot";
 
+    [Header("Audio Settings")]
+    [SerializeField] private AudioSource audioSource;
+    [SerializeField] private AudioClip packagePickupSFX;
+    [SerializeField] private AudioClip packageDeliverSFX;
+
     public bool HasPackage => hasPackage;
+
+    private void Start()
+    {
+        if (audioSource == null)
+        {
+            audioSource = GetComponent<AudioSource>();
+        }
+    }
 
     private void OnTriggerEnter(Collider other)
     {
@@ -19,19 +32,12 @@ public class playerDeliveryManager : MonoBehaviour
             {
                 PickupPackage();
             }
-            else
-            {
-            }
         }
-
         else if (other.CompareTag(depotTag))
         {
             if (hasPackage)
             {
                 DeliverPackage();
-            }
-            else
-            {
             }
         }
     }
@@ -39,11 +45,26 @@ public class playerDeliveryManager : MonoBehaviour
     private void PickupPackage()
     {
         hasPackage = true;
+
+        if (audioSource != null && packagePickupSFX != null)
+        {
+            audioSource.PlayOneShot(packagePickupSFX);
+        }
+
+        if (gameManager.Instance != null)
+        {
+            gameManager.Instance.TriggerPackagePickupPopup();
+        }
     }
 
     private void DeliverPackage()
     {
         hasPackage = false;
+
+        if (audioSource != null && packageDeliverSFX != null)
+        {
+            audioSource.PlayOneShot(packageDeliverSFX);
+        }
 
         if (gameManager.Instance != null)
         {

@@ -13,7 +13,7 @@ public class TurretController : MonoBehaviour
     [SerializeField] private Vector3 localFiringAxis = Vector3.down;
 
     [Header("Aiming")]
-    [SerializeField] private LayerMask aimMask = Physics.DefaultRaycastLayers;
+    [SerializeField] private LayerMask aimMask;
     [SerializeField] private float maxAimDistance = 300f;
     [SerializeField] private float yawSpeed = 260f;
     [SerializeField] private float pitchSpeed = 180f;
@@ -34,12 +34,16 @@ public class TurretController : MonoBehaviour
     [SerializeField, Range(0f, 60f)] private float maxCameraPitchUp = 13f;
     [SerializeField, Range(0f, 60f)] private float maxCameraPitchDown = 6f;
 
-    [Header("Projectile")]
-    [SerializeField] private GameObject projectilePrefab;
-    [SerializeField] private float muzzleForwardOffset = 1.2f;
-    [SerializeField] private float projectileSpeed = 55f;
-    [SerializeField] private float projectileLifetime = 4f;
+    [Header("Hitscan & Visual Settings")]
+    [SerializeField] private GameObject tracerPrefab;
+    [SerializeField] private float hitscanMaxRange = 200f;
+    [SerializeField] private float muzzleForwardOffset = 0.12f;
     [SerializeField] private int baseDamage = 25;
+    [SerializeField] private ParticleSystem muzzleFlash;
+
+    [Header("Buckshot Settings")]
+    [SerializeField] private int buckshotPellets = 8;
+    [SerializeField] private float buckshotSpread = 5f;
 
     private readonly RaycastHit[] aimHits = new RaycastHit[16];
     private Transform cameraAimTarget;
@@ -51,6 +55,7 @@ public class TurretController : MonoBehaviour
     void Awake()
     {
         AutoFindReferences();
+        EnsureMuzzleReference();
         RememberNeutralBarrelDirection();
         EnsureCameraAimTarget();
         SnapCameraAimTarget();
@@ -71,40 +76,70 @@ public class TurretController : MonoBehaviour
         UpdateCameraAimTarget();
     }
 
+    public void SetBaseDamage(int damageAmount)
+    {
+        baseDamage = damageAmount;
+    }
+
+    public void SetMaxRange(float maxRangeValue)
+    {
+        hitscanMaxRange = maxRangeValue;
+    }
+
     public void Fire(float damageMultiplier = 1f)
     {
         if (!barrel) return;
 
-        Transform spawnTransform = muzzle ? muzzle : barrel;
-        Vector3 direction = FiringDirection();
-        Vector3 spawnPosition = spawnTransform.position + direction * muzzleForwardOffset;
-        int damage = Mathf.Max(1, Mathf.RoundToInt(baseDamage * Mathf.Max(0f, damageMultiplier)));
+        Vector3 baseDirection = FiringDirection();
+        Vector3 spawnOrigin = muzzle ? muzzle.position : FindBarrelTip(baseDirection);
+        Vector3 spawnPosition = spawnOrigin + barrel.forward * muzzleForwardOffset;
 
-        Projectile projectile = CreateProjectile(spawnPosition, Quaternion.LookRotation(direction));
-        projectile.Initialize(direction, projectileSpeed, projectileLifetime, damage, transform.root);
-    }
-
-    Projectile CreateProjectile(Vector3 position, Quaternion rotation)
-    {
-        GameObject projectileObject;
-
-        if (projectilePrefab)
+        if (muzzleFlash != null)
         {
-            projectileObject = Instantiate(projectilePrefab, position, rotation);
-        }
-        else
-        {
-            projectileObject = GameObject.CreatePrimitive(PrimitiveType.Sphere);
-            projectileObject.name = "Turret Projectile";
-            projectileObject.transform.SetPositionAndRotation(position, rotation);
-            projectileObject.transform.localScale = Vector3.one * 0.22f;
+            muzzleFlash.Play();
         }
 
-        Projectile projectile = projectileObject.GetComponent<Projectile>();
-        if (!projectile)
-            projectile = projectileObject.AddComponent<Projectile>();
+        bool isBuckshot = GameSelection.SelectedTurretType == "BUCKSHOT";
+        int pelletsToFire = isBuckshot ? buckshotPellets : 1;
 
-        return projectile;
+        for (int i = 0; i < pelletsToFire; i++)
+        {
+            Vector3 finalDirection = baseDirection;
+
+            if (isBuckshot)
+            {
+                float spreadX = Random.Range(-buckshotSpread, buckshotSpread);
+                float spreadY = Random.Range(-buckshotSpread, buckshotSpread);
+
+                Quaternion spreadRotation = Quaternion.Euler(spreadX, spreadY, 0);
+                finalDirection = Quaternion.LookRotation(baseDirection) * spreadRotation * Vector3.forward;
+            }
+
+            Vector3 targetPoint = spawnPosition + (finalDirection * hitscanMaxRange);
+            bool didHit = Physics.Raycast(spawnPosition, finalDirection, out RaycastHit hit, hitscanMaxRange, aimMask);
+
+            if (didHit)
+            {
+                targetPoint = hit.point;
+                float finalDamage = baseDamage * damageMultiplier;
+
+                Debug.Log($"Pellet {i} registered hit on: {hit.collider.name} at {hit.point}. Damage: {finalDamage}");
+            }
+
+            if (tracerPrefab)
+            {
+                GameObject tracerObj = Instantiate(tracerPrefab, spawnPosition, Quaternion.LookRotation(finalDirection));
+                tracer tracerComponent = tracerObj.GetComponent<tracer>();
+
+                if (tracerComponent != null)
+                {
+                    Color activeLaserColor = gameManager.Instance != null
+                        ? gameManager.Instance.CurrentTracerColor
+                        : Color.white;
+                    tracerComponent.InitializeHitscanLine(spawnPosition, targetPoint, activeLaserColor);
+                }
+            }
+        }
     }
 
     void AimAtCursor()
@@ -286,7 +321,58 @@ public class TurretController : MonoBehaviour
         if (!yawPivot) yawPivot = FindChild("Yaw");
         if (!pitchPivot) pitchPivot = FindChild("Pitch");
         if (!barrel) barrel = FindChild("Barrel");
-        if (!muzzle) muzzle = barrel;
+        if (!muzzle) muzzle = FindChild("Muzzle");
+    }
+
+    void EnsureMuzzleReference()
+    {
+        if (!barrel || (muzzle && muzzle != barrel))
+            return;
+
+        Transform existingMuzzle = FindChild("Muzzle");
+        if (existingMuzzle && existingMuzzle != barrel)
+        {
+            muzzle = existingMuzzle;
+            return;
+        }
+
+        Vector3 direction = FiringDirection();
+        GameObject muzzleObject = new GameObject("Muzzle");
+        muzzle = muzzleObject.transform;
+        muzzle.SetParent(barrel, true);
+        muzzle.position = FindBarrelTip(direction);
+        muzzle.rotation = Quaternion.LookRotation(direction, transform.up);
+    }
+
+    Vector3 FindBarrelTip(Vector3 direction)
+    {
+        if (!barrel)
+            return transform.position;
+
+        Renderer barrelRenderer = barrel.GetComponentInChildren<Renderer>();
+        if (!barrelRenderer)
+            return barrel.position;
+
+        Bounds bounds = barrelRenderer.bounds;
+        Vector3 center = bounds.center;
+        Vector3 extents = bounds.extents;
+        float furthestProjection = float.NegativeInfinity;
+
+        for (int x = -1; x <= 1; x += 2)
+        {
+            for (int y = -1; y <= 1; y += 2)
+            {
+                for (int z = -1; z <= 1; z += 2)
+                {
+                    Vector3 corner = center + Vector3.Scale(extents, new Vector3(x, y, z));
+                    furthestProjection = Mathf.Max(
+                        furthestProjection,
+                        Vector3.Dot(corner - barrel.position, direction));
+                }
+            }
+        }
+
+        return barrel.position + direction * Mathf.Max(0f, furthestProjection);
     }
 
     Transform FindChild(string childName)

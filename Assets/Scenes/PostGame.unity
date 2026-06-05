@@ -214,6 +214,8 @@ MonoBehaviour:
   audioSource: {fileID: 675947370}
   clickSound: {fileID: 8300000, guid: a477886f5c9369a65a1cc34944e9a697, type: 3}
   hoverSound: {fileID: 8300000, guid: 4048deccd44de671cae0d2563b428984, type: 3}
+  labelShowSound: {fileID: 8300000, guid: e6fd28e75db15a70f92f2fd1bb916870, type: 3}
+  finalGradeSound: {fileID: 8300000, guid: 601b88a2907da3bd293bf54ff2cd12bf, type: 3}
 --- !u!82 &675947370
 AudioSource:
   m_ObjectHideFlags: 0

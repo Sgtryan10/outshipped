@@ -33,6 +33,17 @@ public class WheelConfig : MonoBehaviour
     [Range(0f, 1f)] public float minimumLongitudinalGripScale = 0.55f;
     public float steeringAngleSpeed = 500f;
 
+    [Header("Step Assist")]
+    public bool enableStepAssist = true;
+    [Tooltip("How far ahead of a leading wheel to check for a curb face.")]
+    public float stepAssistProbeDistance = 0.7f;
+    [Tooltip("Maximum obstacle height treated as a curb instead of a wall.")]
+    public float stepAssistMaxHeight = 0.42f;
+    public float stepAssistLowerProbeHeight = 0.08f;
+    public float stepAssistLiftForce = 6500f;
+    public float stepAssistForwardForce = 1800f;
+    public float stepAssistMaxSpeed = 12f;
+
     [Header("Rolling Resistance")]
     public float coastDragStiffness = 300f;
 
@@ -68,6 +79,12 @@ public class WheelConfig : MonoBehaviour
         combinedGripBlend = Mathf.Clamp01(combinedGripBlend);
         minimumLongitudinalGripScale = Mathf.Clamp01(minimumLongitudinalGripScale);
         steeringAngleSpeed = Mathf.Max(0f, steeringAngleSpeed);
+        stepAssistProbeDistance = Mathf.Max(0f, stepAssistProbeDistance);
+        stepAssistMaxHeight = Mathf.Max(0f, stepAssistMaxHeight);
+        stepAssistLowerProbeHeight = Mathf.Clamp(stepAssistLowerProbeHeight, 0f, stepAssistMaxHeight);
+        stepAssistLiftForce = Mathf.Max(0f, stepAssistLiftForce);
+        stepAssistForwardForce = Mathf.Max(0f, stepAssistForwardForce);
+        stepAssistMaxSpeed = Mathf.Max(0f, stepAssistMaxSpeed);
         coastDragStiffness = Mathf.Max(0f, coastDragStiffness);
         wheelVisualFollowSpeed = Mathf.Max(0f, wheelVisualFollowSpeed);
         airborneVisualDroop = Mathf.Max(0f, airborneVisualDroop);

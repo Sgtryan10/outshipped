@@ -13,6 +13,14 @@ public class CarVfxSfx : MonoBehaviour
     [SerializeField] private TrailRenderer[] skidTrails;
     [SerializeField] private ParticleSystem[] skidParticles;
 
+    [Header("Collision Audio")]
+    [SerializeField] private AudioSource collisionSource;
+    [SerializeField] private AudioClip[] crashClips;
+    [SerializeField] private float minCollisionRelativeVelocity = 2f;
+    [SerializeField] private float maxCollisionRelativeVelocity = 15f;
+    [SerializeField, Range(0f, 1f)] private float minCollisionVolume = 0.2f;
+    [SerializeField, Range(0f, 1f)] private float maxCollisionVolume = 1f;
+
     [Header("Engine Audio")]
     [SerializeField] private float maxSpeedForAudio = 55f;
     [SerializeField, Range(0f, 1f)] private float engineVolume = 0.7f;
@@ -43,6 +51,12 @@ public class CarVfxSfx : MonoBehaviour
             engineSource.loop = true;
         if (skidSource)
             skidSource.loop = true;
+
+        if (collisionSource)
+        {
+            collisionSource.loop = false;
+            collisionSource.playOnAwake = false;
+        }
     }
 
     void Update()
@@ -52,6 +66,23 @@ public class CarVfxSfx : MonoBehaviour
         float speed = rb.linearVelocity.magnitude;
         UpdateEngineAudio(speed);
         UpdateSkidFeedback(speed);
+    }
+
+    void OnCollisionEnter(Collision collision)
+    {
+        if (!collisionSource || crashClips == null || crashClips.Length == 0) return;
+
+        float impactForce = collision.relativeVelocity.magnitude;
+
+        if (impactForce >= minCollisionRelativeVelocity)
+        {
+            float rawT = Mathf.InverseLerp(minCollisionRelativeVelocity, maxCollisionRelativeVelocity, impactForce);
+            float volume = Mathf.Lerp(minCollisionVolume, maxCollisionVolume, rawT);
+
+            AudioClip randomClip = crashClips[UnityEngine.Random.Range(0, crashClips.Length)];
+
+            collisionSource.PlayOneShot(randomClip, volume);
+        }
     }
 
     void OnDisable()
