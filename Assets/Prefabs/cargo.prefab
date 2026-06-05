@@ -64,6 +64,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: cargo
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 529b1441b7b1fa1828e813e8b420ad8a, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

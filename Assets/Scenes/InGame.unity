@@ -534,6 +534,10 @@ MonoBehaviour:
   - turretType: RAPID-FIRE
     reloadSound: {fileID: 8300000, guid: 6a6daa973c4b7d58882cb82b23efc53a, type: 3}
   defaultReloadSFX: {fileID: 8300000, guid: 5729a23b1b3a9dc44bb35a99242b0ffe, type: 3}
+  damageSFXList:
+  - {fileID: 8300000, guid: 0b6df5b02283c08a4b685fa02fe6afe8, type: 3}
+  - {fileID: 8300000, guid: 7550b8890000b31fc9165db143c833ce, type: 3}
+  - {fileID: 8300000, guid: b4e053d48dd7337dbaa712abdcaddc86, type: 3}
   maxPlayerHealth: 100
   maxMagazineSize: 30
   overdriveFOV: 80
@@ -1511,8 +1515,112 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 220932329890409331, guid: 09f2ea1a3f03efbe6bc6d2fea3f17bc3, type: 3}
+      propertyPath: m_TagString
+      value: Spider
+      objectReference: {fileID: 0}
+    - target: {fileID: 232294472622529377, guid: 09f2ea1a3f03efbe6bc6d2fea3f17bc3, type: 3}
+      propertyPath: m_TagString
+      value: Spider
+      objectReference: {fileID: 0}
+    - target: {fileID: 418580605483561457, guid: 09f2ea1a3f03efbe6bc6d2fea3f17bc3, type: 3}
+      propertyPath: m_TagString
+      value: Spider
+      objectReference: {fileID: 0}
+    - target: {fileID: 602080847904036347, guid: 09f2ea1a3f03efbe6bc6d2fea3f17bc3, type: 3}
+      propertyPath: m_TagString
+      value: Spider
+      objectReference: {fileID: 0}
+    - target: {fileID: 716488400018110688, guid: 09f2ea1a3f03efbe6bc6d2fea3f17bc3, type: 3}
+      propertyPath: m_TagString
+      value: Spider
+      objectReference: {fileID: 0}
+    - target: {fileID: 895181418490851505, guid: 09f2ea1a3f03efbe6bc6d2fea3f17bc3, type: 3}
+      propertyPath: m_TagString
+      value: Spider
+      objectReference: {fileID: 0}
+    - target: {fileID: 1050237410122953106, guid: 09f2ea1a3f03efbe6bc6d2fea3f17bc3, type: 3}
+      propertyPath: m_TagString
+      value: Spider
+      objectReference: {fileID: 0}
+    - target: {fileID: 1772900356902260923, guid: 09f2ea1a3f03efbe6bc6d2fea3f17bc3, type: 3}
+      propertyPath: m_TagString
+      value: Spider
+      objectReference: {fileID: 0}
+    - target: {fileID: 2457600668717209198, guid: 09f2ea1a3f03efbe6bc6d2fea3f17bc3, type: 3}
+      propertyPath: m_TagString
+      value: Spider
+      objectReference: {fileID: 0}
     - target: {fileID: 2747332583533574340, guid: 09f2ea1a3f03efbe6bc6d2fea3f17bc3, type: 3}
       propertyPath: m_Name
+      value: Spider
+      objectReference: {fileID: 0}
+    - target: {fileID: 2747332583533574340, guid: 09f2ea1a3f03efbe6bc6d2fea3f17bc3, type: 3}
+      propertyPath: m_TagString
+      value: Spider
+      objectReference: {fileID: 0}
+    - target: {fileID: 3165405177580503820, guid: 09f2ea1a3f03efbe6bc6d2fea3f17bc3, type: 3}
+      propertyPath: m_TagString
+      value: Spider
+      objectReference: {fileID: 0}
+    - target: {fileID: 3386881042972376722, guid: 09f2ea1a3f03efbe6bc6d2fea3f17bc3, type: 3}
+      propertyPath: m_TagString
+      value: Spider
+      objectReference: {fileID: 0}
+    - target: {fileID: 3721966292860969949, guid: 09f2ea1a3f03efbe6bc6d2fea3f17bc3, type: 3}
+      propertyPath: m_TagString
+      value: Spider
+      objectReference: {fileID: 0}
+    - target: {fileID: 4417794699274294251, guid: 09f2ea1a3f03efbe6bc6d2fea3f17bc3, type: 3}
+      propertyPath: m_TagString
+      value: Spider
+      objectReference: {fileID: 0}
+    - target: {fileID: 4498062181295103008, guid: 09f2ea1a3f03efbe6bc6d2fea3f17bc3, type: 3}
+      propertyPath: m_TagString
+      value: Spider
+      objectReference: {fileID: 0}
+    - target: {fileID: 4582463125604919893, guid: 09f2ea1a3f03efbe6bc6d2fea3f17bc3, type: 3}
+      propertyPath: m_TagString
+      value: Spider
+      objectReference: {fileID: 0}
+    - target: {fileID: 4743216320587008463, guid: 09f2ea1a3f03efbe6bc6d2fea3f17bc3, type: 3}
+      propertyPath: m_TagString
+      value: Spider
+      objectReference: {fileID: 0}
+    - target: {fileID: 4859745246189235068, guid: 09f2ea1a3f03efbe6bc6d2fea3f17bc3, type: 3}
+      propertyPath: m_TagString
+      value: Spider
+      objectReference: {fileID: 0}
+    - target: {fileID: 4875196847280927437, guid: 09f2ea1a3f03efbe6bc6d2fea3f17bc3, type: 3}
+      propertyPath: m_TagString
+      value: Spider
+      objectReference: {fileID: 0}
+    - target: {fileID: 4886271750840833870, guid: 09f2ea1a3f03efbe6bc6d2fea3f17bc3, type: 3}
+      propertyPath: m_TagString
+      value: Spider
+      objectReference: {fileID: 0}
+    - target: {fileID: 4987615833377753524, guid: 09f2ea1a3f03efbe6bc6d2fea3f17bc3, type: 3}
+      propertyPath: m_TagString
+      value: Spider
+      objectReference: {fileID: 0}
+    - target: {fileID: 5393868562511342626, guid: 09f2ea1a3f03efbe6bc6d2fea3f17bc3, type: 3}
+      propertyPath: m_TagString
+      value: Spider
+      objectReference: {fileID: 0}
+    - target: {fileID: 5500800314886441248, guid: 09f2ea1a3f03efbe6bc6d2fea3f17bc3, type: 3}
+      propertyPath: m_TagString
+      value: Spider
+      objectReference: {fileID: 0}
+    - target: {fileID: 5671118308058718660, guid: 09f2ea1a3f03efbe6bc6d2fea3f17bc3, type: 3}
+      propertyPath: m_TagString
+      value: Spider
+      objectReference: {fileID: 0}
+    - target: {fileID: 6084486380878801067, guid: 09f2ea1a3f03efbe6bc6d2fea3f17bc3, type: 3}
+      propertyPath: m_TagString
+      value: Spider
+      objectReference: {fileID: 0}
+    - target: {fileID: 6131359359045565270, guid: 09f2ea1a3f03efbe6bc6d2fea3f17bc3, type: 3}
+      propertyPath: m_TagString
       value: Spider
       objectReference: {fileID: 0}
     - target: {fileID: 6640446753092268891, guid: 09f2ea1a3f03efbe6bc6d2fea3f17bc3, type: 3}
@@ -1554,6 +1662,54 @@ PrefabInstance:
     - target: {fileID: 6640446753092268891, guid: 09f2ea1a3f03efbe6bc6d2fea3f17bc3, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6763141238139273609, guid: 09f2ea1a3f03efbe6bc6d2fea3f17bc3, type: 3}
+      propertyPath: m_TagString
+      value: Spider
+      objectReference: {fileID: 0}
+    - target: {fileID: 6904168486562112995, guid: 09f2ea1a3f03efbe6bc6d2fea3f17bc3, type: 3}
+      propertyPath: m_TagString
+      value: Spider
+      objectReference: {fileID: 0}
+    - target: {fileID: 6953212533721973126, guid: 09f2ea1a3f03efbe6bc6d2fea3f17bc3, type: 3}
+      propertyPath: m_TagString
+      value: Spider
+      objectReference: {fileID: 0}
+    - target: {fileID: 7166201533984608878, guid: 09f2ea1a3f03efbe6bc6d2fea3f17bc3, type: 3}
+      propertyPath: m_TagString
+      value: Spider
+      objectReference: {fileID: 0}
+    - target: {fileID: 7188487365342908105, guid: 09f2ea1a3f03efbe6bc6d2fea3f17bc3, type: 3}
+      propertyPath: m_TagString
+      value: Spider
+      objectReference: {fileID: 0}
+    - target: {fileID: 7711659420003903408, guid: 09f2ea1a3f03efbe6bc6d2fea3f17bc3, type: 3}
+      propertyPath: m_TagString
+      value: Spider
+      objectReference: {fileID: 0}
+    - target: {fileID: 7734868655440849038, guid: 09f2ea1a3f03efbe6bc6d2fea3f17bc3, type: 3}
+      propertyPath: m_TagString
+      value: Spider
+      objectReference: {fileID: 0}
+    - target: {fileID: 7977747315925278598, guid: 09f2ea1a3f03efbe6bc6d2fea3f17bc3, type: 3}
+      propertyPath: m_TagString
+      value: Spider
+      objectReference: {fileID: 0}
+    - target: {fileID: 8005572166985632112, guid: 09f2ea1a3f03efbe6bc6d2fea3f17bc3, type: 3}
+      propertyPath: m_TagString
+      value: Spider
+      objectReference: {fileID: 0}
+    - target: {fileID: 8297707949854757868, guid: 09f2ea1a3f03efbe6bc6d2fea3f17bc3, type: 3}
+      propertyPath: m_TagString
+      value: Spider
+      objectReference: {fileID: 0}
+    - target: {fileID: 8763056734078424658, guid: 09f2ea1a3f03efbe6bc6d2fea3f17bc3, type: 3}
+      propertyPath: m_TagString
+      value: Spider
+      objectReference: {fileID: 0}
+    - target: {fileID: 8957693915798317718, guid: 09f2ea1a3f03efbe6bc6d2fea3f17bc3, type: 3}
+      propertyPath: m_TagString
+      value: Spider
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
