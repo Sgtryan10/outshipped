@@ -1,0 +1,65 @@
+{
+    "Spider": {
+        "checkpoints": [
+            {
+                "steps": 1849348,
+                "file_path": "results/SpiderJumpOnlyV1/Spider/Spider-1849348.onnx",
+                "reward": 2782.1611099243164,
+                "creation_time": 1780643557.817085,
+                "auxillary_file_paths": [
+                    "results/SpiderJumpOnlyV1/Spider/Spider-1849348.pt"
+                ]
+            },
+            {
+                "steps": 1899534,
+                "file_path": "results/SpiderJumpOnlyV1/Spider/Spider-1899534.onnx",
+                "reward": 3847.9652099609375,
+                "creation_time": 1780643686.759905,
+                "auxillary_file_paths": [
+                    "results/SpiderJumpOnlyV1/Spider/Spider-1899534.pt"
+                ]
+            },
+            {
+                "steps": 1949882,
+                "file_path": "results/SpiderJumpOnlyV1/Spider/Spider-1949882.onnx",
+                "reward": 3108.8877807617187,
+                "creation_time": 1780643814.090538,
+                "auxillary_file_paths": [
+                    "results/SpiderJumpOnlyV1/Spider/Spider-1949882.pt"
+                ]
+            },
+            {
+                "steps": 1999523,
+                "file_path": "results/SpiderJumpOnlyV1/Spider/Spider-1999523.onnx",
+                "reward": 2929.6130573272703,
+                "creation_time": 1780643940.869268,
+                "auxillary_file_paths": [
+                    "results/SpiderJumpOnlyV1/Spider/Spider-1999523.pt"
+                ]
+            },
+            {
+                "steps": 2000305,
+                "file_path": "results/SpiderJumpOnlyV1/Spider/Spider-2000305.onnx",
+                "reward": 2771.5926697470927,
+                "creation_time": 1780643940.900148,
+                "auxillary_file_paths": [
+                    "results/SpiderJumpOnlyV1/Spider/Spider-2000305.pt"
+                ]
+            }
+        ],
+        "final_checkpoint": {
+            "steps": 2000305,
+            "file_path": "results/SpiderJumpOnlyV1/Spider.onnx",
+            "reward": 2771.5926697470927,
+            "creation_time": 1780643940.900148,
+            "auxillary_file_paths": [
+                "results/SpiderJumpOnlyV1/Spider/Spider-2000305.pt"
+            ]
+        }
+    },
+    "metadata": {
+        "stats_format_version": "0.3.0",
+        "mlagents_version": "1.1.0",
+        "torch_version": "2.2.2"
+    }
+}
