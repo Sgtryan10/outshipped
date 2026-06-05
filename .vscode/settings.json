@@ -67,6 +67,6 @@
         "*.sln": "*.csproj",
         "*.slnx": "*.csproj"
     },
-    "dotnet.defaultSolution": "outshipped.slnx",
+    "dotnet.defaultSolution": "Outshipped.slnx",
     "dotnet.enableWorkspaceBasedDevelopment": false
 }

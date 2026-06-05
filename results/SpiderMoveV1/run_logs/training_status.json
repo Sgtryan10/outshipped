@@ -1,0 +1,29 @@
+{
+    "Spider": {
+        "checkpoints": [
+            {
+                "steps": 28874,
+                "file_path": "results/SpiderMoveV1/Spider/Spider-28874.onnx",
+                "reward": 1074.6437606811523,
+                "creation_time": 1780606015.282906,
+                "auxillary_file_paths": [
+                    "results/SpiderMoveV1/Spider/Spider-28874.pt"
+                ]
+            }
+        ],
+        "final_checkpoint": {
+            "steps": 28874,
+            "file_path": "results/SpiderMoveV1/Spider.onnx",
+            "reward": 1074.6437606811523,
+            "creation_time": 1780606015.282906,
+            "auxillary_file_paths": [
+                "results/SpiderMoveV1/Spider/Spider-28874.pt"
+            ]
+        }
+    },
+    "metadata": {
+        "stats_format_version": "0.3.0",
+        "mlagents_version": "1.1.0",
+        "torch_version": "2.2.2"
+    }
+}

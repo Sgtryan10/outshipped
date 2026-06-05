@@ -1,0 +1,65 @@
+{
+    "Spider": {
+        "checkpoints": [
+            {
+                "steps": 99600,
+                "file_path": "results/SpiderV14/Spider/Spider-99600.onnx",
+                "reward": 87.36186834482046,
+                "creation_time": 1780557967.4149382,
+                "auxillary_file_paths": [
+                    "results/SpiderV14/Spider/Spider-99600.pt"
+                ]
+            },
+            {
+                "steps": 149400,
+                "file_path": "results/SpiderV14/Spider/Spider-149400.onnx",
+                "reward": 95.75325965881348,
+                "creation_time": 1780558109.716369,
+                "auxillary_file_paths": [
+                    "results/SpiderV14/Spider/Spider-149400.pt"
+                ]
+            },
+            {
+                "steps": 199800,
+                "file_path": "results/SpiderV14/Spider/Spider-199800.onnx",
+                "reward": 98.39976204766168,
+                "creation_time": 1780558256.0328152,
+                "auxillary_file_paths": [
+                    "results/SpiderV14/Spider/Spider-199800.pt"
+                ]
+            },
+            {
+                "steps": 249600,
+                "file_path": "results/SpiderV14/Spider/Spider-249600.onnx",
+                "reward": 101.42590799639302,
+                "creation_time": 1780558389.545491,
+                "auxillary_file_paths": [
+                    "results/SpiderV14/Spider/Spider-249600.pt"
+                ]
+            },
+            {
+                "steps": 293399,
+                "file_path": "results/SpiderV14/Spider/Spider-293399.onnx",
+                "reward": 123.94016131232766,
+                "creation_time": 1780558525.088711,
+                "auxillary_file_paths": [
+                    "results/SpiderV14/Spider/Spider-293399.pt"
+                ]
+            }
+        ],
+        "final_checkpoint": {
+            "steps": 293399,
+            "file_path": "results/SpiderV14/Spider.onnx",
+            "reward": 123.94016131232766,
+            "creation_time": 1780558525.088711,
+            "auxillary_file_paths": [
+                "results/SpiderV14/Spider/Spider-293399.pt"
+            ]
+        }
+    },
+    "metadata": {
+        "stats_format_version": "0.3.0",
+        "mlagents_version": "1.1.0",
+        "torch_version": "2.2.2"
+    }
+}
