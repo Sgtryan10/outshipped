@@ -8,8 +8,8 @@ OcclusionCullingSettings:
     smallestOccluder: 5
     smallestHole: 0.25
     backfaceThreshold: 100
-  m_SceneGUID: 00000000000000000000000000000000
-  m_OcclusionCullingData: {fileID: 0}
+  m_SceneGUID: 5295baf33f0da45bb9f5b5b60a69ccdb
+  m_OcclusionCullingData: {fileID: 36300000, guid: 18ae4d1552d4c4c3e8ba1a12b8f5733a, type: 2}
 --- !u!104 &2
 RenderSettings:
   m_ObjectHideFlags: 0
@@ -836,11 +836,7 @@ MonoBehaviour:
     heightOffset: 0
   grassProps:
   - prefab: {fileID: 314206257683211606, guid: b52bb73dc628449e3ac067983deb89d4, type: 3}
-    heightOffset: -1
-  - prefab: {fileID: 4896274675194340267, guid: 419321df5e5b04c75a81111e95d6d807, type: 3}
-    heightOffset: -1
-  - prefab: {fileID: 1532060817090696778, guid: 2ce82bb3b860b4a84b06bafadf5145bc, type: 3}
-    heightOffset: -1
+    heightOffset: -2
   spawnCountDepots: 4
   spawnCountTrees: 80
   spawnCountRocks: 120
@@ -2460,6 +2456,10 @@ PrefabInstance:
     - target: {fileID: 271502393013744477, guid: 3d547cc21944c64af921367ded561ade, type: 3}
       propertyPath: m_Name
       value: Terrain
+      objectReference: {fileID: 0}
+    - target: {fileID: 271502393013744477, guid: 3d547cc21944c64af921367ded561ade, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 2988940053965868031, guid: 3d547cc21944c64af921367ded561ade, type: 3}
       propertyPath: m_LocalPosition.x
