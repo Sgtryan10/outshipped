@@ -889,15 +889,15 @@ MonoBehaviour:
     heightOffset: 0
   grassProps:
   - prefab: {fileID: 314206257683211606, guid: b52bb73dc628449e3ac067983deb89d4, type: 3}
-    heightOffset: 0
+    heightOffset: -1
   - prefab: {fileID: 4896274675194340267, guid: 419321df5e5b04c75a81111e95d6d807, type: 3}
-    heightOffset: 0
+    heightOffset: -1
   - prefab: {fileID: 1532060817090696778, guid: 2ce82bb3b860b4a84b06bafadf5145bc, type: 3}
-    heightOffset: 0
+    heightOffset: -1
   spawnCountDepots: 4
   spawnCountTrees: 160
   spawnCountRocks: 100
-  spawnCountGrassClusters: 1000
+  spawnCountGrassClusters: 2000
   baseSpawnZone: {fileID: 600736268}
   depotSpawnZone: {fileID: 1502877203}
   treeSpawnZone: {fileID: 567099109}

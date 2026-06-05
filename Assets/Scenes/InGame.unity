@@ -349,6 +349,7 @@ Transform:
   - {fileID: 1502877202}
   - {fileID: 567099108}
   - {fileID: 858603837}
+  - {fileID: 1273166683}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &567099107
@@ -829,22 +830,28 @@ MonoBehaviour:
   - prefab: {fileID: 6466589418591897993, guid: a07256a3358e942d08f06e934b9c2681, type: 3}
     heightOffset: 0
   rockProps:
-  - prefab: {fileID: 4587036509022841175, guid: 2040dfe76772840639392b590a08a954, type: 3}
+  - prefab: {fileID: 4931907148550731102, guid: 63f157292f234457ca87c8a6e8d7de46, type: 3}
     heightOffset: 0
-  - prefab: {fileID: 8465928695243506275, guid: 8e571f2b7cde543ab86f960de777a2e2, type: 3}
+  - prefab: {fileID: 4323681853782324628, guid: afdb60329703a4ba9b3ac02838b02d72, type: 3}
     heightOffset: 0
-  - prefab: {fileID: 990245261491764671, guid: ee67821003f8a4cf981ee1c1ba6d8170, type: 3}
+  - prefab: {fileID: 8800142915761186283, guid: 5228aef58aebc456f94cd71456491155, type: 3}
     heightOffset: 0
-  grassProps: []
+  grassProps:
+  - prefab: {fileID: 314206257683211606, guid: b52bb73dc628449e3ac067983deb89d4, type: 3}
+    heightOffset: -1
+  - prefab: {fileID: 4896274675194340267, guid: 419321df5e5b04c75a81111e95d6d807, type: 3}
+    heightOffset: -1
+  - prefab: {fileID: 1532060817090696778, guid: 2ce82bb3b860b4a84b06bafadf5145bc, type: 3}
+    heightOffset: -1
   spawnCountDepots: 4
   spawnCountTrees: 80
   spawnCountRocks: 120
-  spawnCountGrassClusters: 30
+  spawnCountGrassClusters: 2000
   baseSpawnZone: {fileID: 600736268}
   depotSpawnZone: {fileID: 1502877203}
   treeSpawnZone: {fileID: 567099109}
   rockSpawnZone: {fileID: 858603838}
-  grassSpawnZone: {fileID: 0}
+  grassSpawnZone: {fileID: 1273166684}
   groundLayer:
     serializedVersion: 2
     m_Bits: 8
@@ -1395,6 +1402,59 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 09f2ea1a3f03efbe6bc6d2fea3f17bc3, type: 3}
+--- !u!1 &1273166682
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1273166683}
+  - component: {fileID: 1273166684}
+  m_Layer: 2
+  m_Name: Grass Spawn Zone
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1273166683
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1273166682}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 517775239}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &1273166684
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1273166682}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 495, y: 37.755302, z: 495}
+  m_Center: {x: 0, y: 6, z: 0}
 --- !u!1 &1468259663
 GameObject:
   m_ObjectHideFlags: 0
