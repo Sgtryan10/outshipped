@@ -38,12 +38,15 @@ public class gameManager : MonoBehaviour
     [SerializeField] private AudioClip slowPickupSFX;
     [SerializeField] private AudioClip armorPickupSFX;
     [SerializeField] private AudioClip abilityUseSFX;
+    [SerializeField] private AudioClip empBlastSFX;
 
     [SerializeField] private List<TurretFireSFX> turretFireSounds;
     [SerializeField] private AudioClip defaultFireSFX;
 
     [SerializeField] private List<TurretReloadSFX> turretReloadSounds;
     [SerializeField] private AudioClip defaultReloadSFX;
+
+    [SerializeField] private List<AudioClip> damageSFXList;
 
     [Header("Player Health & Armor Settings")]
     [SerializeField] private int maxPlayerHealth = 100;
@@ -69,6 +72,10 @@ public class gameManager : MonoBehaviour
     [SerializeField] private Color overdriveVignetteColor = new Color(0.960784314f, 0.764705882f, 0.278431373f);
     [SerializeField] private Color empVignetteColor = new Color(0.454901961f, 0.721568627f, 0.937254902f);
     [SerializeField] private Color slowVignetteColor = new Color(0.435294118f, 0.482352941f, 0.968627451f);
+
+    [Header("Ability Visual Effects")]
+    [SerializeField] private ParticleSystem slowFieldParticles;
+    [SerializeField] private ParticleSystem empFieldEffect;
 
     private Vignette vignette;
     private Color baseVignetteColor;
@@ -505,7 +512,18 @@ public class gameManager : MonoBehaviour
 
         StartVignetteTransition(empVignetteColor, activeVignetteIntensity, activeVignetteSmoothness);
 
-        yield return new WaitForSeconds(20f);
+        if (empBlastSFX != null)
+        {
+            audioSource.PlayOneShot(empBlastSFX);
+        }
+
+        yield return new WaitForSeconds(1.5f);
+        if (empFieldEffect != null)
+        {
+            empFieldEffect.Play();
+        }
+
+        yield return new WaitForSeconds(1f);
         empActive = false;
 
         StartVignetteTransition(baseVignetteColor, baseVignetteIntensity, baseVignetteSmoothness);
@@ -518,8 +536,18 @@ public class gameManager : MonoBehaviour
 
         StartVignetteTransition(slowVignetteColor, activeVignetteIntensity, activeVignetteSmoothness);
 
+        if (slowFieldParticles != null)
+        {
+            slowFieldParticles.Play();
+        }
+
         yield return new WaitForSeconds(20f);
         slowActive = false;
+
+        if (slowFieldParticles != null)
+        {
+            slowFieldParticles.Stop();
+        }
 
         StartVignetteTransition(baseVignetteColor, baseVignetteIntensity, baseVignetteSmoothness);
     }
@@ -656,6 +684,19 @@ public class gameManager : MonoBehaviour
     }
 
     public void OnActiveAbilityUsed() => scoreManager.activeAbilitiesUsed++;
+
+    public void PlayRandomDamageSound()
+    {
+        if (audioSource == null || damageSFXList == null || damageSFXList.Count == 0) return;
+
+        int randomIndex = Random.Range(0, damageSFXList.Count);
+        AudioClip randomClip = damageSFXList[randomIndex];
+
+        if (randomClip != null)
+        {
+            audioSource.PlayOneShot(randomClip);
+        }
+    }
 
     public void TriggerGameOver()
     {

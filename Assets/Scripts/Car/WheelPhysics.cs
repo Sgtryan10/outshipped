@@ -467,6 +467,8 @@ public class WheelPhysics : MonoBehaviour
 
     void UpdateWheelVisualRotation()
     {
+        if (!wheelMesh) return;
+
         if (!config.animateWheelMesh)
         {
             wheelMesh.localRotation = wheelMeshRestLocalRotation;
@@ -492,16 +494,17 @@ public class WheelPhysics : MonoBehaviour
         Quaternion restWorldRotation = parentRotation * wheelMeshRestLocalRotation;
 
         Vector3 suspensionUp = rb ? rb.transform.up : transform.up;
+        Quaternion steerRotation = isFrontWheel
+            ? Quaternion.AngleAxis(steerAngle, suspensionUp)
+            : Quaternion.identity;
+
         Vector3 axle = rb ? rb.transform.TransformDirection(localRightAxis) : transform.right;
         if (isFrontWheel)
-            axle = Quaternion.AngleAxis(steerAngle, suspensionUp) * axle;
+            axle = steerRotation * axle;
 
         if (axle.sqrMagnitude < 0.0001f)
             axle = transform.right;
 
-        Quaternion steerRotation = isFrontWheel
-            ? Quaternion.AngleAxis(steerAngle, suspensionUp)
-            : Quaternion.identity;
         Quaternion rollRotation = Quaternion.AngleAxis(wheelVisualSpin, axle.normalized);
         Quaternion targetWorldRotation = rollRotation * steerRotation * restWorldRotation;
 

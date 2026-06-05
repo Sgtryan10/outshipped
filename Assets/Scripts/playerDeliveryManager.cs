@@ -82,28 +82,27 @@ public class playerDeliveryManager : MonoBehaviour
     private void ResolvePackageVisual()
     {
         if (packageVisual == null)
-        {
-            Transform child = transform.Find("package");
-            if (child == null)
-            {
-                child = transform.Find("Package Visual");
-            }
-
-            if (child != null)
-            {
-                packageVisual = child.gameObject;
-            }
-        }
+            packageVisual = FindPackageChild();
 
         if (packageVisual == null && createPlaceholderIfMissing)
-        {
             packageVisual = CreatePlaceholderPackage();
-        }
 
         if (packageVisual != null)
-        {
             DisablePackageColliders(packageVisual);
+    }
+
+    private GameObject FindPackageChild()
+    {
+        string[] names = { "package visual", "Package Visual", "package" };
+
+        foreach (string childName in names)
+        {
+            Transform child = transform.Find(childName);
+            if (child != null)
+                return child.gameObject;
         }
+
+        return null;
     }
 
     private GameObject CreatePlaceholderPackage()
@@ -117,9 +116,7 @@ public class playerDeliveryManager : MonoBehaviour
 
         Renderer packageRenderer = packageObject.GetComponent<Renderer>();
         if (packageRenderer != null)
-        {
             packageRenderer.material.color = placeholderColor;
-        }
 
         return packageObject;
     }
@@ -128,16 +125,12 @@ public class playerDeliveryManager : MonoBehaviour
     {
         Collider[] colliders = visual.GetComponentsInChildren<Collider>(true);
         for (int i = 0; i < colliders.Length; i++)
-        {
             colliders[i].enabled = false;
-        }
     }
 
     private void SetPackageVisualActive(bool active)
     {
         if (packageVisual != null)
-        {
             packageVisual.SetActive(active);
-        }
     }
 }
