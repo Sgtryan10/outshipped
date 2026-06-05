@@ -428,4 +428,20 @@ public class CarController : MonoBehaviour
         maxSpeed = targetMaxSpeed;
         acceleration = targetAcceleration;
     }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        // THIS WILL PRINT ANYTHING THE CAR TOUCHES (Floor, walls, enemies, etc.)
+        Debug.Log($"[PHYSICS] Car collided with: {collision.gameObject.name} | Tag: {collision.gameObject.tag}");
+
+        if (collision.gameObject.CompareTag("Spider"))
+        {
+            Debug.Log("[MATCH] Hit a verified 'Spider' tag! Sending damage command.");
+            if (gameManager.Instance != null)
+            {
+                gameManager.Instance.TakeDamage(25);
+                gameManager.Instance.PlayRandomDamageSound();
+            }
+        }
+    }
 }

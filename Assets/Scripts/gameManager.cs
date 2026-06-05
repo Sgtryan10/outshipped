@@ -46,6 +46,8 @@ public class gameManager : MonoBehaviour
     [SerializeField] private List<TurretReloadSFX> turretReloadSounds;
     [SerializeField] private AudioClip defaultReloadSFX;
 
+    [SerializeField] private List<AudioClip> damageSFXList;
+
     [Header("Player Health & Armor Settings")]
     [SerializeField] private int maxPlayerHealth = 100;
     private int currentPlayerHealth;
@@ -682,6 +684,19 @@ public class gameManager : MonoBehaviour
     }
 
     public void OnActiveAbilityUsed() => scoreManager.activeAbilitiesUsed++;
+
+    public void PlayRandomDamageSound()
+    {
+        if (audioSource == null || damageSFXList == null || damageSFXList.Count == 0) return;
+
+        int randomIndex = Random.Range(0, damageSFXList.Count);
+        AudioClip randomClip = damageSFXList[randomIndex];
+
+        if (randomClip != null)
+        {
+            audioSource.PlayOneShot(randomClip);
+        }
+    }
 
     public void TriggerGameOver()
     {
