@@ -1,0 +1,42 @@
+{
+    "name": "root",
+    "metadata": {
+        "timer_format_version": "0.1.0",
+        "start_time_seconds": "1780462011",
+        "python_version": "3.9.25 (main, Nov  3 2025, 22:44:01) [MSC v.1929 64 bit (AMD64)]",
+        "command_line_arguments": "C:\\Users\\ajawa\\anaconda3\\envs\\mlagents_py39\\lib\\site-packages\\mlagents\\trainers\\learn.py config/ppo/spider.yaml --run-id=SpiderRun2",
+        "mlagents_version": "0.30.0",
+        "mlagents_envs_version": "0.30.0",
+        "communication_protocol_version": "1.5.0",
+        "pytorch_version": "2.8.0+cpu",
+        "numpy_version": "1.21.2",
+        "end_time_seconds": "1780462023"
+    },
+    "total": 11.8040029,
+    "count": 1,
+    "self": 0.01244180000000128,
+    "children": {
+        "run_training.setup": {
+            "total": 0.21768829999999983,
+            "count": 1,
+            "self": 0.21768829999999983
+        },
+        "TrainerController.start_learning": {
+            "total": 11.5738728,
+            "count": 1,
+            "self": 0.00020620000000093341,
+            "children": {
+                "TrainerController._reset_env": {
+                    "total": 11.573633399999999,
+                    "count": 1,
+                    "self": 11.573633399999999
+                },
+                "TrainerController._save_models": {
+                    "total": 3.3200000000732643e-05,
+                    "count": 1,
+                    "self": 3.3200000000732643e-05
+                }
+            }
+        }
+    }
+}

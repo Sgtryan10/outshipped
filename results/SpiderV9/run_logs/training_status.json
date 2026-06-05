@@ -1,0 +1,65 @@
+{
+    "Spider": {
+        "checkpoints": [
+            {
+                "steps": 49800,
+                "file_path": "results/SpiderV9/Spider/Spider-49800.onnx",
+                "reward": -2.7632549726046047,
+                "creation_time": 1780551122.014188,
+                "auxillary_file_paths": [
+                    "results/SpiderV9/Spider/Spider-49800.pt"
+                ]
+            },
+            {
+                "steps": 99600,
+                "file_path": "results/SpiderV9/Spider/Spider-99600.onnx",
+                "reward": -2.756835414813115,
+                "creation_time": 1780551235.957196,
+                "auxillary_file_paths": [
+                    "results/SpiderV9/Spider/Spider-99600.pt"
+                ]
+            },
+            {
+                "steps": 149400,
+                "file_path": "results/SpiderV9/Spider/Spider-149400.onnx",
+                "reward": -2.768935263156891,
+                "creation_time": 1780551351.477131,
+                "auxillary_file_paths": [
+                    "results/SpiderV9/Spider/Spider-149400.pt"
+                ]
+            },
+            {
+                "steps": 199800,
+                "file_path": "results/SpiderV9/Spider/Spider-199800.onnx",
+                "reward": -2.7583873536851673,
+                "creation_time": 1780551470.4342499,
+                "auxillary_file_paths": [
+                    "results/SpiderV9/Spider/Spider-199800.pt"
+                ]
+            },
+            {
+                "steps": 249600,
+                "file_path": "results/SpiderV9/Spider/Spider-249600.onnx",
+                "reward": -2.7500768630735335,
+                "creation_time": 1780551603.9254131,
+                "auxillary_file_paths": [
+                    "results/SpiderV9/Spider/Spider-249600.pt"
+                ]
+            }
+        ],
+        "final_checkpoint": {
+            "steps": 249600,
+            "file_path": "results/SpiderV9/Spider.onnx",
+            "reward": -2.7500768630735335,
+            "creation_time": 1780551603.9254131,
+            "auxillary_file_paths": [
+                "results/SpiderV9/Spider/Spider-249600.pt"
+            ]
+        }
+    },
+    "metadata": {
+        "stats_format_version": "0.3.0",
+        "mlagents_version": "1.1.0",
+        "torch_version": "2.2.2"
+    }
+}

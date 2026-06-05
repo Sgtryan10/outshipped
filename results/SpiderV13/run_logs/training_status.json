@@ -1,0 +1,65 @@
+{
+    "Spider": {
+        "checkpoints": [
+            {
+                "steps": 1499400,
+                "file_path": "results/SpiderV13/Spider/Spider-1499400.onnx",
+                "reward": 2.3279212287494113,
+                "creation_time": 1780557146.869925,
+                "auxillary_file_paths": [
+                    "results/SpiderV13/Spider/Spider-1499400.pt"
+                ]
+            },
+            {
+                "steps": 1549800,
+                "file_path": "results/SpiderV13/Spider/Spider-1549800.onnx",
+                "reward": 2.237305841275624,
+                "creation_time": 1780557274.265692,
+                "auxillary_file_paths": [
+                    "results/SpiderV13/Spider/Spider-1549800.pt"
+                ]
+            },
+            {
+                "steps": 1599600,
+                "file_path": "results/SpiderV13/Spider/Spider-1599600.onnx",
+                "reward": 2.5104744831720986,
+                "creation_time": 1780557394.2049751,
+                "auxillary_file_paths": [
+                    "results/SpiderV13/Spider/Spider-1599600.pt"
+                ]
+            },
+            {
+                "steps": 1649400,
+                "file_path": "results/SpiderV13/Spider/Spider-1649400.onnx",
+                "reward": 2.742809954442476,
+                "creation_time": 1780557511.220187,
+                "auxillary_file_paths": [
+                    "results/SpiderV13/Spider/Spider-1649400.pt"
+                ]
+            },
+            {
+                "steps": 1654200,
+                "file_path": "results/SpiderV13/Spider/Spider-1654200.onnx",
+                "reward": 2.733472223635073,
+                "creation_time": 1780557522.336875,
+                "auxillary_file_paths": [
+                    "results/SpiderV13/Spider/Spider-1654200.pt"
+                ]
+            }
+        ],
+        "final_checkpoint": {
+            "steps": 1654200,
+            "file_path": "results/SpiderV13/Spider.onnx",
+            "reward": 2.733472223635073,
+            "creation_time": 1780557522.336875,
+            "auxillary_file_paths": [
+                "results/SpiderV13/Spider/Spider-1654200.pt"
+            ]
+        }
+    },
+    "metadata": {
+        "stats_format_version": "0.3.0",
+        "mlagents_version": "1.1.0",
+        "torch_version": "2.2.2"
+    }
+}
