@@ -5,6 +5,13 @@ public class playerDeliveryManager : MonoBehaviour
     [Header("Delivery State")]
     [SerializeField] private bool hasPackage = false;
 
+    [Header("Package Visual")]
+    [SerializeField] private GameObject packageVisual;
+    [SerializeField] private bool createPlaceholderIfMissing = true;
+    [SerializeField] private Vector3 placeholderLocalPosition = new Vector3(-1.75f, 1f, 0f);
+    [SerializeField] private Vector3 placeholderLocalScale = new Vector3(1.5f, 1.5f, 1.5f);
+    [SerializeField] private Color placeholderColor = new Color(0.55f, 0.32f, 0.12f);
+
     [Header("Target Tags")]
     [SerializeField] private string baseTag = "Base";
     [SerializeField] private string depotTag = "Depot";
@@ -16,12 +23,15 @@ public class playerDeliveryManager : MonoBehaviour
 
     public bool HasPackage => hasPackage;
 
-    private void Start()
+    private void Awake()
     {
         if (audioSource == null)
         {
             audioSource = GetComponent<AudioSource>();
         }
+
+        ResolvePackageVisual();
+        SetPackageVisualActive(hasPackage);
     }
 
     private void OnTriggerEnter(Collider other)
@@ -45,6 +55,7 @@ public class playerDeliveryManager : MonoBehaviour
     private void PickupPackage()
     {
         hasPackage = true;
+        SetPackageVisualActive(true);
 
         if (audioSource != null && packagePickupSFX != null)
         {
@@ -60,6 +71,7 @@ public class playerDeliveryManager : MonoBehaviour
     private void DeliverPackage()
     {
         hasPackage = false;
+        SetPackageVisualActive(false);
 
         if (audioSource != null && packageDeliverSFX != null)
         {
@@ -70,5 +82,60 @@ public class playerDeliveryManager : MonoBehaviour
         {
             gameManager.Instance.OnPackageDelivered();
         }
+    }
+
+    private void ResolvePackageVisual()
+    {
+        if (packageVisual == null)
+            packageVisual = FindPackageChild();
+
+        if (packageVisual == null && createPlaceholderIfMissing)
+            packageVisual = CreatePlaceholderPackage();
+
+        if (packageVisual != null)
+            DisablePackageColliders(packageVisual);
+    }
+
+    private GameObject FindPackageChild()
+    {
+        string[] names = { "package visual", "Package Visual", "package" };
+
+        foreach (string childName in names)
+        {
+            Transform child = transform.Find(childName);
+            if (child != null)
+                return child.gameObject;
+        }
+
+        return null;
+    }
+
+    private GameObject CreatePlaceholderPackage()
+    {
+        GameObject packageObject = GameObject.CreatePrimitive(PrimitiveType.Cube);
+        packageObject.name = "Package Visual";
+        packageObject.transform.SetParent(transform, false);
+        packageObject.transform.localPosition = placeholderLocalPosition;
+        packageObject.transform.localRotation = Quaternion.identity;
+        packageObject.transform.localScale = placeholderLocalScale;
+
+        Renderer packageRenderer = packageObject.GetComponent<Renderer>();
+        if (packageRenderer != null)
+            packageRenderer.material.color = placeholderColor;
+
+        return packageObject;
+    }
+
+    private void DisablePackageColliders(GameObject visual)
+    {
+        Collider[] colliders = visual.GetComponentsInChildren<Collider>(true);
+        for (int i = 0; i < colliders.Length; i++)
+            colliders[i].enabled = false;
+    }
+
+    private void SetPackageVisualActive(bool active)
+    {
+        if (packageVisual != null)
+            packageVisual.SetActive(active);
     }
 }
