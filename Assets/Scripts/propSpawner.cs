@@ -1,7 +1,7 @@
 using UnityEngine;
 using System.Collections.Generic;
 
-public class propSpawner : MonoBehaviour
+public class PropSpawner : MonoBehaviour
 {
     [System.Serializable]
     public struct PropData
@@ -15,21 +15,20 @@ public class propSpawner : MonoBehaviour
     [SerializeField] private PropData depotProp;
     [SerializeField] private PropData[] treeProps;
     [SerializeField] private PropData[] rockProps;
+    [SerializeField] private PropData[] grassProps;
 
     [SerializeField] private int spawnCountDepots = 4;
     [SerializeField] private int spawnCountTrees = 40;
     [SerializeField] private int spawnCountRocks = 40;
+    [SerializeField] private int spawnCountGrassClusters = 30;   
 
     [Header("Area Settings")]
     [SerializeField] private BoxCollider baseSpawnZone;
     [SerializeField] private BoxCollider depotSpawnZone;
     [SerializeField] private BoxCollider treeSpawnZone;
     [SerializeField] private BoxCollider rockSpawnZone;
+    [SerializeField] private BoxCollider grassSpawnZone;
     [SerializeField] private LayerMask groundLayer;
-
-    [Header("Global Spacing Settings")]
-    [Tooltip("Minimum distance required between structures (Base/Depots) and any other object.")]
-    [SerializeField] private float structureMinSpacing = 6.0f;
 
     [Header("Tree Natural Settings")]
     [SerializeField] private float treeMinSpacing = 2.5f;
@@ -51,30 +50,27 @@ public class propSpawner : MonoBehaviour
     [SerializeField] private float rockClusterRadius = 7f;
     [SerializeField] private float rockClusterStrength = 0.75f;
 
-    private struct PlacedObject
-    {
-        public Vector2 position;
-        public float radius;
-
-        public PlacedObject(Vector2 pos, float rad)
-        {
-            position = pos;
-            radius = rad;
-        }
-    }
-
-    private List<PlacedObject> allPlacedObjects = new List<PlacedObject>();
+    [Header("Grass Natural Settings")]
+    [SerializeField] private int grassBladesMin = 2;           
+    [SerializeField] private int grassBladesMax = 5;           
+    [SerializeField] private float grassClumpRadius = 0.6f;      
+    [SerializeField] private float grassMinSpacing = 1.2f;      
+    [SerializeField] private float grassScaleMin = 0.75f;
+    [SerializeField] private float grassScaleMax = 1.25f;
+    [SerializeField] private bool grassAlignToSlope = false;
+    [SerializeField] private float grassSlopeBlend = 0.2f;
+    [SerializeField] private int grassClusterCount = 8;          
+    [SerializeField] private float grassClusterRadius = 10f;
+    [SerializeField] private float grassClusterStrength = 0.7f;
 
 
     void Start()
     {
-        allPlacedObjects.Clear();
-
         if (baseSpawnZone != null && baseProp.prefab != null)
-            SpawnProps(baseSpawnZone, baseProp, 1, false, structureMinSpacing);
+            SpawnProps(baseSpawnZone, baseProp, 1, false);
 
         if (depotSpawnZone != null && depotProp.prefab != null)
-            SpawnProps(depotSpawnZone, depotProp, spawnCountDepots, false, structureMinSpacing);
+            SpawnProps(depotSpawnZone, depotProp, spawnCountDepots, false);
 
         if (treeSpawnZone != null)
             SpawnNatural(treeSpawnZone, treeProps, spawnCountTrees,
@@ -87,7 +83,139 @@ public class propSpawner : MonoBehaviour
                 rockMinSpacing, rockScaleMin, rockScaleMax,
                 rockAlignToSlope, rockSlopeBlend,
                 rockClusterCount, rockClusterRadius, rockClusterStrength);
+
+        if (grassSpawnZone != null)
+            SpawnGrass();
     }
+
+    void SpawnGrass()
+    {
+        if (grassProps == null || grassProps.Length == 0 || grassSpawnZone == null) return;
+
+        Bounds bounds = grassSpawnZone.bounds;
+
+        Vector2[] clusters = new Vector2[grassClusterCount];
+        for (int c = 0; c < grassClusterCount; c++)
+        {
+            clusters[c] = new Vector2(
+                Random.Range(bounds.min.x, bounds.max.x),
+                Random.Range(bounds.min.z, bounds.max.z)
+            );
+        }
+
+        List<Vector2> clumpCentres = new List<Vector2>();
+        int maxAttempts = spawnCountGrassClusters * 30;
+        int clumpsPlaced = 0;
+        int attempts = 0;
+
+        while (clumpsPlaced < spawnCountGrassClusters && attempts < maxAttempts)
+        {
+            attempts++;
+
+            Vector2 raw = new Vector2(
+                Random.Range(bounds.min.x, bounds.max.x),
+                Random.Range(bounds.min.z, bounds.max.z)
+            );
+
+            Vector2 centre = raw;
+            if (grassClusterStrength > 0f)
+            {
+                Vector2 nearest = clusters[0];
+                float bestDist = Vector2.Distance(raw, clusters[0]);
+                for (int c = 1; c < clusters.Length; c++)
+                {
+                    float d = Vector2.Distance(raw, clusters[c]);
+                    if (d < bestDist) { bestDist = d; nearest = clusters[c]; }
+                }
+
+                float t = Mathf.Clamp01(1f - bestDist / grassClusterRadius) * grassClusterStrength;
+                centre = Vector2.Lerp(raw, nearest + Random.insideUnitCircle * grassClusterRadius * 0.4f, t);
+                centre.x = Mathf.Clamp(centre.x, bounds.min.x, bounds.max.x);
+                centre.y = Mathf.Clamp(centre.y, bounds.min.z, bounds.max.z);
+            }
+
+            bool tooClose = false;
+            foreach (Vector2 existing in clumpCentres)
+            {
+                if (Vector2.Distance(centre, existing) < grassMinSpacing)
+                {
+                    tooClose = true;
+                    break;
+                }
+            }
+            if (tooClose) continue;
+
+            int bladeCount = Random.Range(grassBladesMin, grassBladesMax + 1);
+            bool anyBladeSpawned = false;
+
+            for (int b = 0; b < bladeCount; b++)
+            {
+
+                Vector2 offset = Random.insideUnitCircle * grassClumpRadius;
+                float bx = Mathf.Clamp(centre.x + offset.x, bounds.min.x, bounds.max.x);
+                float bz = Mathf.Clamp(centre.y + offset.y, bounds.min.z, bounds.max.z);
+
+                Vector3 rayStart = new Vector3(bx, bounds.max.y + 5f, bz);
+                float rayDist = bounds.size.y + 15f;
+
+                PropData chosen = grassProps[Random.Range(0, grassProps.Length)];
+                if (chosen.prefab == null) continue;
+
+                Vector3 spawnPos;
+                Quaternion spawnRot;
+
+                float yaw = Random.Range(0f, 360f);
+
+                if (Physics.Raycast(rayStart, Vector3.down, out RaycastHit hit, rayDist, groundLayer))
+                {
+                    spawnPos = hit.point + Vector3.up * chosen.heightOffset;
+
+                    if (grassAlignToSlope && grassSlopeBlend > 0f)
+                    {
+                        Quaternion yawRot = Quaternion.Euler(
+                            chosen.prefab.transform.rotation.eulerAngles.x,
+                            yaw,
+                            chosen.prefab.transform.rotation.eulerAngles.z
+                        );
+                        Quaternion slopeRot = Quaternion.FromToRotation(Vector3.up, hit.normal) * Quaternion.Euler(0f, yaw, 0f);
+                        spawnRot = Quaternion.Slerp(yawRot, slopeRot, grassSlopeBlend);
+                    }
+                    else
+                    {
+                        spawnRot = Quaternion.Euler(
+                            chosen.prefab.transform.rotation.eulerAngles.x,
+                            yaw,
+                            chosen.prefab.transform.rotation.eulerAngles.z
+                        );
+                    }
+                }
+                else
+                {
+                    spawnPos = new Vector3(bx, bounds.center.y + chosen.heightOffset, bz);
+                    spawnRot = Quaternion.Euler(
+                        chosen.prefab.transform.rotation.eulerAngles.x,
+                        yaw,
+                        chosen.prefab.transform.rotation.eulerAngles.z
+                    );
+                }
+
+                float scale = Random.Range(grassScaleMin, grassScaleMax);
+                GameObject go = Instantiate(chosen.prefab, spawnPos, spawnRot, transform);
+                go.transform.localScale = chosen.prefab.transform.localScale * scale;
+                anyBladeSpawned = true;
+            }
+
+            if (anyBladeSpawned)
+            {
+                clumpCentres.Add(centre);
+                clumpsPlaced++;
+            }
+        }
+
+        if (clumpsPlaced < spawnCountGrassClusters)
+            Debug.LogWarning($"[PropSpawner] Only placed {clumpsPlaced}/{spawnCountGrassClusters} grass clumps in '{grassSpawnZone.name}' — try reducing grassMinSpacing or enlarging the zone.");
+    }
+
 
     void SpawnNatural(
         BoxCollider zone, PropData[] propDatas, int count,
@@ -108,7 +236,8 @@ public class propSpawner : MonoBehaviour
             );
         }
 
-        int maxAttempts = count * 50;
+        List<Vector2> placed = new List<Vector2>();
+        int maxAttempts = count * 30;
         int spawned = 0;
         int attempts = 0;
 
@@ -141,8 +270,16 @@ public class propSpawner : MonoBehaviour
                 candidate = raw;
             }
 
-            if (IsOverlapping(candidate, minSpacing))
-                continue;
+            bool tooClose = false;
+            foreach (Vector2 p in placed)
+            {
+                if (Vector2.Distance(candidate, p) < minSpacing)
+                {
+                    tooClose = true;
+                    break;
+                }
+            }
+            if (tooClose) continue;
 
             Vector3 rayStart = new Vector3(candidate.x, bounds.max.y + 5f, candidate.y);
             float rayDist = bounds.size.y + 15f;
@@ -188,41 +325,30 @@ public class propSpawner : MonoBehaviour
             GameObject go = Instantiate(chosen.prefab, spawnPos, spawnRot, transform);
             go.transform.localScale = chosen.prefab.transform.localScale * scale;
 
-            // Register this object globally
-            allPlacedObjects.Add(new PlacedObject(candidate, minSpacing));
+            placed.Add(candidate);
             spawned++;
         }
 
         if (spawned < count)
-            Debug.LogWarning($"[PropSpawner] Only placed {spawned}/{count} props in '{zone.name}' — try reducing spacing values or increasing the zone size.");
+            Debug.LogWarning($"[PropSpawner] Only placed {spawned}/{count} props in '{zone.name}' — try reducing minSpacing or increasing the zone.");
     }
 
-    void SpawnProps(BoxCollider spawnZone, PropData propData, int spawnCount, bool randomizeRotation, float clearanceRadius)
+    void SpawnProps(BoxCollider spawnZone, PropData propData, int spawnCount, bool randomizeRotation)
     {
         if (propData.prefab == null) return;
-        SpawnProps(spawnZone, new PropData[] { propData }, spawnCount, randomizeRotation, clearanceRadius);
+        SpawnProps(spawnZone, new PropData[] { propData }, spawnCount, randomizeRotation);
     }
 
-    void SpawnProps(BoxCollider spawnZone, PropData[] propDatas, int spawnCount, bool randomizeRotation, float clearanceRadius)
+    void SpawnProps(BoxCollider spawnZone, PropData[] propDatas, int spawnCount, bool randomizeRotation)
     {
         if (propDatas == null || propDatas.Length == 0 || spawnZone == null) return;
 
         Bounds bounds = spawnZone.bounds;
-        int maxAttempts = spawnCount * 50;
-        int spawned = 0;
-        int attempts = 0;
 
-        while (spawned < spawnCount && attempts < maxAttempts)
+        for (int i = 0; i < spawnCount; i++)
         {
-            attempts++;
-
             float randomX = Random.Range(bounds.min.x, bounds.max.x);
             float randomZ = Random.Range(bounds.min.z, bounds.max.z);
-            Vector2 candidate = new Vector2(randomX, randomZ);
-
-            // Structure overlap check
-            if (IsOverlapping(candidate, clearanceRadius))
-                continue;
 
             Vector3 rayStart = new Vector3(randomX, bounds.max.y, randomZ);
             float rayDistance = bounds.size.y + 10f;
@@ -241,24 +367,6 @@ public class propSpawner : MonoBehaviour
                 : chosenProp.prefab.transform.rotation;
 
             Instantiate(chosenProp.prefab, spawnPosition, spawnRotation, transform);
-
-            allPlacedObjects.Add(new PlacedObject(candidate, clearanceRadius));
-            spawned++;
         }
-    }
-
-    private bool IsOverlapping(Vector2 candidate, float currentPropSpacing)
-    {
-        foreach (PlacedObject existing in allPlacedObjects)
-        {
-            float distance = Vector2.Distance(candidate, existing.position);
-            float requiredGap = (currentPropSpacing + existing.radius) * 0.5f;
-
-            if (distance < requiredGap)
-            {
-                return true;
-            }
-        }
-        return false;
     }
 }
