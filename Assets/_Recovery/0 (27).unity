@@ -514,7 +514,6 @@ MonoBehaviour:
   slowPickupSFX: {fileID: 8300000, guid: f3b725bfcdf9c4251a1f6082daaf2633, type: 3}
   armorPickupSFX: {fileID: 8300000, guid: 32da8c7a0069a4123aa4778a5665dc2e, type: 3}
   abilityUseSFX: {fileID: 8300000, guid: 28e507e4ff7e5371b8eb01e8d088530c, type: 3}
-  empBlastSFX: {fileID: 8300000, guid: ecacb361e7c8b114398f77856f7a550d, type: 3}
   turretFireSounds:
   - turretType: AUTOMATIC
     fireSound: {fileID: 8300000, guid: a813a174a8b70dc76a80ee5ab316a252, type: 3}
@@ -548,7 +547,6 @@ MonoBehaviour:
   empVignetteColor: {r: 0.45490196, g: 0.72156864, b: 0.9372549, a: 1}
   slowVignetteColor: {r: 0.43529412, g: 0.48235294, b: 0.96862745, a: 1}
   slowFieldParticles: {fileID: 1547781291}
-  empFieldEffect: {fileID: 1348626957}
 --- !u!82 &802119722
 AudioSource:
   m_ObjectHideFlags: 0
@@ -1268,10 +1266,6 @@ PrefabInstance:
       propertyPath: m_LocalPosition.y
       value: -1.2
       objectReference: {fileID: 0}
-    - target: {fileID: 6032349544763538227, guid: e9156b349b9b44cfb841f6e32dae3276, type: 3}
-      propertyPath: m_Name
-      value: empSphere
-      objectReference: {fileID: 0}
     - target: {fileID: 6668722607344005111, guid: e9156b349b9b44cfb841f6e32dae3276, type: 3}
       propertyPath: m_BoundingSphereOverride.w
       value: -1.9789103e+33
@@ -1632,11 +1626,6 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 495, y: 37.755302, z: 495}
   m_Center: {x: 0, y: 6, z: 0}
---- !u!198 &1348626957 stripped
-ParticleSystem:
-  m_CorrespondingSourceObject: {fileID: 7345258851018978684, guid: e9156b349b9b44cfb841f6e32dae3276, type: 3}
-  m_PrefabInstance: {fileID: 1244940493}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1468259663
 GameObject:
   m_ObjectHideFlags: 0

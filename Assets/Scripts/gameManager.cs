@@ -38,6 +38,7 @@ public class gameManager : MonoBehaviour
     [SerializeField] private AudioClip slowPickupSFX;
     [SerializeField] private AudioClip armorPickupSFX;
     [SerializeField] private AudioClip abilityUseSFX;
+    [SerializeField] private AudioClip empBlastSFX;
 
     [SerializeField] private List<TurretFireSFX> turretFireSounds;
     [SerializeField] private AudioClip defaultFireSFX;
@@ -72,6 +73,7 @@ public class gameManager : MonoBehaviour
 
     [Header("Ability Visual Effects")]
     [SerializeField] private ParticleSystem slowFieldParticles;
+    [SerializeField] private ParticleSystem empFieldEffect;
 
     private Vignette vignette;
     private Color baseVignetteColor;
@@ -508,7 +510,18 @@ public class gameManager : MonoBehaviour
 
         StartVignetteTransition(empVignetteColor, activeVignetteIntensity, activeVignetteSmoothness);
 
-        yield return new WaitForSeconds(20f);
+        if (empBlastSFX != null)
+        {
+            audioSource.PlayOneShot(empBlastSFX);
+        }
+
+        yield return new WaitForSeconds(1.5f);
+        if (empFieldEffect != null)
+        {
+            empFieldEffect.Play();
+        }
+
+        yield return new WaitForSeconds(1f);
         empActive = false;
 
         StartVignetteTransition(baseVignetteColor, baseVignetteIntensity, baseVignetteSmoothness);
