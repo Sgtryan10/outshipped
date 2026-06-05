@@ -3,6 +3,8 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using Unity.Cinemachine;
 using System.Collections.Generic;
+using UnityEngine.Rendering;
+using UnityEngine.Rendering.Universal;
 
 public class gameManager : MonoBehaviour
 {
@@ -35,14 +37,14 @@ public class gameManager : MonoBehaviour
     [SerializeField] private AudioClip empPickupSFX;
     [SerializeField] private AudioClip slowPickupSFX;
     [SerializeField] private AudioClip armorPickupSFX;
+    [SerializeField] private AudioClip abilityUseSFX;
 
-    [Tooltip("Map turret type names to specific firing audio clips.")]
     [SerializeField] private List<TurretFireSFX> turretFireSounds;
     [SerializeField] private AudioClip defaultFireSFX;
 
-    [Tooltip("Map turret type names to specific reloading audio clips.")]
     [SerializeField] private List<TurretReloadSFX> turretReloadSounds;
     [SerializeField] private AudioClip defaultReloadSFX;
+
     [Header("Player Health & Armor Settings")]
     [SerializeField] private int maxPlayerHealth = 100;
     private int currentPlayerHealth;
@@ -56,9 +58,32 @@ public class gameManager : MonoBehaviour
     private float baseFOV = 60f;
     [SerializeField] private float fovTransitionSpeed = 100f;
 
+    [Header("Vignette Settings")]
+    [SerializeField] private Volume globalVolume;
+    [SerializeField] private float activeVignetteIntensity = 0.45f;
+    [SerializeField] private float activeVignetteSmoothness = 0.5f;
+    [SerializeField] private float vignetteTransitionDuration = 0.5f;
+
+    [Header("Ability Vignette Colors")]
+    [SerializeField] private Color ampedVignetteColor = new Color(1f, 0.37254902f, 0f);
+    [SerializeField] private Color overdriveVignetteColor = new Color(0.960784314f, 0.764705882f, 0.278431373f);
+    [SerializeField] private Color empVignetteColor = new Color(0.454901961f, 0.721568627f, 0.937254902f);
+    [SerializeField] private Color slowVignetteColor = new Color(0.435294118f, 0.482352941f, 0.968627451f);
+
+    private Vignette vignette;
+    private Color baseVignetteColor;
+    private float baseVignetteIntensity;
+    private float baseVignetteSmoothness;
+    private Coroutine vignetteTransitionCoroutine;
+
     private string currentTurretType;
     private int currentMagazine;
     private int currentReserve;
+    private int currentBaseDamage;
+    private float currentRange;
+    public float CurrentRange => currentRange;
+    private Color currentTracerColor;
+    public Color CurrentTracerColor => currentTracerColor;
 
     private float fireRate;
     private float reloadTime;
@@ -73,6 +98,8 @@ public class gameManager : MonoBehaviour
     public float damageMultiplier { get; private set; } = 1f;
     public float speedMultiplier { get; private set; } = 1f;
 
+    private bool wantsToShoot;
+
     private float originalMaxSpeed;
     private float originalAcceleration;
 
@@ -81,7 +108,7 @@ public class gameManager : MonoBehaviour
     private bool isGameOver = false;
 
     private Dictionary<string, AudioClip> fireSoundLookup = new Dictionary<string, AudioClip>();
-    private Dictionary<string, AudioClip> reloadSoundLookup = new Dictionary<string, AudioClip>(); // --- NEW: Fast runtime lookup for reloads ---
+    private Dictionary<string, AudioClip> reloadSoundLookup = new Dictionary<string, AudioClip>();
 
     private void Awake()
     {
@@ -95,7 +122,7 @@ public class gameManager : MonoBehaviour
         }
 
         InitializeFireSounds();
-        InitializeReloadSounds(); // --- NEW: Initialize the lookup dictionary ---
+        InitializeReloadSounds();
     }
 
     private void InitializeFireSounds()
@@ -112,7 +139,6 @@ public class gameManager : MonoBehaviour
         }
     }
 
-    // --- NEW: Helper to convert reload list data into a fast dictionary lookup ---
     private void InitializeReloadSounds()
     {
         reloadSoundLookup.Clear();
@@ -153,6 +179,17 @@ public class gameManager : MonoBehaviour
             baseFOV = vCam.Lens.FieldOfView;
         }
 
+        if (globalVolume != null && globalVolume.profile.TryGet<Vignette>(out vignette))
+        {
+            baseVignetteColor = vignette.color.value;
+            baseVignetteIntensity = vignette.intensity.value;
+            baseVignetteSmoothness = vignette.smoothness.value;
+
+            vignette.color.overrideState = true;
+            vignette.intensity.overrideState = true;
+            vignette.smoothness.overrideState = true;
+        }
+
         currentPlayerHealth = maxPlayerHealth;
         currentArmorStacks = 0;
 
@@ -164,6 +201,9 @@ public class gameManager : MonoBehaviour
 
         fireRate = GameSelection.SelectedFireRate;
         reloadTime = GameSelection.SelectedReloadTime;
+        currentBaseDamage = GameSelection.SelectedDamage;
+        currentRange = GameSelection.SelectedRange;
+        currentTracerColor = GameSelection.SelectedTracerColor;
 
         if (hudController != null)
         {
@@ -181,6 +221,9 @@ public class gameManager : MonoBehaviour
             hudController.updateActiveAbility(empActive, overdriveActive, ampedActive, slowActive);
 
             hudController.DismissPopup();
+
+            turretController.SetBaseDamage(currentBaseDamage);
+            turretController.SetMaxRange(currentRange);
         }
     }
 
@@ -194,7 +237,6 @@ public class gameManager : MonoBehaviour
             UseStoredAbility();
         }
 
-        bool wantsToShoot = false;
         if (Mouse.current != null)
         {
             if (currentTurretType == "AUTOMATIC" || currentTurretType == "RAPID-FIRE")
@@ -249,7 +291,6 @@ public class gameManager : MonoBehaviour
         }
     }
 
-    // --- NEW: Dynamically checks currentTurretType and plays the reload audio ---
     private void PlayReloadSound()
     {
         if (audioSource == null) return;
@@ -336,6 +377,11 @@ public class gameManager : MonoBehaviour
     {
         if (string.IsNullOrEmpty(storedAbility)) return;
 
+        if (audioSource != null && abilityUseSFX != null)
+        {
+            audioSource.PlayOneShot(abilityUseSFX);
+        }
+
         OnActiveAbilityUsed();
 
         switch (storedAbility)
@@ -357,16 +403,55 @@ public class gameManager : MonoBehaviour
         storedAbility = "";
     }
 
+    private void StartVignetteTransition(Color targetColor, float targetIntensity, float targetSmoothness)
+    {
+        if (vignette == null) return;
+
+        if (vignetteTransitionCoroutine != null)
+        {
+            StopCoroutine(vignetteTransitionCoroutine);
+        }
+        vignetteTransitionCoroutine = StartCoroutine(TransitionVignetteRoutine(targetColor, targetIntensity, targetSmoothness));
+    }
+
+    private IEnumerator TransitionVignetteRoutine(Color targetColor, float targetIntensity, float targetSmoothness)
+    {
+        Color startColor = vignette.color.value;
+        float startIntensity = vignette.intensity.value;
+        float startSmoothness = vignette.smoothness.value;
+        float elapsed = 0f;
+
+        while (elapsed < vignetteTransitionDuration)
+        {
+            elapsed += Time.deltaTime;
+            float t = elapsed / vignetteTransitionDuration;
+
+            vignette.color.value = Color.Lerp(startColor, targetColor, t);
+            vignette.intensity.value = Mathf.Lerp(startIntensity, targetIntensity, t);
+            vignette.smoothness.value = Mathf.Lerp(startSmoothness, targetSmoothness, t);
+
+            yield return null;
+        }
+
+        vignette.color.value = targetColor;
+        vignette.intensity.value = targetIntensity;
+        vignette.smoothness.value = targetSmoothness;
+    }
+
     private IEnumerator AmpedRoutine()
     {
         ampedActive = true;
         damageMultiplier = 1.5f;
-
         hudController?.updateActiveAbility(false, false, false, false);
+
+        StartVignetteTransition(ampedVignetteColor, activeVignetteIntensity, activeVignetteSmoothness);
+
         yield return new WaitForSeconds(20f);
 
         damageMultiplier = 1f;
         ampedActive = false;
+
+        StartVignetteTransition(baseVignetteColor, baseVignetteIntensity, baseVignetteSmoothness);
     }
 
     private IEnumerator OverdriveRoutine()
@@ -378,6 +463,8 @@ public class gameManager : MonoBehaviour
         {
             playerCar.SetOverdriveSpeeds(originalMaxSpeed * 1.5f, originalAcceleration * 1.5f);
         }
+
+        StartVignetteTransition(overdriveVignetteColor, activeVignetteIntensity, activeVignetteSmoothness);
 
         if (vCam != null)
         {
@@ -399,6 +486,8 @@ public class gameManager : MonoBehaviour
             playerCar.SetOverdriveSpeeds(originalMaxSpeed, originalAcceleration);
         }
 
+        StartVignetteTransition(baseVignetteColor, baseVignetteIntensity, baseVignetteSmoothness);
+
         if (vCam != null)
         {
             while (!Mathf.Approximately(vCam.Lens.FieldOfView, baseFOV))
@@ -413,16 +502,26 @@ public class gameManager : MonoBehaviour
     {
         empActive = true;
         hudController?.updateActiveAbility(false, false, false, false);
+
+        StartVignetteTransition(empVignetteColor, activeVignetteIntensity, activeVignetteSmoothness);
+
         yield return new WaitForSeconds(20f);
         empActive = false;
+
+        StartVignetteTransition(baseVignetteColor, baseVignetteIntensity, baseVignetteSmoothness);
     }
 
     private IEnumerator SlowRoutine()
     {
         slowActive = true;
         hudController?.updateActiveAbility(false, false, false, false);
+
+        StartVignetteTransition(slowVignetteColor, activeVignetteIntensity, activeVignetteSmoothness);
+
         yield return new WaitForSeconds(20f);
         slowActive = false;
+
+        StartVignetteTransition(baseVignetteColor, baseVignetteIntensity, baseVignetteSmoothness);
     }
 
     public void TakeDamage(int damageAmount)

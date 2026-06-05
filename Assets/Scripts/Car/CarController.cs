@@ -27,7 +27,7 @@ public class CarController : MonoBehaviour
     [SerializeField] private float driveGroundingResponse = 8f;
 
     [Header("Steering")]
-    [SerializeField] private float maxSteeringAngle = 32f;
+    [SerializeField] private float maxSteeringAngle = 48f;
     [SerializeField] private float steerAtMaxSpeed = 12f;
     [SerializeField] private float steerResponse = 3.5f;
     [SerializeField] private float steerReturnSpeed = 6f;

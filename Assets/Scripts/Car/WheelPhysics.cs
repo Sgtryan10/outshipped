@@ -9,7 +9,6 @@ public class WheelPhysics : MonoBehaviour
     private Vector3 localRightAxis = Vector3.right;
     private float steerAngle;
     private readonly RaycastHit[] groundHits = new RaycastHit[8];
-    private Quaternion wheelRootRestLocalRotation;
     private Vector3 wheelMeshRestLocalPosition;
     private Vector3 wheelMeshTargetLocalPosition;
     private Quaternion wheelMeshRestLocalRotation;
@@ -53,7 +52,6 @@ public class WheelPhysics : MonoBehaviour
         }
 
         groundMask = ResolveGroundMask();
-        wheelRootRestLocalRotation = transform.localRotation;
         if (wheelMesh)
         {
             wheelMeshRestLocalPosition = wheelMesh.localPosition;
@@ -471,15 +469,17 @@ public class WheelPhysics : MonoBehaviour
     {
         if (!config.animateWheelMesh)
         {
-            transform.localRotation = wheelRootRestLocalRotation;
             wheelMesh.localRotation = wheelMeshRestLocalRotation;
+            wheelVisualForwardSpeed = 0f;
             return;
         }
 
         float targetForwardSpeed = isGrounded ? forwardSpeed : 0f;
         float response = isGrounded ? config.wheelVisualFollowSpeed : config.wheelVisualFollowSpeed * 0.35f;
-        float speedFollow = 1f - Mathf.Exp(-response * Time.deltaTime);
-        wheelVisualForwardSpeed = Mathf.Lerp(wheelVisualForwardSpeed, targetForwardSpeed, speedFollow);
+        wheelVisualForwardSpeed = Mathf.Lerp(
+            wheelVisualForwardSpeed,
+            targetForwardSpeed,
+            1f - Mathf.Exp(-response * Time.deltaTime));
 
         if (config.wheelRadius > 0.001f)
         {
@@ -487,13 +487,27 @@ public class WheelPhysics : MonoBehaviour
             wheelVisualSpin = Mathf.Repeat(wheelVisualSpin + spinDegrees, 360f);
         }
 
-        Quaternion steerRotation = isFrontWheel
-            ? Quaternion.AngleAxis(steerAngle, Vector3.forward)
-            : Quaternion.identity;
-        transform.localRotation = wheelRootRestLocalRotation * steerRotation;
+        Transform visualParent = wheelMesh.parent;
+        Quaternion parentRotation = visualParent ? visualParent.rotation : Quaternion.identity;
+        Quaternion restWorldRotation = parentRotation * wheelMeshRestLocalRotation;
 
-        Quaternion rollingRotation = Quaternion.AngleAxis(wheelVisualSpin, Vector3.up);
-        wheelMesh.localRotation = wheelMeshRestLocalRotation * rollingRotation;
+        Vector3 suspensionUp = rb ? rb.transform.up : transform.up;
+        Vector3 axle = rb ? rb.transform.TransformDirection(localRightAxis) : transform.right;
+        if (isFrontWheel)
+            axle = Quaternion.AngleAxis(steerAngle, suspensionUp) * axle;
+
+        if (axle.sqrMagnitude < 0.0001f)
+            axle = transform.right;
+
+        Quaternion steerRotation = isFrontWheel
+            ? Quaternion.AngleAxis(steerAngle, suspensionUp)
+            : Quaternion.identity;
+        Quaternion rollRotation = Quaternion.AngleAxis(wheelVisualSpin, axle.normalized);
+        Quaternion targetWorldRotation = rollRotation * steerRotation * restWorldRotation;
+
+        wheelMesh.localRotation = visualParent
+            ? Quaternion.Inverse(parentRotation) * targetWorldRotation
+            : targetWorldRotation;
     }
 
     Vector3 WheelForward(Vector3 groundNormal)

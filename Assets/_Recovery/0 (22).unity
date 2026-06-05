@@ -159,7 +159,7 @@ MonoBehaviour:
       Enabled: 1
       Size: {x: 0.72, y: 0.62}
       Offset: {x: 0, y: 0}
-  CenterOnActivate: 1
+  CenterOnActivate: 0
   TargetOffset: {x: 0, y: 0, z: 0}
   Damping: {x: 0.65, y: 0.85}
   Lookahead:
@@ -210,7 +210,7 @@ MonoBehaviour:
     LookAtTarget: {fileID: 0}
     CustomLookAtTarget: 0
   Lens:
-    FieldOfView: 60
+    FieldOfView: 55
     OrthographicSize: 5
     NearClipPlane: 0.3
     FarClipPlane: 1000
@@ -237,7 +237,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 368060691}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.12890115, y: 0.6952586, z: -0.1289012, w: 0.69525856}
+  m_LocalRotation: {x: 0.121105954, y: 0.6966588, z: -0.12110598, w: 0.6966587}
   m_LocalPosition: {x: -11.902531, y: 11.32122, z: -0.00000011920929}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -285,7 +285,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 517775239}
-  m_Layer: 2
+  m_Layer: 0
   m_Name: Prop Spawn Zones
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -301,7 +301,7 @@ Transform:
   m_GameObject: {fileID: 517775238}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: -2, y: 4.23593, z: 0.77191}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -321,7 +321,7 @@ GameObject:
   m_Component:
   - component: {fileID: 567099108}
   - component: {fileID: 567099109}
-  m_Layer: 2
+  m_Layer: 0
   m_Name: Tree Spawn Zone
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -374,7 +374,7 @@ GameObject:
   m_Component:
   - component: {fileID: 600736267}
   - component: {fileID: 600736268}
-  m_Layer: 2
+  m_Layer: 0
   m_Name: Base Spawn Zone
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -472,7 +472,6 @@ MonoBehaviour:
   empPickupSFX: {fileID: 8300000, guid: 05533ecf2cc79489c987791507f8848b, type: 3}
   slowPickupSFX: {fileID: 8300000, guid: f3b725bfcdf9c4251a1f6082daaf2633, type: 3}
   armorPickupSFX: {fileID: 8300000, guid: 32da8c7a0069a4123aa4778a5665dc2e, type: 3}
-  abilityUseSFX: {fileID: 8300000, guid: 28e507e4ff7e5371b8eb01e8d088530c, type: 3}
   turretFireSounds:
   - turretType: AUTOMATIC
     fireSound: {fileID: 8300000, guid: a813a174a8b70dc76a80ee5ab316a252, type: 3}
@@ -497,14 +496,6 @@ MonoBehaviour:
   maxMagazineSize: 30
   overdriveFOV: 80
   fovTransitionSpeed: 100
-  globalVolume: {fileID: 1953825353}
-  activeVignetteIntensity: 0.45
-  activeVignetteSmoothness: 0.5
-  vignetteTransitionDuration: 0.5
-  ampedVignetteColor: {r: 0.99607843, g: 0.37254903, b: 0, a: 1}
-  overdriveVignetteColor: {r: 0.9607843, g: 0.7647059, b: 0.2784314, a: 1}
-  empVignetteColor: {r: 0.45490196, g: 0.72156864, b: 0.9372549, a: 1}
-  slowVignetteColor: {r: 0.43529412, g: 0.48235294, b: 0.96862745, a: 1}
 --- !u!82 &802119722
 AudioSource:
   m_ObjectHideFlags: 0
@@ -695,7 +686,7 @@ GameObject:
   m_Component:
   - component: {fileID: 858603837}
   - component: {fileID: 858603838}
-  m_Layer: 2
+  m_Layer: 0
   m_Name: Rock Spawn Zone
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1000,14 +991,6 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 2704341632117077500, guid: 0e9dfeeb8e94e76c79dc7e90b993e0d0, type: 3}
     - target: {fileID: 1474544913221177702, guid: e9156b349b9b44cfb841f6e32dae3276, type: 3}
-      propertyPath: virtualCamera
-      value: 
-      objectReference: {fileID: 368060694}
-    - target: {fileID: 1474544913221177702, guid: e9156b349b9b44cfb841f6e32dae3276, type: 3}
-      propertyPath: aimMask.m_Bits
-      value: 91
-      objectReference: {fileID: 0}
-    - target: {fileID: 1474544913221177702, guid: e9156b349b9b44cfb841f6e32dae3276, type: 3}
       propertyPath: hitscanMaxRange
       value: 2000
       objectReference: {fileID: 0}
@@ -1067,62 +1050,10 @@ PrefabInstance:
       propertyPath: m_PlayOnAwake
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 3730853690311579723, guid: e9156b349b9b44cfb841f6e32dae3276, type: 3}
-      propertyPath: m_Size.x
-      value: 0.017
-      objectReference: {fileID: 0}
-    - target: {fileID: 5372501872205966627, guid: e9156b349b9b44cfb841f6e32dae3276, type: 3}
-      propertyPath: stepAssistMaxSpeed
-      value: 45
-      objectReference: {fileID: 0}
-    - target: {fileID: 5372501872205966627, guid: e9156b349b9b44cfb841f6e32dae3276, type: 3}
-      propertyPath: stepAssistLiftForce
-      value: 14000
-      objectReference: {fileID: 0}
-    - target: {fileID: 5372501872205966627, guid: e9156b349b9b44cfb841f6e32dae3276, type: 3}
-      propertyPath: stepAssistMaxHeight
-      value: 0.6
-      objectReference: {fileID: 0}
-    - target: {fileID: 5372501872205966627, guid: e9156b349b9b44cfb841f6e32dae3276, type: 3}
-      propertyPath: stepAssistForwardForce
-      value: 4500
-      objectReference: {fileID: 0}
-    - target: {fileID: 5372501872205966627, guid: e9156b349b9b44cfb841f6e32dae3276, type: 3}
-      propertyPath: stepAssistProbeDistance
-      value: 1.1
-      objectReference: {fileID: 0}
-    - target: {fileID: 5372501872205966627, guid: e9156b349b9b44cfb841f6e32dae3276, type: 3}
-      propertyPath: stepAssistLowerProbeHeight
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 5521095255619042919, guid: e9156b349b9b44cfb841f6e32dae3276, type: 3}
       propertyPath: engineSource
       value: 
       objectReference: {fileID: 964827644}
-    - target: {fileID: 5521095255619042919, guid: e9156b349b9b44cfb841f6e32dae3276, type: 3}
-      propertyPath: collisionSource
-      value: 
-      objectReference: {fileID: 964827644}
-    - target: {fileID: 5521095255619042919, guid: e9156b349b9b44cfb841f6e32dae3276, type: 3}
-      propertyPath: crashClips.Array.size
-      value: 4
-      objectReference: {fileID: 0}
-    - target: {fileID: 5521095255619042919, guid: e9156b349b9b44cfb841f6e32dae3276, type: 3}
-      propertyPath: 'crashClips.Array.data[0]'
-      value: 
-      objectReference: {fileID: 8300000, guid: b728b9c228f600e04b9818a218e8a434, type: 3}
-    - target: {fileID: 5521095255619042919, guid: e9156b349b9b44cfb841f6e32dae3276, type: 3}
-      propertyPath: 'crashClips.Array.data[1]'
-      value: 
-      objectReference: {fileID: 8300000, guid: 9c45233b251434eb781bba8955a128f8, type: 3}
-    - target: {fileID: 5521095255619042919, guid: e9156b349b9b44cfb841f6e32dae3276, type: 3}
-      propertyPath: 'crashClips.Array.data[2]'
-      value: 
-      objectReference: {fileID: 8300000, guid: 073873ea53e0ada00a7ae3fc0ac51f05, type: 3}
-    - target: {fileID: 5521095255619042919, guid: e9156b349b9b44cfb841f6e32dae3276, type: 3}
-      propertyPath: 'crashClips.Array.data[3]'
-      value: 
-      objectReference: {fileID: 8300000, guid: dc97fc2470c7eb8979bc782abb799487, type: 3}
     - target: {fileID: 5521095255619042919, guid: e9156b349b9b44cfb841f6e32dae3276, type: 3}
       propertyPath: skidParticles.Array.size
       value: 2
@@ -1295,63 +1226,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1001 &1266938596
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    serializedVersion: 3
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 2747332583533574340, guid: 09f2ea1a3f03efbe6bc6d2fea3f17bc3, type: 3}
-      propertyPath: m_Name
-      value: Spider
-      objectReference: {fileID: 0}
-    - target: {fileID: 6640446753092268891, guid: 09f2ea1a3f03efbe6bc6d2fea3f17bc3, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: -14.536228
-      objectReference: {fileID: 0}
-    - target: {fileID: 6640446753092268891, guid: 09f2ea1a3f03efbe6bc6d2fea3f17bc3, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 4.614014
-      objectReference: {fileID: 0}
-    - target: {fileID: 6640446753092268891, guid: 09f2ea1a3f03efbe6bc6d2fea3f17bc3, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: -27.122826
-      objectReference: {fileID: 0}
-    - target: {fileID: 6640446753092268891, guid: 09f2ea1a3f03efbe6bc6d2fea3f17bc3, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 0.7071068
-      objectReference: {fileID: 0}
-    - target: {fileID: 6640446753092268891, guid: 09f2ea1a3f03efbe6bc6d2fea3f17bc3, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: -0.7071068
-      objectReference: {fileID: 0}
-    - target: {fileID: 6640446753092268891, guid: 09f2ea1a3f03efbe6bc6d2fea3f17bc3, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6640446753092268891, guid: 09f2ea1a3f03efbe6bc6d2fea3f17bc3, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6640446753092268891, guid: 09f2ea1a3f03efbe6bc6d2fea3f17bc3, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6640446753092268891, guid: 09f2ea1a3f03efbe6bc6d2fea3f17bc3, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6640446753092268891, guid: 09f2ea1a3f03efbe6bc6d2fea3f17bc3, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: 09f2ea1a3f03efbe6bc6d2fea3f17bc3, type: 3}
 --- !u!1 &1468259663
 GameObject:
   m_ObjectHideFlags: 0
@@ -1474,7 +1348,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1502877202}
   - component: {fileID: 1502877203}
-  m_Layer: 2
+  m_Layer: 0
   m_Name: Depot Spawn Zone
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1578,7 +1452,7 @@ Camera:
     height: 1
   near clip plane: 0.3
   far clip plane: 1000
-  field of view: 60
+  field of view: 55
   orthographic: 0
   orthographic size: 5
   m_Depth: -1
@@ -1604,7 +1478,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1668576978}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.12890117, y: 0.6952586, z: -0.12890118, w: 0.69525856}
+  m_LocalRotation: {x: 0.121105954, y: 0.6966588, z: -0.12110598, w: 0.6966587}
   m_LocalPosition: {x: -11.902531, y: 11.32122, z: -0.00000011920929}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -2201,11 +2075,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::playerDeliveryManager
   hasPackage: 0
-  packageVisual: {fileID: 0}
-  createPlaceholderIfMissing: 1
-  placeholderLocalPosition: {x: -1.75, y: 1, z: 0}
-  placeholderLocalScale: {x: 1.5, y: 1.5, z: 1.5}
-  placeholderColor: {r: 0.55, g: 0.32, b: 0.12, a: 1}
   baseTag: Base
   depotTag: Depot
   audioSource: {fileID: 802119722}
@@ -2289,4 +2158,3 @@ SceneRoots:
   - {fileID: 1083037005}
   - {fileID: 1244940493}
   - {fileID: 1265482293}
-  - {fileID: 1266938596}

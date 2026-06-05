@@ -13,7 +13,7 @@ public class TurretController : MonoBehaviour
     [SerializeField] private Vector3 localFiringAxis = Vector3.down;
 
     [Header("Aiming")]
-    [SerializeField] private LayerMask aimMask = Physics.DefaultRaycastLayers;
+    [SerializeField] private LayerMask aimMask;
     [SerializeField] private float maxAimDistance = 300f;
     [SerializeField] private float yawSpeed = 260f;
     [SerializeField] private float pitchSpeed = 180f;
@@ -34,15 +34,16 @@ public class TurretController : MonoBehaviour
     [SerializeField, Range(0f, 60f)] private float maxCameraPitchUp = 13f;
     [SerializeField, Range(0f, 60f)] private float maxCameraPitchDown = 6f;
 
-    [Header("Projectile")]
-    [SerializeField] private GameObject projectilePrefab;
+    [Header("Hitscan & Visual Settings")]
+    [SerializeField] private GameObject tracerPrefab;
+    [SerializeField] private float hitscanMaxRange = 200f;
     [SerializeField] private float muzzleForwardOffset = 0.12f;
-    [SerializeField] private float projectileSpeed = 1000f;
-    [SerializeField] private float projectileLifetime = 4f;
     [SerializeField] private int baseDamage = 25;
-    [SerializeField] private Color projColor = Color.yellow; 
-    [SerializeField] private float projGlowStrength = 4f;
     [SerializeField] private ParticleSystem muzzleFlash;
+
+    [Header("Buckshot Settings")]
+    [SerializeField] private int buckshotPellets = 8;
+    [SerializeField] private float buckshotSpread = 5f;
 
     private readonly RaycastHit[] aimHits = new RaycastHit[16];
     private Transform cameraAimTarget;
@@ -75,55 +76,70 @@ public class TurretController : MonoBehaviour
         UpdateCameraAimTarget();
     }
 
+    public void SetBaseDamage(int damageAmount)
+    {
+        baseDamage = damageAmount;
+    }
+
+    public void SetMaxRange(float maxRangeValue)
+    {
+        hitscanMaxRange = maxRangeValue;
+    }
+
     public void Fire(float damageMultiplier = 1f)
     {
         if (!barrel) return;
 
-        Vector3 direction = FiringDirection();
-        Vector3 spawnOrigin = muzzle ? muzzle.position : FindBarrelTip(direction);
-        Vector3 spawnPosition = spawnOrigin + direction * muzzleForwardOffset + transform.up * 1.2f;
-        int damage = Mathf.Max(1, Mathf.RoundToInt(baseDamage * Mathf.Max(0f, damageMultiplier)));
+        Vector3 baseDirection = FiringDirection();
+        Vector3 spawnOrigin = muzzle ? muzzle.position : FindBarrelTip(baseDirection);
+        Vector3 spawnPosition = spawnOrigin + barrel.forward * muzzleForwardOffset;
 
-        Projectile projectile = CreateProjectile(spawnPosition, Quaternion.LookRotation(direction));
-        projectile.Initialize(direction, projectileSpeed, projectileLifetime, damage, transform.root);
         if (muzzleFlash != null)
         {
             muzzleFlash.Play();
         }
-    }
 
-    Projectile CreateProjectile(Vector3 position, Quaternion rotation)
-    {
-        GameObject projectileObject;
+        bool isBuckshot = GameSelection.SelectedTurretType == "BUCKSHOT";
+        int pelletsToFire = isBuckshot ? buckshotPellets : 1;
 
-        if (projectilePrefab)
+        for (int i = 0; i < pelletsToFire; i++)
         {
-            projectileObject = Instantiate(projectilePrefab, position, rotation);
-        }
-        else
-        {
-            projectileObject = GameObject.CreatePrimitive(PrimitiveType.Sphere);
-            projectileObject.name = "Turret Projectile";
-            projectileObject.transform.SetPositionAndRotation(position, rotation);
-            projectileObject.transform.localScale = Vector3.one * 0.22f;
-            Renderer renderer = projectileObject.GetComponent<Renderer>();
+            Vector3 finalDirection = baseDirection;
 
-            if (renderer)
+            if (isBuckshot)
             {
-                Material glowMaterial = new Material(renderer.material);
-                Color emissionColor = projColor * projGlowStrength;
-                glowMaterial.color = projColor;
-                glowMaterial.EnableKeyword("_EMISSION");
-                glowMaterial.SetColor("_EmissionColor", emissionColor);
-                renderer.material = glowMaterial;
+                float spreadX = Random.Range(-buckshotSpread, buckshotSpread);
+                float spreadY = Random.Range(-buckshotSpread, buckshotSpread);
+
+                Quaternion spreadRotation = Quaternion.Euler(spreadX, spreadY, 0);
+                finalDirection = Quaternion.LookRotation(baseDirection) * spreadRotation * Vector3.forward;
+            }
+
+            Vector3 targetPoint = spawnPosition + (finalDirection * hitscanMaxRange);
+            bool didHit = Physics.Raycast(spawnPosition, finalDirection, out RaycastHit hit, hitscanMaxRange, aimMask);
+
+            if (didHit)
+            {
+                targetPoint = hit.point;
+                float finalDamage = baseDamage * damageMultiplier;
+
+                Debug.Log($"Pellet {i} registered hit on: {hit.collider.name} at {hit.point}. Damage: {finalDamage}");
+            }
+
+            if (tracerPrefab)
+            {
+                GameObject tracerObj = Instantiate(tracerPrefab, spawnPosition, Quaternion.LookRotation(finalDirection));
+                tracer tracerComponent = tracerObj.GetComponent<tracer>();
+
+                if (tracerComponent != null)
+                {
+                    Color activeLaserColor = gameManager.Instance != null
+                        ? gameManager.Instance.CurrentTracerColor
+                        : Color.white;
+                    tracerComponent.InitializeHitscanLine(spawnPosition, targetPoint, activeLaserColor);
+                }
             }
         }
-
-        Projectile projectile = projectileObject.GetComponent<Projectile>();
-        if (!projectile)
-            projectile = projectileObject.AddComponent<Projectile>();
-
-        return projectile;
     }
 
     void AimAtCursor()

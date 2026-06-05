@@ -81,6 +81,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::playerDeliveryManager
   hasPackage: 0
+  packageVisual: {fileID: 0}
+  createPlaceholderIfMissing: 1
+  placeholderLocalPosition: {x: -1.75, y: 1, z: 0}
+  placeholderLocalScale: {x: 1.5, y: 1.5, z: 1.5}
+  placeholderColor: {r: 0.55, g: 0.32, b: 0.12, a: 1}
   baseTag: Base
   depotTag: Depot
 --- !u!114 &4235079551041683584
@@ -115,7 +120,7 @@ MonoBehaviour:
   rearLiftReverseScale: 0.55
   axleSupportReference: 0.45
   driveGroundingResponse: 8
-  maxSteeringAngle: 36
+  maxSteeringAngle: 48
   steerAtMaxSpeed: 14
   steerResponse: 8
   steerReturnSpeed: 6
